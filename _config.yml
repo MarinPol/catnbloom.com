@@ -1,0 +1,23 @@
+title: "CatnBloom Studio"
+description: "Whimsical art & prints for cat-plant lovers"
+url: "https://catnbloom.com"
+
+collections:
+  cottagecore:
+    output: true
+    permalink: /cottagecore/:name
+  witchy:
+    output: true
+    permalink: /witchy-cats/:name
+
+defaults:
+  - scope:
+      path: ""
+      type: "cottagecore"
+    values:
+      layout: "product-bridge"
+  - scope:
+      path: ""
+      type: "witchy"
+    values:
+      layout: "product-bridge"
