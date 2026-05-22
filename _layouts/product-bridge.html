@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | CatnBloom Studio</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #2d2d2d;
+            --font-family: 'Arial', sans-serif;
+            /* Динамическая настройка цвета под коллекцию */
+            --accent-color: {% if page.collection == 'witchy' %}#7b2d2d{% else %}#a3b18a{% endif %};
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.25;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .left-block {
+            flex: 1;
+            min-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .right-container {
+            flex: 1;
+            min-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 25px;
+        }
+        .placeholder-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: #f7f7f7;
+            border: 2px dashed #cccccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888888;
+            font-size: 0.9rem;
+        }
+        h1 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+            color: var(--text-color);
+        }
+        h2 {
+            font-size: 1.2rem;
+            font-weight: normal;
+            font-style: italic;
+            margin: 0 0 15px 0;
+            color: #555555;
+        }
+        h3 {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            color: var(--accent-color);
+        }
+        .story-text {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+        .human-proof-box {
+            background-color: #f9f9f9;
+            padding: 15px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            border-left: 3px solid #dddddd;
+        }
+        .product-tabs {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: 1px solid #cccccc;
+            background: #ffffff;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        .tab-btn.active {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border-color: var(--accent-color);
+        }
+        .buy-button {
+            display: inline-block;
+            text-align: center;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            transition: opacity 0.2s ease;
+        }
+        .buy-button:hover {
+            opacity: 0.9;
+        }
+        .metadata-block {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px dashed #dddddd;
+            font-size: 0.85rem;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="left-block">
+            <div class="placeholder-image">
+                [ PLACE IMAGE HERE ]<br>
+                SKU: {{ page.sku }}
+            </div>
+            
+            <div class="metadata-block">
+                <strong>Alt Text:</strong> {{ page.alt_text }}<br><br>
+                <strong>System ID:</strong> {{ page.collection_code }}-{{ page.design_code }}
+            </div>
+        </div>
+
+        <div class="right-container">
+            <h1>{{ page.title }}</h1>
+            <h2>{{ page.headline }}</h2>
+            
+            <div class="story-text">
+                {{ page.story }}
+            </div>
+
+            {% if page.accent_h3_1 %}
+                <h3>{{ page.accent_h3_1 }}</h3>
+            {% endif %}
+            
+            {% if page.accent_h3_2 %}
+                <h3>{{ page.accent_h3_2 }}</h3>
+            {% endif %}
+
+            <div class="human-proof-box">
+                {{ page.human_proof }}
+            </div>
+
+            <div class="product-tabs">
+                <button class="tab-btn active" id="btn-tp" onclick="switchPlatform('teepublic', '{{ page.teepublic_url }}')">Apparel (TeePublic)</button>
+                {% if page.redbubble_url != '/' %}
+                <button class="tab-btn" id="btn-rb" onclick="switchPlatform('redbubble', '{{ page.redbubble_url }}')">Stickers & Stationery (Redbubble)</button>
+                {% endif %}
+            </div>
+
+            <a href="{{ page.teepublic_url }}" class="buy-button" id="main-buy-btn" target="_blank">Shop This Design</a>
+        </div>
+
+    </div>
+
+    <script>
+        function switchPlatform(platform, url) {
+            document.getElementById('main-buy-btn').href = url;
+            
+            document.getElementById('btn-tp').classList.remove('active');
+            const rbBtn = document.getElementById('btn-rb');
+            if(rbBtn) rbBtn.classList.remove('active');
+            
+            if(platform === 'teepublic') {
+                document.getElementById('btn-tp').classList.add('active');
+            } else {
+                document.getElementById('btn-rb').classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
