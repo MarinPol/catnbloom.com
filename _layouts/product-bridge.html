@@ -44,16 +44,16 @@
             border-left: 3px solid var(--accent-color);
             padding-left: 25px;
         }
-        .placeholder-image {
+        .product-image-container {
             width: 100%;
-            aspect-ratio: 1;
-            background-color: #f7f7f7;
-            border: 2px dashed #cccccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888888;
-            font-size: 0.9rem;
+            border-radius: 4px;
+            border: 1px solid #eeeeee;
+            overflow: hidden;
+        }
+        .product-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
         h1 {
             font-size: 2rem;
@@ -83,13 +83,15 @@
             border-radius: 4px;
             border-left: 3px solid #dddddd;
         }
+        /* Сетка для вкладок-переключателей */
         .product-tabs {
             display: flex;
             gap: 10px;
             margin-top: 15px;
         }
         .tab-btn {
-            padding: 10px 20px;
+            flex: 1; /* Делает кнопки абсолютно одинакового размера */
+            padding: 12px 15px;
             border: 1px solid #cccccc;
             background: #ffffff;
             cursor: pointer;
@@ -97,14 +99,16 @@
             font-size: 0.9rem;
             border-radius: 4px;
             transition: all 0.2s ease;
+            text-align: center;
         }
         .tab-btn.active {
             background-color: var(--accent-color);
             color: #ffffff;
             border-color: var(--accent-color);
         }
+        /* Главная целевая кнопка перехода */
         .buy-button {
-            display: inline-block;
+            display: block;
             text-align: center;
             background-color: var(--accent-color);
             color: #ffffff;
@@ -133,9 +137,12 @@
     <div class="container">
         
         <div class="left-block">
-            <div class="placeholder-image">
-                [ PLACE IMAGE HERE ]<br>
-                SKU: {{ page.sku }}
+            <div class="product-image-container">
+                {% if page.image_url %}
+                    <img src="{{ page.image_url }}" alt="{{ page.alt_text }}">
+                {% else %}
+                    <div style="padding: 40px; background: #f7f7f7; text-align: center; color: #888;">[ Missing Image URL ]</div>
+                {% endif %}
             </div>
             
             <div class="metadata-block">
@@ -165,26 +172,28 @@
             </div>
 
             <div class="product-tabs">
-                <button class="tab-btn active" id="btn-tp" onclick="switchPlatform('teepublic', '{{ page.teepublic_url }}')">Apparel (TeePublic)</button>
+                <button class="tab-btn active" id="btn-tp" onclick="switchPlatform('TeePublic', '{{ page.teepublic_url }}')">Apparel (TeePublic)</button>
                 {% if page.redbubble_url != '/' %}
-                <button class="tab-btn" id="btn-rb" onclick="switchPlatform('redbubble', '{{ page.redbubble_url }}')">Stickers & Stationery (Redbubble)</button>
+                <button class="tab-btn" id="btn-rb" onclick="switchPlatform('Redbubble', '{{ page.redbubble_url }}')">Stickers & Stationery (Redbubble)</button>
                 {% endif %}
             </div>
 
-            <a href="{{ page.teepublic_url }}" class="buy-button" id="main-buy-btn" target="_blank">Shop This Design</a>
+            <a href="{{ page.teepublic_url }}" class="buy-button" id="main-buy-btn" target="_blank">See on TeePublic</a>
         </div>
 
     </div>
 
     <script>
         function switchPlatform(platform, url) {
-            document.getElementById('main-buy-btn').href = url;
+            const buyBtn = document.getElementById('main-buy-btn');
+            buyBtn.href = url;
+            buyBtn.textContent = 'See on ' + platform; // Автоматически меняет текст кнопки при переключении
             
             document.getElementById('btn-tp').classList.remove('active');
             const rbBtn = document.getElementById('btn-rb');
             if(rbBtn) rbBtn.classList.remove('active');
             
-            if(platform === 'teepublic') {
+            if(platform === 'TeePublic') {
                 document.getElementById('btn-tp').classList.add('active');
             } else {
                 document.getElementById('btn-rb').classList.add('active');
