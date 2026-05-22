@@ -76,7 +76,7 @@
             margin-bottom: 5px;
         }
         
-        /* СОВРЕМЕННЫЙ ПЕРЕКЛЮЧАТЕЛЬ (SWITCH / TABS) */
+        /* ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ */
         .platform-switcher {
             display: flex;
             background: #f0f0f0;
@@ -103,7 +103,7 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
 
-        /* ЕДИНСТВЕННАЯ АКЦЕНТНАЯ КНОПКА ДЕЙСТВИЯ */
+        /* КНОПКА ПЕРЕХОДА */
         .buy-button {
             display: block;
             text-align: center;
@@ -120,14 +120,27 @@
         .buy-button:hover {
             opacity: 0.95;
         }
-        .buy-button:active {
-            transform: scale(0.98);
+
+        /* КРАСИВЫЙ БЛОК ТЕГОВ */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        .product-tag {
+            background-color: #f0f0f0;
+            color: #555555;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            font-weight: 500;
         }
 
         .product-id-spec {
             font-size: 0.85rem;
             color: #999999;
-            margin-top: 10px;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -160,13 +173,23 @@
                 {{ page.human_proof }}
             </div>
 
+            {% if page.redbubble_url and page.redbubble_url != '/' %}
             <div class="platform-switcher">
                 <button class="switch-tab active" id="tab-tp" onclick="togglePlatform('TeePublic', '{{ page.teepublic_url }}')">Apparel</button>
                 <button class="switch-tab" id="tab-rb" onclick="togglePlatform('Redbubble', '{{ page.redbubble_url }}')">Stickers & Notebooks</button>
             </div>
+            {% endif %}
 
             <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">See on TeePublic</a>
             
+            {% if page.tags %}
+            <div class="tags-container">
+                {% for tag in page.tags %}
+                <span class="product-tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <div class="product-id-spec">
                 <strong>Product ID:</strong> {{ page.collection_code }}-{{ page.design_code }}
             </div>
@@ -177,17 +200,9 @@
     <script>
         function togglePlatform(platform, url) {
             const actionBtn = document.getElementById('action-btn');
-            
-            // Если ссылка пустая или равна слэшу, временно ведем на главную Redbubble, чтобы не было ошибки
-            if (!url || url === '/') {
-                actionBtn.href = 'https://www.redbubble.com';
-            } else {
-                actionBtn.href = url;
-            }
-            
+            actionBtn.href = url;
             actionBtn.textContent = 'See on ' + platform;
             
-            // Переключение активного визуального состояния табов
             document.getElementById('tab-tp').classList.remove('active');
             document.getElementById('tab-rb').classList.remove('active');
             
