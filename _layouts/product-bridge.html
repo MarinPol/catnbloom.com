@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} | CatnBloom Studio</title>
+    <meta name="description" content="{{ page.story }}">
     <style>
         :root {
             --bg-color: #ffffff;
             --text-color: #2d2d2d;
             --font-family: 'Arial', sans-serif;
-            /* Динамическая настройка цвета под коллекцию */
             --accent-color: {% if page.collection == 'witchy' %}#7b2d2d{% else %}#a3b18a{% endif %};
+            --accent-light: {% if page.collection == 'witchy' %}#fbf4f4{% else %}#f4f6f0{% endif %};
         }
         body {
             margin: 0;
@@ -18,36 +19,31 @@
             font-family: var(--font-family);
             background-color: var(--bg-color);
             color: var(--text-color);
-            line-height: 1.25;
+            line-height: 1.3;
         }
         .container {
-            max-width: 1100px;
-            margin: 0 auto;
+            max-width: 1050px;
+            margin: 40px auto;
             padding: 20px;
             display: flex;
             flex-wrap: wrap;
-            gap: 40px;
+            gap: 50px;
         }
         .left-block {
-            flex: 1;
+            flex: 1.1;
             min-width: 320px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
         }
         .right-container {
             flex: 1;
             min-width: 320px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            border-left: 3px solid var(--accent-color);
-            padding-left: 25px;
+            gap: 22px;
         }
         .product-image-container {
             width: 100%;
-            border-radius: 4px;
-            border: 1px solid #eeeeee;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             overflow: hidden;
         }
         .product-image-container img {
@@ -56,79 +52,82 @@
             display: block;
         }
         h1 {
-            font-size: 2rem;
-            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            margin: 0;
             color: var(--text-color);
-        }
-        h2 {
-            font-size: 1.2rem;
-            font-weight: normal;
-            font-style: italic;
-            margin: 0 0 15px 0;
-            color: #555555;
+            font-weight: 700;
         }
         h3 {
-            font-size: 1.1rem;
-            margin: 10px 0;
+            font-size: 1.15rem;
+            margin: 5px 0;
             color: var(--accent-color);
+            font-weight: 600;
         }
         .story-text {
             font-size: 1.05rem;
-            margin-bottom: 20px;
+            color: #444444;
         }
         .human-proof-box {
             background-color: #f9f9f9;
-            padding: 15px;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            border-left: 3px solid #dddddd;
+            padding: 15px 20px;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            border-left: 4px solid #e0e0e0;
+            margin-bottom: 5px;
         }
-        /* Сетка для вкладок-переключателей */
-        .product-tabs {
+        
+        /* СОВРЕМЕННЫЙ ПЕРЕКЛЮЧАТЕЛЬ (SWITCH / TABS) */
+        .platform-switcher {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 8px;
+            margin-top: 10px;
         }
-        .tab-btn {
-            flex: 1; /* Делает кнопки абсолютно одинакового размера */
-            padding: 12px 15px;
-            border: 1px solid #cccccc;
-            background: #ffffff;
+        .switch-tab {
+            flex: 1;
+            padding: 10px 10px;
+            border: none;
+            background: transparent;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 0.9rem;
-            border-radius: 4px;
+            border-radius: 6px;
+            color: #666666;
             transition: all 0.2s ease;
             text-align: center;
         }
-        .tab-btn.active {
-            background-color: var(--accent-color);
-            color: #ffffff;
-            border-color: var(--accent-color);
+        .switch-tab.active {
+            background: #ffffff;
+            color: var(--text-color);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
-        /* Главная целевая кнопка перехода */
+
+        /* ЕДИНСТВЕННАЯ АКЦЕНТНАЯ КНОПКА ДЕЙСТВИЯ */
         .buy-button {
             display: block;
             text-align: center;
             background-color: var(--accent-color);
             color: #ffffff;
             text-decoration: none;
-            padding: 15px 30px;
+            padding: 16px 30px;
             font-weight: bold;
-            border-radius: 4px;
-            margin-top: 15px;
-            font-size: 1.1rem;
-            transition: opacity 0.2s ease;
+            border-radius: 8px;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.1s ease, opacity 0.2s ease;
         }
         .buy-button:hover {
-            opacity: 0.9;
+            opacity: 0.95;
         }
-        .metadata-block {
-            margin-top: auto;
-            padding-top: 20px;
-            border-top: 1px dashed #dddddd;
+        .buy-button:active {
+            transform: scale(0.98);
+        }
+
+        .product-id-spec {
             font-size: 0.85rem;
-            color: #666666;
+            color: #999999;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -138,22 +137,12 @@
         
         <div class="left-block">
             <div class="product-image-container">
-                {% if page.image_url %}
-                    <img src="{{ page.image_url }}" alt="{{ page.alt_text }}">
-                {% else %}
-                    <div style="padding: 40px; background: #f7f7f7; text-align: center; color: #888;">[ Missing Image URL ]</div>
-                {% endif %}
-            </div>
-            
-            <div class="metadata-block">
-                <strong>Alt Text:</strong> {{ page.alt_text }}<br><br>
-                <strong>System ID:</strong> {{ page.collection_code }}-{{ page.design_code }}
+                <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}" alt="{{ page.alt_text }}">
             </div>
         </div>
 
         <div class="right-container">
             <h1>{{ page.title }}</h1>
-            <h2>{{ page.headline }}</h2>
             
             <div class="story-text">
                 {{ page.story }}
@@ -171,32 +160,41 @@
                 {{ page.human_proof }}
             </div>
 
-            <div class="product-tabs">
-                <button class="tab-btn active" id="btn-tp" onclick="switchPlatform('TeePublic', '{{ page.teepublic_url }}')">Apparel (TeePublic)</button>
-                {% if page.redbubble_url != '/' %}
-                <button class="tab-btn" id="btn-rb" onclick="switchPlatform('Redbubble', '{{ page.redbubble_url }}')">Stickers & Stationery (Redbubble)</button>
-                {% endif %}
+            <div class="platform-switcher">
+                <button class="switch-tab active" id="tab-tp" onclick="togglePlatform('TeePublic', '{{ page.teepublic_url }}')">Apparel</button>
+                <button class="switch-tab" id="tab-rb" onclick="togglePlatform('Redbubble', '{{ page.redbubble_url }}')">Stickers & Notebooks</button>
             </div>
 
-            <a href="{{ page.teepublic_url }}" class="buy-button" id="main-buy-btn" target="_blank">See on TeePublic</a>
+            <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">See on TeePublic</a>
+            
+            <div class="product-id-spec">
+                <strong>Product ID:</strong> {{ page.collection_code }}-{{ page.design_code }}
+            </div>
         </div>
 
     </div>
 
     <script>
-        function switchPlatform(platform, url) {
-            const buyBtn = document.getElementById('main-buy-btn');
-            buyBtn.href = url;
-            buyBtn.textContent = 'See on ' + platform; // Автоматически меняет текст кнопки при переключении
+        function togglePlatform(platform, url) {
+            const actionBtn = document.getElementById('action-btn');
             
-            document.getElementById('btn-tp').classList.remove('active');
-            const rbBtn = document.getElementById('btn-rb');
-            if(rbBtn) rbBtn.classList.remove('active');
+            // Если ссылка пустая или равна слэшу, временно ведем на главную Redbubble, чтобы не было ошибки
+            if (!url || url === '/') {
+                actionBtn.href = 'https://www.redbubble.com';
+            } else {
+                actionBtn.href = url;
+            }
+            
+            actionBtn.textContent = 'See on ' + platform;
+            
+            // Переключение активного визуального состояния табов
+            document.getElementById('tab-tp').classList.remove('active');
+            document.getElementById('tab-rb').classList.remove('active');
             
             if(platform === 'TeePublic') {
-                document.getElementById('btn-tp').classList.add('active');
+                document.getElementById('tab-tp').classList.add('active');
             } else {
-                document.getElementById('btn-rb').classList.add('active');
+                document.getElementById('tab-rb').classList.add('active');
             }
         }
     </script>
