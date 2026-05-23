@@ -8,7 +8,7 @@ collections:
     permalink: /cottagecore/:name
   witchy:
     output: true
-    permalink: /witchy-cats/:name
+    permalink: /witchy/:name
 
 defaults:
   - scope:
