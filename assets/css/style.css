@@ -239,3 +239,16 @@ h3 {
     display: none;
   }
 }
+/* FORCE PRODUCT CARD OVERRIDE */
+.container {
+  display: flex !important;
+  gap: 50px !important;
+}
+
+.left-block {
+  flex: 1.1 !important;
+}
+
+.right-container {
+  flex: 1 !important;
+}
