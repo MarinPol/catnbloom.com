@@ -5,19 +5,17 @@ url: "https://www.catnbloom.com"
 collections:
   cottagecore:
     output: true
-    permalink: /cottagecore/:name
+    permalink: /cottagecore-cats/:path/
   witchy:
     output: true
-    permalink: /witchy/:name
+    permalink: /witchy-cats-plants/:path/
 
 defaults:
   - scope:
-      path: ""
       type: "cottagecore"
     values:
       layout: "product-bridge"
   - scope:
-      path: ""
       type: "witchy"
     values:
       layout: "product-bridge"
