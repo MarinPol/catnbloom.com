@@ -7,10 +7,13 @@
     <meta name="description" content="{{ page.description }}">
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
+
 <body>
+
     {% include header.html %}
 
     <div class="container">
+
         <div class="left-block">
             <div class="product-image-container">
                 <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}" alt="{{ page.alt_text }}">
@@ -18,6 +21,7 @@
         </div>
 
         <div class="right-container">
+
             <h1>{{ page.title }}</h1>
             
             <div class="story-text">{{ page.story }}</div>
@@ -29,23 +33,38 @@
 
             {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
                 <div class="platform-switcher">
-                    <button class="switch-tab active" id="tab-tp" onclick="togglePlatform('TeePublic', '{{ page.teepublic_url }}')">Apparel</button>
-                    <button class="switch-tab" id="tab-rb" onclick="togglePlatform('Redbubble', '{{ page.redbubble_url }}')">Stickers & Notebooks</button>
+                    <button class="switch-tab active" id="tab-tp"
+                        onclick="togglePlatform('TeePublic', '{{ page.teepublic_url }}')">
+                        Apparel
+                    </button>
+
+                    <button class="switch-tab" id="tab-rb"
+                        onclick="togglePlatform('Redbubble', '{{ page.redbubble_url }}')">
+                        Stickers & Notebooks
+                    </button>
                 </div>
-                <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">See on TeePublic</a>
+
+                <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">
+                    See on TeePublic
+                </a>
             {% else %}
-                <a href="{{ page.teepublic_url }}" class="buy-button" target="_blank">See on TeePublic</a>
+                <a href="{{ page.teepublic_url }}" class="buy-button" target="_blank">
+                    See on TeePublic
+                </a>
             {% endif %}
-            
+
             {% if page.tags %}
             <div class="tags-container">
-                {% for tag in page.tags %}<span class="product-tag">{{ tag }}</span>{% endfor %}
+                {% for tag in page.tags %}
+                    <span class="product-tag">{{ tag }}</span>
+                {% endfor %}
             </div>
             {% endif %}
 
             <div class="product-id-spec">
                 <strong>Product ID:</strong> {{ page.collection_code }}-{{ page.design_code }}
             </div>
+
         </div>
     </div>
 
@@ -54,11 +73,17 @@
             const actionBtn = document.getElementById('action-btn');
             actionBtn.href = url;
             actionBtn.textContent = 'See on ' + platform;
+
             document.getElementById('tab-tp').classList.remove('active');
             document.getElementById('tab-rb').classList.remove('active');
-            if(platform === 'TeePublic') { document.getElementById('tab-tp').classList.add('active'); } 
-            else { document.getElementById('tab-rb').classList.add('active'); }
+
+            if (platform === 'TeePublic') {
+                document.getElementById('tab-tp').classList.add('active');
+            } else {
+                document.getElementById('tab-rb').classList.add('active');
+            }
         }
     </script>
+
 </body>
 </html>
