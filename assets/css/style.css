@@ -1,5 +1,5 @@
 /* =========================
-   RESET sm
+   RESET
 ========================= */
 
 * {
@@ -16,7 +16,7 @@ body {
 }
 
 /* =========================
-   HEADER (FINAL 280px)
+   HEADER (270px FIXED)
 ========================= */
 
 .site-header {
@@ -24,7 +24,7 @@ body {
 }
 
 .header-content {
-  height: 280px;   /* ✔ стабильная рабочая высота */
+  height: 270px; /* ✔ твоя финальная высота */
   padding: 0 50px;
 
   background: url('/assets/images/header-bg.jpg') center/cover no-repeat;
@@ -33,7 +33,7 @@ body {
   align-items: center;
 }
 
-/* NAV */
+/* NAV LAYOUT */
 .main-nav {
   display: flex;
   justify-content: space-between;
@@ -41,14 +41,14 @@ body {
   width: 100%;
 }
 
-/* LOGO */
+/* LOGO (масштабируем только его) */
 .brand-logo img {
-  height: 90px;   /* ✔ читаемый масштаб */
+  height: 100px; /* ✔ пропорционально 270px */
   width: auto;
   display: block;
 }
 
-/* MENU */
+/* NAV TEXT (НИКОГДА НЕ МАСШТАБИРУЕМ) */
 .nav-right {
   display: flex;
   gap: 18px;
@@ -59,10 +59,10 @@ body {
 }
 
 .nav-right a {
+  font-size: 14px;   /* ✔ фиксировано */
+  font-weight: 600;
   text-decoration: none;
   color: #2d2d2d;
-  font-weight: 600;
-  font-size: 14px;
 }
 
 /* =========================
@@ -198,7 +198,7 @@ h3 {
   }
 
   .brand-logo img {
-    height: 65px;
+    height: 70px;
   }
 
   .container {
