@@ -203,3 +203,7 @@ h3 {
   border-radius: 20px;
   font-size: 0.85rem;
 }
+.brand-logo::before {
+  content: none !important;
+  display: none !important;
+}
