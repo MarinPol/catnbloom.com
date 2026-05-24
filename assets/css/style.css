@@ -1,5 +1,5 @@
 /* =========================
-   RESET 85px
+   RESET
 ========================= */
 
 * {
@@ -16,7 +16,7 @@ body {
 }
 
 /* =========================
-   HEADER (СТАБИЛЬНАЯ ВЕРСИЯ)
+   HEADER (400px FIXED)
 ========================= */
 
 .site-header {
@@ -24,12 +24,13 @@ body {
 }
 
 .header-content {
-  min-height: 180px;
-  padding: 20px 24px;
+  height: 400px;              /* 🔥 твоя фиксированная высота */
+  padding: 0 40px;           /* без вертикального сжатия */
 
-  background: 
-    linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.55)),
-    url('/assets/images/header-bg.jpg') center/cover no-repeat;
+  background: url('/assets/images/header-bg.jpg') center/cover no-repeat;
+
+  display: flex;
+  align-items: center;
 }
 
 /* NAV */
@@ -42,7 +43,7 @@ body {
 
 /* LOGO */
 .brand-logo img {
-  height: 85px;
+  height: 140px;             /* масштаб под 400px header */
   width: auto;
   display: block;
 }
@@ -186,25 +187,28 @@ h3 {
   color: #999;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 768px) {
 
-  .container {
-    flex-direction: column;
-    gap: 30px;
-  }
-
   .header-content {
-    min-height: 120px;
-    padding: 12px 16px;
+    height: 220px;      /* адаптив под 400px */
+    padding: 0 16px;
   }
 
   .brand-logo img {
-    height: 48px;
+    height: 80px;
   }
 
   .nav-right {
     display: none;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 30px;
   }
 
   .product-image-container {
