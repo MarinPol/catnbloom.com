@@ -1,5 +1,5 @@
 /* =========================
-   RESET kukareku
+   RESET
 ========================= */
 
 * {
@@ -16,16 +16,7 @@ body {
 }
 
 /* =========================
-   VARIABLES
-========================= */
-
-:root {
-  --accent-color: #a3b18a;
-  --text-color: #2d2d2d;
-}
-
-/* =========================
-   HEADER
+   HEADER (ВАЖНО: ЭТО ТВОЯ ШАПКА)
 ========================= */
 
 .site-header {
@@ -34,9 +25,10 @@ body {
 
 .header-content {
   width: 100%;
-  min-height: 120px;
-  padding: 14px 24px;
+  min-height: 140px; /* ← увеличено, чтобы не было "108px эффекта" */
+  padding: 18px 24px;
   background: url('/assets/images/header-bg.jpg') center/cover no-repeat;
+
   display: flex;
   align-items: center;
 }
@@ -49,7 +41,7 @@ body {
 }
 
 .brand-logo img {
-  height: 52px;
+  height: 60px;
   width: auto;
   display: block;
 }
@@ -60,6 +52,14 @@ body {
   list-style: none;
   margin: 0;
   padding: 0;
+  align-items: center;
+}
+
+.nav-right a {
+  text-decoration: none;
+  color: #2d2d2d;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 /* =========================
@@ -91,7 +91,7 @@ body {
 }
 
 /* =========================
-   IMAGE
+   IMAGE (ФИКС ВЫСОТЫ 500px)
 ========================= */
 
 .product-image-container {
@@ -114,7 +114,7 @@ body {
 ========================= */
 
 h1 {
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   margin: 0;
   line-height: 1.2;
   font-weight: 700;
@@ -123,7 +123,7 @@ h1 {
 h3 {
   font-size: 1.1rem;
   margin: 0;
-  color: var(--accent-color);
+  color: #a3b18a;
 }
 
 .story-text {
@@ -149,7 +149,7 @@ h3 {
 .buy-button {
   display: block;
   text-align: center;
-  background: var(--accent-color);
+  background: #a3b18a;
   color: #fff;
   padding: 16px;
   border-radius: 8px;
@@ -158,7 +158,7 @@ h3 {
 }
 
 /* =========================
-   PLATFORM SWITCH
+   SWITCHER
 ========================= */
 
 .platform-switcher {
@@ -214,12 +214,12 @@ h3 {
   }
 
   .header-content {
-    min-height: 90px;
-    padding: 10px 16px;
+    min-height: 110px;
+    padding: 12px 16px;
   }
 
   .brand-logo img {
-    height: 44px;
+    height: 48px;
   }
 
   .nav-right {
