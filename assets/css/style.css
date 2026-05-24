@@ -1,5 +1,5 @@
 /* =========================
-   RESET
+   RESET smaller
 ========================= */
 
 * {
@@ -16,24 +16,37 @@ body {
 }
 
 /* =========================
-   HEADER (400px FIXED)
+   HEADER WRAPPER (фикс 400px)
 ========================= */
 
-.site-header {
-  width: 100%;
+.header-viewport {
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
+/* =========================
+   HEADER CONTENT (масштаб сцены)
+========================= */
+
 .header-content {
-  height: 400px;              /* 🔥 твоя фиксированная высота */
-  padding: 0 40px;           /* без вертикального сжатия */
+  width: 100%;
+  padding: 0 40px;
 
   background: url('/assets/images/header-bg.jpg') center/cover no-repeat;
 
   display: flex;
   align-items: center;
+
+  transform: scale(0.7);            /* 🔥 уменьшение всей шапки */
+  transform-origin: center center;
 }
 
-/* NAV */
+/* =========================
+   NAV
+========================= */
+
 .main-nav {
   display: flex;
   justify-content: space-between;
@@ -41,14 +54,20 @@ body {
   width: 100%;
 }
 
-/* LOGO */
+/* =========================
+   LOGO
+========================= */
+
 .brand-logo img {
-  height: 140px;             /* масштаб под 400px header */
+  height: 140px;
   width: auto;
   display: block;
 }
 
-/* MENU */
+/* =========================
+   MENU
+========================= */
+
 .nav-right {
   display: flex;
   gap: 18px;
@@ -66,7 +85,7 @@ body {
 }
 
 /* =========================
-   PRODUCT LAYOUT
+   PRODUCT LAYOUT (без изменений)
 ========================= */
 
 .container {
@@ -106,14 +125,12 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 /* TYPOGRAPHY */
 h1 {
   font-size: 2.4rem;
   margin: 0;
-  line-height: 1.2;
   font-weight: 700;
 }
 
@@ -144,8 +161,8 @@ h3 {
   color: #fff;
   padding: 16px;
   border-radius: 8px;
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
 }
 
 /* SWITCH */
@@ -187,23 +204,20 @@ h3 {
   color: #999;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
+/* MOBILE */
 @media (max-width: 768px) {
 
+  .header-viewport {
+    height: 220px;
+  }
+
   .header-content {
-    height: 220px;      /* адаптив под 400px */
+    transform: scale(0.75);
     padding: 0 16px;
   }
 
   .brand-logo img {
     height: 80px;
-  }
-
-  .nav-right {
-    display: none;
   }
 
   .container {
