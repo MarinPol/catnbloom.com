@@ -1,5 +1,5 @@
 /* =========================
-   RESET hahaha
+   RESET kuku
 ========================= */
 
 * {
@@ -16,15 +16,12 @@ body {
 }
 
 /* =========================
-   VARIABLES (GLOBAL THEME)
+   VARIABLES
 ========================= */
 
 :root {
-  --bg-color: #ffffff;
-  --text-color: #2d2d2d;
-  --font-family: Arial, sans-serif;
   --accent-color: #a3b18a;
-  --accent-light: #f4f6f0;
+  --text-color: #2d2d2d;
 }
 
 /* =========================
@@ -33,15 +30,13 @@ body {
 
 .site-header {
   width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 .header-content {
   width: 100%;
   min-height: 120px;
   padding: 14px 24px;
-  background: url('/assets/images/header-bg.jpg') no-repeat center center / cover;
+  background: url('/assets/images/header-bg.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
 }
@@ -49,14 +44,12 @@ body {
 .main-nav {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
+  align-items: center;
 }
 
 .brand-logo img {
   height: 52px;
-  width: auto;
-  display: block;
 }
 
 .nav-right {
@@ -65,56 +58,53 @@ body {
   list-style: none;
   margin: 0;
   padding: 0;
-  align-items: center;
-}
-
-.nav-right a {
-  text-decoration: none;
-  color: #2d2d2d;
-  font-weight: 600;
-  font-size: 14px;
-  white-space: nowrap;
 }
 
 /* =========================
-   CARD LAYOUT
+   PRODUCT LAYOUT (ВАЖНО)
 ========================= */
 
 .container {
   max-width: 1050px;
   margin: 40px auto;
   padding: 20px;
+
   display: flex;
-  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 50px;
 }
 
+/* LEFT */
 .left-block {
   flex: 1.1;
   min-width: 320px;
 }
 
+/* RIGHT */
 .right-container {
   flex: 1;
   min-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 18px;
 }
 
 /* =========================
-   IMAGE
+   IMAGE (FIXED HEIGHT HERO)
 ========================= */
 
 .product-image-container {
   width: 100%;
-  border-radius: 8px;
+  height: 500px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .product-image-container img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
@@ -125,13 +115,12 @@ body {
 h1 {
   font-size: 2.2rem;
   margin: 0;
-  font-weight: 700;
 }
 
 h3 {
   font-size: 1.1rem;
-  margin: 0;
   color: var(--accent-color);
+  margin: 0;
 }
 
 .story-text {
@@ -159,19 +148,14 @@ h3 {
   text-align: center;
   background: var(--accent-color);
   color: #fff;
-  text-decoration: none;
   padding: 16px;
   border-radius: 8px;
+  text-decoration: none;
   font-weight: bold;
-  transition: 0.2s ease;
-}
-
-.buy-button:hover {
-  opacity: 0.9;
 }
 
 /* =========================
-   PLATFORM SWITCH
+   SWITCH
 ========================= */
 
 .platform-switcher {
@@ -190,7 +174,7 @@ h3 {
 
 .switch-tab.active {
   background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 /* =========================
@@ -220,7 +204,6 @@ h3 {
 ========================= */
 
 @media (max-width: 768px) {
-
   .container {
     flex-direction: column;
     gap: 30px;
@@ -228,48 +211,13 @@ h3 {
 
   .header-content {
     min-height: 90px;
-    padding: 10px 16px;
-  }
-
-  .brand-logo img {
-    height: 44px;
   }
 
   .nav-right {
     display: none;
   }
-}
-/* FORCE PRODUCT CARD OVERRIDE */
-.container {
-  display: flex !important;
-  gap: 50px !important;
-}
 
-.left-block {
-  flex: 1.1 !important;
-}
-
-.right-container {
-  flex: 1 !important;
-}
-
-.container {
-  align-items: flex-start;
-}
-
-.left-block {
-  display: flex;
-  align-items: flex-start;
-}
-
-.product-image-container {
-  height: 500px;
-  overflow: hidden;
-}
-
-.product-image-container img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  display: block;
+  .product-image-container {
+    height: 420px;
+  }
 }
