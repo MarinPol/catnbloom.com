@@ -1,5 +1,5 @@
 /* =========================
-   RESET bez kashi
+   RESET bez mob
 ========================= */
 
 * {
@@ -206,4 +206,119 @@ h3 {
 .brand-logo::before {
   content: none !important;
   display: none !important;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  /* HEADER */
+  .header-content {
+
+    height: 160px;
+
+    padding: 0 20px;
+
+    background:
+      url('/assets/images/header-mobile.jpg')
+      center/cover no-repeat;
+
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  /* ICON */
+  .brand-area {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .site-icon {
+    height: 54px;
+  }
+
+  /* NAV */
+  .nav-bar {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0 12px;
+  }
+
+  .nav-right {
+    gap: 18px;
+    padding: 12px 0;
+  }
+
+  .nav-right a {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* PRODUCT LAYOUT */
+  .container {
+
+    flex-direction: column;
+
+    gap: 24px;
+
+    padding: 16px;
+  }
+
+  .left-block,
+  .right-container {
+    width: 100%;
+  }
+
+  /* IMAGE */
+  .product-image-container {
+    height: auto;
+  }
+
+  .product-image-container img {
+
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+  }
+
+  /* TYPOGRAPHY */
+  h1 {
+    font-size: 1.7rem;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  .story-text {
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  /* BUTTONS */
+  .platform-switcher {
+    flex-direction: column;
+  }
+
+  .switch-tab {
+    width: 100%;
+  }
+
+  .buy-button {
+    width: 100%;
+  }
+
+  /* TAGS */
+  .tags-container {
+    gap: 6px;
+  }
+
+  .product-tag {
+    font-size: 11px;
+  }
+
 }
