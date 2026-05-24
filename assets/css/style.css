@@ -1,5 +1,5 @@
 /* =========================
-   RESET kuku
+   RESET kukareku
 ========================= */
 
 * {
@@ -44,12 +44,14 @@ body {
 .main-nav {
   display: flex;
   justify-content: space-between;
-  width: 100%;
   align-items: center;
+  width: 100%;
 }
 
 .brand-logo img {
   height: 52px;
+  width: auto;
+  display: block;
 }
 
 .nav-right {
@@ -61,7 +63,7 @@ body {
 }
 
 /* =========================
-   PRODUCT LAYOUT (ВАЖНО)
+   PRODUCT LAYOUT
 ========================= */
 
 .container {
@@ -70,27 +72,26 @@ body {
   padding: 20px;
 
   display: flex;
-  align-items: flex-start;
   gap: 50px;
+  align-items: flex-start;
 }
 
-/* LEFT */
 .left-block {
   flex: 1.1;
   min-width: 320px;
 }
 
-/* RIGHT */
 .right-container {
   flex: 1;
   min-width: 320px;
+
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
 /* =========================
-   IMAGE (FIXED HEIGHT HERO)
+   IMAGE
 ========================= */
 
 .product-image-container {
@@ -115,12 +116,14 @@ body {
 h1 {
   font-size: 2.2rem;
   margin: 0;
+  line-height: 1.2;
+  font-weight: 700;
 }
 
 h3 {
   font-size: 1.1rem;
-  color: var(--accent-color);
   margin: 0;
+  color: var(--accent-color);
 }
 
 .story-text {
@@ -155,7 +158,7 @@ h3 {
 }
 
 /* =========================
-   SWITCH
+   PLATFORM SWITCH
 ========================= */
 
 .platform-switcher {
@@ -204,6 +207,7 @@ h3 {
 ========================= */
 
 @media (max-width: 768px) {
+
   .container {
     flex-direction: column;
     gap: 30px;
@@ -211,6 +215,11 @@ h3 {
 
   .header-content {
     min-height: 90px;
+    padding: 10px 16px;
+  }
+
+  .brand-logo img {
+    height: 44px;
   }
 
   .nav-right {
