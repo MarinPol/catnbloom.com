@@ -20,24 +20,54 @@
   <div class="nav-bar" id="navBar">
 
     <ul class="nav-right">
+
       <li><a href="/">Home</a></li>
 
       <li class="dropdown">
         <a href="#">Shop Collections ▾</a>
+
         <div class="dropdown-menu">
-          <a href="/cottagecore-cats/">Cottagecore Cats</a>
-          <a href="/witchy-cats-plants/">Witchy Cats Plants</a>
+          <a href="/cottagecore-cats/">
+            Cottagecore Cats
+          </a>
+
+          <a href="/witchy-cats-plants/">
+            Witchy Cats Plants
+          </a>
         </div>
       </li>
 
       <li><a href="/seasons/">Seasonal Sets</a></li>
+
       <li><a href="/about/">Our Story</a></li>
+
       <li><a href="/contact/">Contact</a></li>
+
     </ul>
 
   </div>
 
 </header>
+
+<!-- BREADCRUMBS -->
+<nav class="breadcrumbs">
+
+  <a href="/">Home</a>
+
+  <span>/</span>
+
+  <a href="/{{ page.collection_slug }}/">
+    {{ page.collection_name }}
+  </a>
+
+  <span>/</span>
+
+  <span class="current-page">
+    {{ page.title }}
+  </span>
+
+</nav>
+
 <script>
 function toggleMenu() {
   document.getElementById("navBar").classList.toggle("open");
