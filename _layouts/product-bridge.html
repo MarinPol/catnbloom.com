@@ -7,56 +7,82 @@
     <title>{{ page.title }} | CatnBloom Studio</title>
     <meta name="description" content="{{ page.description }}">
 
-<link rel="stylesheet" href="/assets/css/style.css?v=999999">
-    
-   
+    <link rel="stylesheet" href="/assets/css/style.css?v=999999">
 </head>
 
 <body>
 
+    <!-- HEADER (global include) -->
     {% include header.html %}
 
+    <!-- BREADCRUMBS (navigation layer) -->
+    {% include breadcrumbs.html %}
+
+    <!-- PRODUCT CONTENT -->
     <div class="container">
 
+        <!-- LEFT: IMAGE -->
         <div class="left-block">
             <div class="product-image-container">
-                <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}" alt="{{ page.alt_text }}">
+                <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
+                     alt="{{ page.alt_text }}">
             </div>
         </div>
 
+        <!-- RIGHT: INFO -->
         <div class="right-container">
 
             <h1>{{ page.title }}</h1>
 
-            <div class="story-text">{{ page.story }}</div>
+            <div class="story-text">
+                {{ page.story }}
+            </div>
 
-            {% if page.accent_h3_1 %}<h3>{{ page.accent_h3_1 }}</h3>{% endif %}
-            {% if page.accent_h3_2 %}<h3>{{ page.accent_h3_2 }}</h3>{% endif %}
+            {% if page.accent_h3_1 %}
+                <h3>{{ page.accent_h3_1 }}</h3>
+            {% endif %}
 
-            <div class="human-proof-box">{{ page.human_proof }}</div>
+            {% if page.accent_h3_2 %}
+                <h3>{{ page.accent_h3_2 }}</h3>
+            {% endif %}
 
-            {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
+            <div class="human-proof-box">
+                {{ page.human_proof }}
+            </div>
+
+            <!-- PLATFORM SWITCHER -->
+            {% if page.teepublic_url %}
+
                 <div class="platform-switcher">
-                    <button class="switch-tab active" id="tab-tp"
+
+                    <button class="switch-tab active"
+                        id="tab-tp"
                         onclick="togglePlatform('TeePublic', '{{ page.teepublic_url }}')">
                         Apparel
                     </button>
 
-                    <button class="switch-tab" id="tab-rb"
-                        onclick="togglePlatform('Redbubble', '{{ page.redbubble_url }}')">
-                        Stickers & Notebooks
-                    </button>
+                    {% if page.redbubble_url and page.redbubble_url != 'none' %}
+
+                        <button class="switch-tab"
+                            id="tab-rb"
+                            onclick="togglePlatform('Redbubble', '{{ page.redbubble_url }}')">
+                            Stickers & Notebooks
+                        </button>
+
+                    {% endif %}
+
                 </div>
 
-                <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">
+                <a href="{{ page.teepublic_url }}"
+                   class="buy-button"
+                   id="action-btn"
+                   target="_blank">
                     See on TeePublic
                 </a>
-            {% else %}
-                <a href="{{ page.teepublic_url }}" class="buy-button" target="_blank">
-                    See on TeePublic
-                </a>
+
             {% endif %}
 
+            <!-- TAGS -->
             {% if page.tags %}
             <div class="tags-container">
                 {% for tag in page.tags %}
@@ -65,26 +91,37 @@
             </div>
             {% endif %}
 
+            <!-- PRODUCT ID -->
             <div class="product-id-spec">
-                <strong>Product ID:</strong> {{ page.collection_code }}-{{ page.design_code }}
+                <strong>Product ID:</strong>
+                {{ page.collection_code }}-{{ page.design_code }}
             </div>
 
         </div>
+
     </div>
 
+    <!-- SCRIPT -->
     <script>
         function togglePlatform(platform, url) {
+
             const actionBtn = document.getElementById('action-btn');
+
             actionBtn.href = url;
             actionBtn.textContent = 'See on ' + platform;
 
-            document.getElementById('tab-tp').classList.remove('active');
-            document.getElementById('tab-rb').classList.remove('active');
+            const tp = document.getElementById('tab-tp');
+            const rb = document.getElementById('tab-rb');
 
-            if (platform === 'TeePublic') {
-                document.getElementById('tab-tp').classList.add('active');
-            } else {
-                document.getElementById('tab-rb').classList.add('active');
+            if (tp) tp.classList.remove('active');
+            if (rb) rb.classList.remove('active');
+
+            if (platform === 'TeePublic' && tp) {
+                tp.classList.add('active');
+            }
+
+            if (platform === 'Redbubble' && rb) {
+                rb.classList.add('active');
             }
         }
     </script>
