@@ -1,5 +1,5 @@
 /* =========================
-   RESET  buttons
+   RESET
 ========================= */
 
 * {
@@ -16,14 +16,13 @@ body {
 }
 
 /* =========================
-   HEADER (BASE DESKTOP)
+   HEADER
 ========================= */
 
 .site-header {
   width: 100%;
 }
 
-/* HERO HEADER */
 .header-content {
   height: 240px;
   padding: 12px 50px;
@@ -31,15 +30,15 @@ body {
   background: url('/assets/images/header-bg.jpg') center/cover no-repeat;
 
   display: flex;
-  align-items: flex-start; /* ❗ КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ */
+  align-items: flex-start; /* фикс вертикали */
   justify-content: space-between;
 }
 
-/* BRAND AREA */
+/* BRAND */
 .brand-area {
   display: flex;
   align-items: flex-start;
-  padding-top: 6px; /* визуальный баланс */
+  padding-top: 6px;
 }
 
 /* ICON */
@@ -48,14 +47,6 @@ body {
   width: auto !important;
   display: block;
   flex-shrink: 0;
-}
-
-/* =========================
-   HAMBURGER (DESKTOP OFF)
-========================= */
-
-.menu-toggle {
-  display: none;
 }
 
 /* =========================
@@ -87,10 +78,7 @@ body {
   font-size: 14px;
 }
 
-/* =========================
-   DROPDOWN
-========================= */
-
+/* DROPDOWN */
 .dropdown {
   position: relative;
 }
@@ -115,7 +103,7 @@ body {
 }
 
 /* =========================
-   PRODUCT LAYOUT
+   LAYOUT
 ========================= */
 
 .container {
@@ -180,6 +168,37 @@ h3 {
   font-weight: bold;
 }
 
+/* =========================
+   SWITCHER (ВАЖНО ВОССТАНОВЛЕН)
+========================= */
+
+.platform-switcher {
+  display: flex !important;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.switch-tab {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  background: #f7f7f7;
+  cursor: pointer;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d2d2d;
+
+  text-align: center;
+}
+
+.switch-tab.active {
+  background: #a3b18a;
+  color: #fff;
+  border-color: #a3b18a;
+}
+
 /* TAGS */
 .tags-container {
   display: flex;
@@ -200,39 +219,26 @@ h3 {
 
 @media (max-width: 768px) {
 
-  /* HEADER */
   .header-content {
     height: 120px;
     padding: 10px 16px;
 
     display: flex;
-    align-items: flex-start; /* ❗ ВАЖНО */
+    align-items: flex-start;
     justify-content: space-between;
   }
 
-  /* ICON */
   .site-icon {
     height: 38px !important;
   }
 
-  /* HAMBURGER */
-  .menu-toggle {
-    display: block;
-    font-size: 26px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #2d2d2d;
-  }
-
-  /* NAV MOBILE */
   .nav-bar {
     display: none;
-    flex-direction: column;
   }
 
   .nav-bar.open {
     display: flex;
+    flex-direction: column;
   }
 
   .nav-right {
@@ -241,11 +247,6 @@ h3 {
     padding: 12px;
   }
 
-  .nav-right a {
-    font-size: 14px;
-  }
-
-  /* PRODUCT STACK */
   .container {
     flex-direction: column;
     padding: 16px;
@@ -280,39 +281,4 @@ h3 {
   .buy-button {
     width: 100%;
   }
-}
-
-/* =========================
-   PLATFORM SWITCHER (FIX RESTORE)
-========================= */
-
-.platform-switcher {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.switch-tab {
-  flex: 1;
-  padding: 12px 14px;
-  border: 1px solid #ddd;
-  background: #f7f7f7;
-  cursor: pointer;
-  border-radius: 6px;
-
-  font-size: 14px;
-  font-weight: 600;
-  color: #2d2d2d;
-
-  transition: all 0.2s ease;
-}
-
-.switch-tab:hover {
-  background: #eee;
-}
-
-.switch-tab.active {
-  background: #a3b18a;
-  color: #fff;
-  border-color: #a3b18a;
 }
