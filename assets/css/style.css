@@ -1,5 +1,5 @@
 /* =========================
-   RESET ku
+   RESET
 ========================= */
 
 * {
@@ -32,19 +32,22 @@ body {
 
   display: flex;
   align-items: center;
-  justify-content: space-between; /* ❗ КЛЮЧЕВОЕ */
+  justify-content: space-between;
 }
 
-/* BRAND / ICON */
+/* BRAND AREA */
 .brand-area {
   display: flex;
   align-items: center;
 }
 
+/* ICON (СТАБИЛЬНЫЙ РАЗМЕР) */
 .site-icon {
-  height: 60px;
-  width: auto;
+  height: 42px !important;
+  width: auto !important;
+  max-height: 42px !important;
   display: block;
+  flex-shrink: 0;
 }
 
 /* HAMBURGER (DESKTOP OFF) */
@@ -53,7 +56,7 @@ body {
 }
 
 /* =========================
-   NAV BAR
+   NAV BAR (DESKTOP)
 ========================= */
 
 .nav-bar {
@@ -189,7 +192,7 @@ h3 {
 }
 
 /* =========================
-   MOBILE
+   MOBILE (CLEAN FINAL VERSION)
 ========================= */
 
 @media (max-width: 768px) {
@@ -201,12 +204,12 @@ h3 {
 
     display: flex;
     align-items: center;
-    justify-content: space-between; /* ❗ ВАЖНО */
+    justify-content: space-between;
   }
 
   /* ICON */
   .site-icon {
-    height: 42px;
+    height: 38px !important;
   }
 
   /* HAMBURGER */
@@ -219,7 +222,7 @@ h3 {
     color: #2d2d2d;
   }
 
-  /* NAV MOBILE HIDDEN */
+  /* NAV MOBILE (HIDDEN DEFAULT) */
   .nav-bar {
     display: none;
     flex-direction: column;
