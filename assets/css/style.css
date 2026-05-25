@@ -1,5 +1,5 @@
 /* =========================
-   RESET last all
+   RESET хлеб
 ========================= */
 
 * {
@@ -49,10 +49,10 @@ body {
 }
 
 /* =========================
-   HAMBURGER (CRITICAL FIX)
+   HAMBURGER
 ========================= */
 
-/* DESKTOP — ВСЕГДА СКРЫТ */
+/* DESKTOP — hidden */
 .menu-toggle {
   display: none !important;
 }
@@ -86,28 +86,71 @@ body {
   font-size: 14px;
 }
 
-/* DROPDOWN */
+/* =========================
+   DROPDOWN
+========================= */
+
 .dropdown {
   position: relative;
 }
 
 .dropdown-menu {
   display: none;
+
   position: absolute;
   top: 100%;
   left: 0;
 
   background: #fff;
   border: 1px solid #eee;
+
   padding: 10px;
-  min-width: 200px;
+  min-width: 220px;
 
   flex-direction: column;
   gap: 8px;
+
+  z-index: 1000;
 }
 
 .dropdown:hover .dropdown-menu {
   display: flex;
+}
+
+.dropdown-menu a {
+  font-size: 13px;
+  color: #444;
+}
+
+/* =========================
+   BREADCRUMBS
+========================= */
+
+.breadcrumbs {
+  max-width: 1050px;
+  margin: 18px auto 0;
+  padding: 0 20px;
+
+  font-size: 13px;
+  color: #888;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.breadcrumbs a {
+  color: #777;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  color: #2d2d2d;
+}
+
+.current-page {
+  color: #2d2d2d;
+  font-weight: 600;
 }
 
 /* =========================
@@ -135,7 +178,10 @@ body {
   gap: 18px;
 }
 
-/* IMAGE */
+/* =========================
+   IMAGE
+========================= */
+
 .product-image-container {
   height: 500px;
   overflow: hidden;
@@ -148,7 +194,10 @@ body {
   object-fit: cover;
 }
 
-/* TYPOGRAPHY */
+/* =========================
+   TYPOGRAPHY
+========================= */
+
 h1 {
   font-size: 2.2rem;
   margin: 0;
@@ -165,7 +214,10 @@ h3 {
   color: #444;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTON
+========================= */
+
 .buy-button {
   background: #a3b18a;
   color: #fff;
@@ -177,7 +229,7 @@ h3 {
 }
 
 /* =========================
-   SWITCHER (FIXED + STABLE)
+   SWITCHER
 ========================= */
 
 .platform-switcher {
@@ -188,14 +240,19 @@ h3 {
 
 .switch-tab {
   flex: 1;
+
   padding: 12px 14px;
+
   border: 1px solid #ddd;
   background: #f7f7f7;
+
   cursor: pointer;
+
   border-radius: 6px;
 
   font-size: 14px;
   font-weight: 600;
+
   color: #2d2d2d;
   text-align: center;
 }
@@ -206,7 +263,10 @@ h3 {
   border-color: #a3b18a;
 }
 
-/* TAGS */
+/* =========================
+   TAGS
+========================= */
+
 .tags-container {
   display: flex;
   flex-wrap: wrap;
@@ -226,29 +286,42 @@ h3 {
 
 @media (max-width: 768px) {
 
+  /* HEADER */
   .header-content {
+
     height: 120px;
     padding: 10px 16px;
+
+    background:
+      url('/assets/images/header-mobile.jpg')
+      center/cover no-repeat;
 
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
   }
 
+  /* ICON */
   .site-icon {
     height: 38px !important;
   }
 
-  /* HAMBURGER — ТОЛЬКО MOBILE */
+  /* HAMBURGER */
   .menu-toggle {
+
     display: block !important;
+
     font-size: 26px;
+
     background: none;
     border: none;
+
     cursor: pointer;
+
     color: #2d2d2d;
   }
 
+  /* NAV */
   .nav-bar {
     display: none;
   }
@@ -264,11 +337,25 @@ h3 {
     padding: 12px;
   }
 
+  /* BREADCRUMBS */
+  .breadcrumbs {
+    font-size: 12px;
+    padding: 0 16px;
+    line-height: 1.5;
+  }
+
+  /* LAYOUT */
   .container {
     flex-direction: column;
     padding: 16px;
   }
 
+  .left-block,
+  .right-container {
+    width: 100%;
+  }
+
+  /* IMAGE */
   .product-image-container {
     height: auto;
   }
@@ -278,6 +365,7 @@ h3 {
     object-fit: contain;
   }
 
+  /* TYPOGRAPHY */
   h1 {
     font-size: 1.7rem;
   }
@@ -290,6 +378,7 @@ h3 {
     font-size: 0.98rem;
   }
 
+  /* SWITCHER */
   .platform-switcher {
     flex-direction: column;
   }
@@ -297,5 +386,10 @@ h3 {
   .switch-tab,
   .buy-button {
     width: 100%;
+  }
+
+  /* TAGS */
+  .product-tag {
+    font-size: 11px;
   }
 }
