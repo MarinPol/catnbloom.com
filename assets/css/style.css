@@ -1,5 +1,5 @@
 /* =========================
-   RESET
+   RESET last all
 ========================= */
 
 * {
@@ -30,7 +30,7 @@ body {
   background: url('/assets/images/header-bg.jpg') center/cover no-repeat;
 
   display: flex;
-  align-items: flex-start; /* фикс вертикали */
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -46,7 +46,15 @@ body {
   height: 42px !important;
   width: auto !important;
   display: block;
-  flex-shrink: 0;
+}
+
+/* =========================
+   HAMBURGER (CRITICAL FIX)
+========================= */
+
+/* DESKTOP — ВСЕГДА СКРЫТ */
+.menu-toggle {
+  display: none !important;
 }
 
 /* =========================
@@ -169,7 +177,7 @@ h3 {
 }
 
 /* =========================
-   SWITCHER (ВАЖНО ВОССТАНОВЛЕН)
+   SWITCHER (FIXED + STABLE)
 ========================= */
 
 .platform-switcher {
@@ -189,7 +197,6 @@ h3 {
   font-size: 14px;
   font-weight: 600;
   color: #2d2d2d;
-
   text-align: center;
 }
 
@@ -230,6 +237,16 @@ h3 {
 
   .site-icon {
     height: 38px !important;
+  }
+
+  /* HAMBURGER — ТОЛЬКО MOBILE */
+  .menu-toggle {
+    display: block !important;
+    font-size: 26px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #2d2d2d;
   }
 
   .nav-bar {
