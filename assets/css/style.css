@@ -20,10 +20,10 @@ body {
 ========================= */
 
 .site-header {
-  position: relative;
+  width: 100%;
 }
 
-/* MAIN HERO HEADER */
+/* HERO HEADER */
 .header-content {
   height: 240px;
   padding: 0 50px;
@@ -32,18 +32,12 @@ body {
 
   display: flex;
   align-items: center;
+  justify-content: space-between; /* ❗ КЛЮЧЕВОЕ */
 }
 
-/* ICON = HOME BUTTON */
+/* BRAND / ICON */
 .brand-area {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 10;
-}
-
-.brand-home {
-  display: inline-flex;
+  display: flex;
   align-items: center;
 }
 
@@ -51,7 +45,11 @@ body {
   height: 60px;
   width: auto;
   display: block;
-  opacity: 0.95;
+}
+
+/* HAMBURGER (DESKTOP OFF) */
+.menu-toggle {
+  display: none;
 }
 
 /* =========================
@@ -191,37 +189,40 @@ h3 {
 }
 
 /* =========================
-   MOBILE (SINGLE CLEAN SYSTEM)
+   MOBILE
 ========================= */
 
 @media (max-width: 768px) {
 
-  /* HEADER becomes clean bar */
+  /* HEADER */
   .header-content {
     height: 120px;
     padding: 0 16px;
 
     display: flex;
-    justify-content: center;
     align-items: center;
-
-    background: url('/assets/images/header-mobile.jpg') center/cover no-repeat;
+    justify-content: space-between; /* ❗ ВАЖНО */
   }
 
-  /* ICON becomes centered UI element */
-  .brand-area {
-    position: static;
-  }
-
+  /* ICON */
   .site-icon {
     height: 42px;
   }
 
-  /* NAV becomes hamburger-controlled */
+  /* HAMBURGER */
+  .menu-toggle {
+    display: block;
+    font-size: 26px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #2d2d2d;
+  }
+
+  /* NAV MOBILE HIDDEN */
   .nav-bar {
     display: none;
     flex-direction: column;
-    background: #f7f7f7;
   }
 
   .nav-bar.open {
