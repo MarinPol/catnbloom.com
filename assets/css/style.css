@@ -1,5 +1,5 @@
 /* =========================
-   RESET  icon
+   RESET  buttons
 ========================= */
 
 * {
@@ -280,4 +280,39 @@ h3 {
   .buy-button {
     width: 100%;
   }
+}
+
+/* =========================
+   PLATFORM SWITCHER (FIX RESTORE)
+========================= */
+
+.platform-switcher {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.switch-tab {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  background: #f7f7f7;
+  cursor: pointer;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d2d2d;
+
+  transition: all 0.2s ease;
+}
+
+.switch-tab:hover {
+  background: #eee;
+}
+
+.switch-tab.active {
+  background: #a3b18a;
+  color: #fff;
+  border-color: #a3b18a;
 }
