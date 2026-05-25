@@ -1,5 +1,5 @@
 /* =========================
-   RESET
+   RESET  icon
 ========================= */
 
 * {
@@ -16,7 +16,7 @@ body {
 }
 
 /* =========================
-   HEADER (DESKTOP BASE)
+   HEADER (BASE DESKTOP)
 ========================= */
 
 .site-header {
@@ -26,37 +26,40 @@ body {
 /* HERO HEADER */
 .header-content {
   height: 240px;
-  padding: 0 50px;
+  padding: 12px 50px;
 
   background: url('/assets/images/header-bg.jpg') center/cover no-repeat;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* ❗ КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ */
   justify-content: space-between;
 }
 
 /* BRAND AREA */
 .brand-area {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 6px; /* визуальный баланс */
 }
 
-/* ICON (СТАБИЛЬНЫЙ РАЗМЕР) */
+/* ICON */
 .site-icon {
   height: 42px !important;
   width: auto !important;
-  max-height: 42px !important;
   display: block;
   flex-shrink: 0;
 }
 
-/* HAMBURGER (DESKTOP OFF) */
+/* =========================
+   HAMBURGER (DESKTOP OFF)
+========================= */
+
 .menu-toggle {
   display: none;
 }
 
 /* =========================
-   NAV BAR (DESKTOP)
+   NAV BAR
 ========================= */
 
 .nav-bar {
@@ -192,7 +195,7 @@ h3 {
 }
 
 /* =========================
-   MOBILE (CLEAN FINAL VERSION)
+   MOBILE
 ========================= */
 
 @media (max-width: 768px) {
@@ -200,10 +203,10 @@ h3 {
   /* HEADER */
   .header-content {
     height: 120px;
-    padding: 0 16px;
+    padding: 10px 16px;
 
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* ❗ ВАЖНО */
     justify-content: space-between;
   }
 
@@ -222,7 +225,7 @@ h3 {
     color: #2d2d2d;
   }
 
-  /* NAV MOBILE (HIDDEN DEFAULT) */
+  /* NAV MOBILE */
   .nav-bar {
     display: none;
     flex-direction: column;
