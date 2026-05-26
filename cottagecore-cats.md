@@ -1,8 +1,6 @@
 ---
 layout: collection
-
-title: "Cottagecore Cats"
-collection_name: "Cottagecore Cats"
+permalink: /cottagecore-cats/
 
 collection: cottagecore
 
@@ -18,17 +16,14 @@ about:
 
 direction:
   - Soft lighting
-  - Nature-based compositions
-  - Warm nostalgic mood
+  - Nature compositions
 
 intent:
   - Calm visual experience
-  - Gift-friendly art prints
-  - Cozy emotional aesthetic
 
 tagline: "Wearable art for soft living"
 
-seo_title: "Cottagecore Cats Collection | CatnBloom"
-seo_description: "Soft cottagecore cat illustrations with floral aesthetics."
+seo_title: "Cottagecore Cats Collection"
+seo_description: "Soft cottagecore cat illustrations"
 og_image: "/assets/images/collections/cottagecore-og.jpg"
 ---
