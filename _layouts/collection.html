@@ -20,7 +20,7 @@
   <nav class="breadcrumbs">
     <a href="/">Home</a>
     <span>/</span>
-    <span>{{ page.collection_name }}</span>
+    <span>{{ page.title }}</span>
   </nav>
 
   <!-- HERO -->
@@ -72,23 +72,14 @@
   </section>
   {% endif %}
 
-  <!-- PRODUCT GRID -->
+  <!-- PRODUCT GRID (СТАБИЛЬНЫЙ ВАРИАНТ) -->
   <section class="product-grid">
 
-    {% assign items = site[page.collection] %}
-
-    {% for item in items %}
-
+    {% for item in site.cottagecore %}
       <a class="product-card" href="{{ item.url }}">
-
         <img src="{{ item.image }}" alt="{{ item.title }}">
-
-        <div class="product-title">
-          {{ item.title }}
-        </div>
-
+        <div class="product-title">{{ item.title }}</div>
       </a>
-
     {% endfor %}
 
   </section>
