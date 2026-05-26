@@ -1,1 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
 
+  <title>{{ page.seo_title | default: page.collection_name }}</title>
+  <meta name="description" content="{{ page.seo_description }}">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ page.seo_title | default: page.collection_name }}">
+  <meta property="og:description" content="{{ page.seo_description }}">
+  <meta property="og:image" content="{{ page.og_image }}">
+
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body>
+
+  <!-- BREADCRUMBS -->
+  <nav class="breadcrumbs">
+    <a href="/">Home</a>
+    <span>/</span>
+    <span>Collections</span>
+    <span>/</span>
+    <span class="current-page">{{ page.collection_name }}</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="collection-hero">
+    <h1>{{ page.hero_title }}</h1>
+    <p class="subtitle">{{ page.hero_subtitle }}</p>
+  </header>
+
+  <!-- INTRO -->
+  {% if page.intro %}
+    <section class="collection-intro">
+      <p>{{ page.intro }}</p>
+    </section>
+  {% endif %}
+
+  <!-- ABOUT -->
+  {% if page.about %}
+    <section class="collection-section">
+      <h2>About</h2>
+      <ul>
+        {% for item in page.about %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <!-- ART DIRECTION -->
+  {% if page.direction %}
+    <section class="collection-section">
+      <h2>Art Direction</h2>
+      <ul>
+        {% for item in page.direction %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <!-- INTENT -->
+  {% if page.intent %}
+    <section class="collection-section">
+      <h2>Intent</h2>
+      <ul>
+        {% for item in page.intent %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <!-- PRODUCT GRID -->
+  <section class="product-grid">
+
+    {% assign items = site[page.collection_slug] %}
+
+    {% for item in items %}
+      <a class="product-card" href="{{ item.url }}">
+
+        <img src="{{ item.image }}" alt="{{ item.title }}">
+
+        <div class="product-title">
+          {{ item.title }}
+        </div>
+
+      </a>
+    {% endfor %}
+
+  </section>
+
+  <!-- TAGLINE -->
+  {% if page.tagline %}
+    <footer class="collection-footer">
+      <p>{{ page.tagline }}</p>
+    </footer>
+  {% endif %}
+
+</body>
+</html>
