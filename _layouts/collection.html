@@ -3,24 +3,27 @@
 <head>
   <meta charset="utf-8">
 
-  <title>{{ page.seo_title | default: page.title }}</title>
+  <title>{{ page.seo_title | default: page.hero_title }}</title>
   <meta name="description" content="{{ page.seo_description }}">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="{{ page.seo_title | default: page.title }}">
+  <meta property="og:title" content="{{ page.seo_title | default: page.hero_title }}">
   <meta property="og:description" content="{{ page.seo_description }}">
   <meta property="og:image" content="{{ page.og_image }}">
 
-<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
+
+  <!-- HEADER -->
+  {% include header.html %}
 
   <!-- BREADCRUMBS -->
   <nav class="breadcrumbs">
     <a href="/">Home</a>
     <span>/</span>
-    <span>{{ page.title }}</span>
+    <span class="current-page">{{ page.hero_title }}</span>
   </nav>
 
   <!-- HERO -->
@@ -72,13 +75,22 @@
   </section>
   {% endif %}
 
-  <!-- PRODUCT GRID (СТАБИЛЬНЫЙ ВАРИАНТ) -->
+  <!-- PRODUCT GRID -->
   <section class="product-grid">
 
-    {% for item in site.cottagecore %}
+    {% assign items = site[page.collection] %}
+
+    {% for item in items %}
       <a class="product-card" href="{{ item.url }}">
-        <img src="{{ item.image }}" alt="{{ item.title }}">
-        <div class="product-title">{{ item.title }}</div>
+
+        {% if item.image %}
+          <img src="{{ item.image }}" alt="{{ item.title }}">
+        {% endif %}
+
+        <div class="product-title">
+          {{ item.headline | default: item.title }}
+        </div>
+
       </a>
     {% endfor %}
 
