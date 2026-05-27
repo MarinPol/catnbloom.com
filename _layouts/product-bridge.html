@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- SEO TITLE -->
     <title>{{ page.title }} | CatnBloom Studio</title>
+
+    <!-- SEO DESCRIPTION -->
     <meta name="description" content="{{ page.story | default: page.headline }}">
 
-    <!-- OPEN GRAPH (минимально безопасный вариант) -->
+    <!-- OPEN GRAPH -->
     <meta property="og:title" content="{{ page.title }}">
     <meta property="og:description" content="{{ page.story | default: page.headline }}">
-    <meta property="og:image" content="{{ page.image_url }}">
+    <meta property="og:image" content="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}">
 
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
@@ -23,7 +26,7 @@
     <!-- BREADCRUMBS -->
     {% include breadcrumbs.html %}
 
-    <!-- PRODUCT CONTENT -->
+    <!-- PRODUCT WRAPPER -->
     <div class="container">
 
         <!-- LEFT: IMAGE -->
@@ -34,18 +37,20 @@
             </div>
         </div>
 
-        <!-- RIGHT: INFO -->
+        <!-- RIGHT: CONTENT -->
         <div class="right-container">
 
             <!-- TITLE -->
             <h1>{{ page.title }}</h1>
 
             <!-- STORY -->
+            {% if page.story %}
             <div class="story-text">
                 {{ page.story }}
             </div>
+            {% endif %}
 
-            <!-- ACCENT HEADINGS -->
+            <!-- ACCENTS -->
             {% if page.accent_h3_1 %}
                 <h3>{{ page.accent_h3_1 }}</h3>
             {% endif %}
@@ -102,7 +107,7 @@
             </div>
             {% endif %}
 
-            <!-- PRODUCT ID (NEW SKU SYSTEM) -->
+            <!-- PRODUCT ID (SKU SYSTEM FINAL) -->
             {% if page.sku %}
             <div class="product-id-spec">
                 <strong>Product ID:</strong>
@@ -119,7 +124,6 @@
         function togglePlatform(platform, url) {
 
             const actionBtn = document.getElementById('action-btn');
-
             if (!actionBtn) return;
 
             actionBtn.href = url;
@@ -131,13 +135,8 @@
             if (tp) tp.classList.remove('active');
             if (rb) rb.classList.remove('active');
 
-            if (platform === 'TeePublic' && tp) {
-                tp.classList.add('active');
-            }
-
-            if (platform === 'Redbubble' && rb) {
-                rb.classList.add('active');
-            }
+            if (platform === 'TeePublic' && tp) tp.classList.add('active');
+            if (platform === 'Redbubble' && rb) rb.classList.add('active');
         }
     </script>
 
