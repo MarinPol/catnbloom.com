@@ -2,6 +2,7 @@ title: "CatnBloom Studio"
 description: "Whimsical art & prints for cat-plant lovers"
 url: "https://www.catnbloom.com"
 
+# COLLECTIONS (STRUCTURED + SCALABLE)
 collections:
   cottagecore:
     output: true
@@ -10,12 +11,27 @@ collections:
     output: true
     permalink: /witchy-cats-plants/:path/
 
+# DEFAULT LAYOUTS (PROPER SCOPING)
 defaults:
   - scope:
+      path: ""
       type: "cottagecore"
     values:
       layout: "product-bridge"
+      collection_name: "Cottagecore Cats"
+      collection_slug: "cottagecore-cats"
+
   - scope:
+      path: ""
       type: "witchy"
     values:
       layout: "product-bridge"
+      collection_name: "Witchy Cats Plants"
+      collection_slug: "witchy-cats-plants"
+
+# PERFORMANCE / SCALE SAFETY (SAFE ADDITION)
+markdown: kramdown
+
+# IMPORTANT FOR LARGE COLLECTIONS
+future: false
+show_drafts: false
