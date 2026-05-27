@@ -40,11 +40,16 @@
 {% assign page_num = page.page_num | default: 1 %}
 
 {% assign offset = page_num | minus: 1 | times: page_size %}
-{% assign paginated = items | slice: offset, page_size %}
+
+{% assign paginated_raw = items | slice: offset, page_size %}
+
+{% assign paginated = paginated_raw | default: empty %}
 
 <section class="product-grid">
 
   {% for item in paginated %}
+
+    {% if item %}
 
     <a class="product-card" href="{{ item.url }}">
 
@@ -61,14 +66,18 @@
 
     </a>
 
+    {% endif %}
+
   {% endfor %}
 
 </section>
 
-<div class="pagination">
+{% assign total = items.size %}
 
-  {% assign total = items.size %}
-  {% assign pages = total | divided_by: page_size | ceil %}
+{% assign pages_float = total | times: 1.0 | divided_by: page_size %}
+{% assign pages = pages_float | ceil %}
+
+<div class="pagination">
 
   {% if page_num > 1 %}
     <a href="/{{ page.collection }}/page{{ page_num | minus: 1 }}/">← Prev</a>
