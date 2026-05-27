@@ -388,6 +388,37 @@ h3 {
     width: 100%;
   }
 
+
+   .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.product-card img {
+  width: 100%;
+  height: 260px;        /* ключевой фикс */
+  object-fit: cover;    /* ОБРЕЗАЕТ а не растягивает */
+  border-radius: 12px;  /* мягкость */
+  display: block;
+}
+
+.product-title {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.product-sku {
+  font-size: 12px;
+  opacity: 0.6;
+}
   /* TAGS */
   .product-tag {
     font-size: 11px;
