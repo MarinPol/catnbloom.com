@@ -75,30 +75,29 @@
   </section>
   {% endif %}
 
-  <!-- PRODUCT GRID (FIXED + SAFE + SCALE READY) -->
+  <!-- PRODUCT GRID (FIXED SCALE LOGIC) -->
   <section class="product-grid">
 
-    {% assign items = site[page.collection] %}
+    {% assign items = site[page.collection] | sort: "sku" %}
 
     {% for item in items %}
 
       <a class="product-card" href="{{ item.url }}">
 
-        <!-- IMAGE SAFE FALLBACK -->
         {% if item.image_url %}
           <img src="{{ item.image_url }}" alt="{{ item.alt_text | default: item.title }}">
+
         {% elsif item.image %}
           <img src="{{ item.image }}" alt="{{ item.title }}">
+
         {% else %}
           <img src="/assets/images/placeholder.jpg" alt="{{ item.title }}">
         {% endif %}
 
-        <!-- TITLE SAFE -->
         <div class="product-title">
           {{ item.headline | default: item.title }}
         </div>
 
-        <!-- SKU (OPTIONAL BUT IMPORTANT) -->
         {% if item.sku %}
         <div class="product-sku">
           {{ item.sku }}
