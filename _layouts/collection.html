@@ -6,7 +6,6 @@
   <title>{{ page.seo_title | default: page.hero_title }}</title>
   <meta name="description" content="{{ page.seo_description }}">
 
-  <!-- Open Graph -->
   <meta property="og:title" content="{{ page.seo_title | default: page.hero_title }}">
   <meta property="og:description" content="{{ page.seo_description }}">
   <meta property="og:image" content="{{ page.og_image }}">
@@ -16,106 +15,78 @@
 
 <body>
 
-  <!-- HEADER -->
-  {% include header.html %}
+{% include header.html %}
 
-  <!-- BREADCRUMBS -->
-  <nav class="breadcrumbs">
-    <a href="/">Home</a>
-    <span>/</span>
-    <span class="current-page">{{ page.hero_title }}</span>
-  </nav>
+<nav class="breadcrumbs">
+  <a href="/">Home</a>
+  <span>/</span>
+  <span class="current-page">{{ page.hero_title }}</span>
+</nav>
 
-  <!-- HERO -->
-  <header class="collection-hero">
-    <h1>{{ page.hero_title }}</h1>
-    <p class="subtitle">{{ page.hero_subtitle }}</p>
-  </header>
+<header class="collection-hero">
+  <h1>{{ page.hero_title }}</h1>
+  <p class="subtitle">{{ page.hero_subtitle }}</p>
+</header>
 
-  <!-- INTRO -->
-  {% if page.intro %}
-  <section class="collection-intro">
-    <p>{{ page.intro }}</p>
-  </section>
+{% if page.intro %}
+<section class="collection-intro">
+  <p>{{ page.intro }}</p>
+</section>
+{% endif %}
+
+{% assign items = site[page.collection] | sort: "sku" %}
+
+{% assign page_size = 24 %}
+{% assign page_num = page.page_num | default: 1 %}
+
+{% assign offset = page_num | minus: 1 | times: page_size %}
+{% assign paginated = items | slice: offset, page_size %}
+
+<section class="product-grid">
+
+  {% for item in paginated %}
+
+    <a class="product-card" href="{{ item.url }}">
+
+      <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}"
+           alt="{{ item.alt_text | default: item.title }}">
+
+      <div class="product-title">
+        {{ item.headline | default: item.title }}
+      </div>
+
+      <div class="product-sku">
+        {{ item.sku }}
+      </div>
+
+    </a>
+
+  {% endfor %}
+
+</section>
+
+<div class="pagination">
+
+  {% assign total = items.size %}
+  {% assign pages = total | divided_by: page_size | ceil %}
+
+  {% if page_num > 1 %}
+    <a href="/{{ page.collection }}/page{{ page_num | minus: 1 }}/">← Prev</a>
   {% endif %}
 
-  <!-- ABOUT -->
-  {% if page.about %}
-  <section class="collection-section">
-    <h2>About</h2>
-    <ul>
-      {% for item in page.about %}
-        <li>{{ item }}</li>
-      {% endfor %}
-    </ul>
-  </section>
+  <span>Page {{ page_num }} / {{ pages }}</span>
+
+  {% if page_num < pages %}
+    <a href="/{{ page.collection }}/page{{ page_num | plus: 1 }}/">Next →</a>
   {% endif %}
 
-  <!-- ART DIRECTION -->
-  {% if page.direction %}
-  <section class="collection-section">
-    <h2>Art Direction</h2>
-    <ul>
-      {% for item in page.direction %}
-        <li>{{ item }}</li>
-      {% endfor %}
-    </ul>
-  </section>
-  {% endif %}
+</div>
 
-  <!-- INTENT -->
-  {% if page.intent %}
-  <section class="collection-section">
-    <h2>Intent</h2>
-    <ul>
-      {% for item in page.intent %}
-        <li>{{ item }}</li>
-      {% endfor %}
-    </ul>
-  </section>
-  {% endif %}
-
-  <!-- PRODUCT GRID (FIXED SCALE LOGIC) -->
-  <section class="product-grid">
-
-    {% assign items = site[page.collection] | sort: "sku" %}
-
-    {% for item in items %}
-
-      <a class="product-card" href="{{ item.url }}">
-
-        {% if item.image_url %}
-          <img src="{{ item.image_url }}" alt="{{ item.alt_text | default: item.title }}">
-
-        {% elsif item.image %}
-          <img src="{{ item.image }}" alt="{{ item.title }}">
-
-        {% else %}
-          <img src="/assets/images/placeholder.jpg" alt="{{ item.title }}">
-        {% endif %}
-
-        <div class="product-title">
-          {{ item.headline | default: item.title }}
-        </div>
-
-        {% if item.sku %}
-        <div class="product-sku">
-          {{ item.sku }}
-        </div>
-        {% endif %}
-
-      </a>
-
-    {% endfor %}
-
-  </section>
-
-  <!-- TAGLINE -->
-  {% if page.tagline %}
-  <footer class="collection-footer">
-    <p>{{ page.tagline }}</p>
-  </footer>
-  {% endif %}
+{% if page.tagline %}
+<footer class="collection-footer">
+  <p>{{ page.tagline }}</p>
+</footer>
+{% endif %}
 
 </body>
 </html>
