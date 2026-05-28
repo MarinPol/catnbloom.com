@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
 
+  <!-- FIX 1: viewport ОБЯЗАТЕЛЕН -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>{{ page.seo_title | default: page.hero_title }}</title>
   <meta name="description" content="{{ page.seo_description }}">
 
@@ -15,10 +18,8 @@
 
 <body>
 
-<!-- FIX: ensure header always stays above collection content -->
-<div class="site-header-wrapper">
-  {% include header.html %}
-</div>
+<!-- HEADER -->
+{% include header.html %}
 
 <nav class="breadcrumbs">
   <a href="/">Home</a>
@@ -43,7 +44,6 @@
 {% assign page_num = page.page_num | default: 1 %}
 
 {% assign offset = page_num | minus: 1 | times: page_size %}
-
 {% assign paginated_raw = items | slice: offset, page_size %}
 {% assign paginated = paginated_raw | default: empty %}
 
@@ -75,7 +75,6 @@
 </section>
 
 {% assign total = items.size %}
-
 {% assign pages_float = total | times: 1.0 | divided_by: page_size %}
 {% assign pages = pages_float | ceil %}
 
