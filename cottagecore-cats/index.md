@@ -1,9 +1,13 @@
 ---
 layout: collection
-permalink: /cottagecore-cats/page2/
+permalink: /cottagecore-cats/
 
 collection: cottagecore
 
-page_num: 2
-page_size: 24
+hero_title: "Cottagecore Cats"
+hero_subtitle: "Cozy cats, flowers & soft aesthetics"
+
+intro: "A collection of soft, floral cat illustrations inspired by cottagecore life."
+
+tagline: "Wearable art for soft living"
 ---
