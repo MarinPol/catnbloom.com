@@ -15,7 +15,10 @@
 
 <body>
 
-{% include header.html %}
+<!-- FIX: ensure header always stays above collection content -->
+<div class="site-header-wrapper">
+  {% include header.html %}
+</div>
 
 <nav class="breadcrumbs">
   <a href="/">Home</a>
@@ -42,7 +45,6 @@
 {% assign offset = page_num | minus: 1 | times: page_size %}
 
 {% assign paginated_raw = items | slice: offset, page_size %}
-
 {% assign paginated = paginated_raw | default: empty %}
 
 <section class="product-grid">
