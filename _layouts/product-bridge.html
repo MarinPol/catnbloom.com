@@ -24,11 +24,13 @@
     <!-- LEFT -->
     <div class="left-block">
 
+        <!-- MAIN IMAGE -->
         <div class="product-image-container">
             <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
                  alt="{{ page.alt_text | default: page.title }}">
         </div>
 
+        <!-- GALLERY (click previews list) -->
         {% if page.detail_images and page.detail_images.size > 0 %}
         <div class="detail-gallery">
 
@@ -61,7 +63,7 @@
         <div class="human-proof-box">{{ page.human_proof }}</div>
         {% endif %}
 
-        <!-- PLATFORM SWITCHER (FIXED SAFE VERSION) -->
+        <!-- PLATFORM SWITCHER (FIXED LABELS) -->
         {% if page.teepublic_url %}
 
         <div class="platform-switcher">
@@ -76,7 +78,7 @@
             <button class="switch-tab"
                     id="tab-rb"
                     onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
-                Stickers
+                Stickers & Notebooks
             </button>
             {% endif %}
 
@@ -111,7 +113,6 @@
 
 <script>
 function togglePlatform(platform, url) {
-
     const btn = document.getElementById('action-btn');
     if (!btn) return;
 
