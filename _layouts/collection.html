@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
 
-  <!-- FIX: responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>{{ page.seo_title | default: page.hero_title }}</title>
@@ -18,17 +17,14 @@
 
 <body>
 
-<!-- HEADER -->
 {% include header.html %}
 
-<!-- BREADCRUMBS -->
 <nav class="breadcrumbs">
   <a href="/">Home</a>
   <span>/</span>
   <span class="current-page">{{ page.hero_title }}</span>
 </nav>
 
-<!-- HERO -->
 <header class="collection-hero">
   <h1>{{ page.hero_title }}</h1>
   <p class="subtitle">{{ page.hero_subtitle }}</p>
@@ -40,8 +36,8 @@
 </section>
 {% endif %}
 
-<!-- ITEMS -->
-{% assign items = site.cottagecore | sort: "sku" %}
+<!-- ✅ УНИВЕРСАЛЬНАЯ ПОДТЯЖКА КОЛЛЕКЦИИ -->
+{% assign items = site[page.collection] | sort: "sku" %}
 
 <section class="product-grid" id="grid">
 
@@ -66,19 +62,16 @@
 
 </section>
 
-<!-- LOAD MORE BUTTON -->
 <button id="loadMoreBtn" class="load-more">
   Load more
 </button>
 
-<!-- FOOTER -->
 {% if page.tagline %}
 <footer class="collection-footer">
   <p>{{ page.tagline }}</p>
 </footer>
 {% endif %}
 
-<!-- LOAD MORE SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
