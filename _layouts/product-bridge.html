@@ -61,7 +61,9 @@
         <div class="human-proof-box">{{ page.human_proof }}</div>
         {% endif %}
 
+        <!-- PLATFORM SWITCHER (FIXED SAFE VERSION) -->
         {% if page.teepublic_url %}
+
         <div class="platform-switcher">
 
             <button class="switch-tab active"
@@ -70,7 +72,7 @@
                 Apparel
             </button>
 
-            {% if page.redbubble_url %}
+            {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
             <button class="switch-tab"
                     id="tab-rb"
                     onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
@@ -86,6 +88,7 @@
            target="_blank">
             See on TeePublic
         </a>
+
         {% endif %}
 
         {% if page.tags %}
@@ -108,11 +111,21 @@
 
 <script>
 function togglePlatform(platform, url) {
+
     const btn = document.getElementById('action-btn');
     if (!btn) return;
 
     btn.href = url;
     btn.textContent = 'See on ' + platform;
+
+    const tp = document.getElementById('tab-tp');
+    const rb = document.getElementById('tab-rb');
+
+    if (tp) tp.classList.remove('active');
+    if (rb) rb.classList.remove('active');
+
+    if (platform === 'TeePublic' && tp) tp.classList.add('active');
+    if (platform === 'Redbubble' && rb) rb.classList.add('active');
 }
 </script>
 
