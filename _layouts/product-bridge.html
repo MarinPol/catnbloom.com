@@ -1,144 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- LEFT: IMAGE -->
+<div class="left-block">
 
-    <!-- SEO TITLE -->
-    <title>{{ page.title }} | CatnBloom Studio</title>
+    <div class="product-image-container">
+        <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
+             alt="{{ page.alt_text | default: page.title }}">
+    </div>
 
-    <!-- SEO DESCRIPTION -->
-    <meta name="description" content="{{ page.story | default: page.headline }}">
+    {% if page.detail_images and page.detail_images.size > 0 %}
 
-    <!-- OPEN GRAPH -->
-    <meta property="og:title" content="{{ page.title }}">
-    <meta property="og:description" content="{{ page.story | default: page.headline }}">
-    <meta property="og:image" content="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}">
+    <div class="detail-gallery">
 
-    <link rel="stylesheet" href="/assets/css/style.css">
-</head>
+        {% for img in page.detail_images %}
 
-<body>
-
-    <!-- HEADER -->
-    {% include header.html %}
-
-    <!-- BREADCRUMBS -->
-    {% include breadcrumbs.html %}
-
-    <!-- PRODUCT WRAPPER -->
-    <div class="container">
-
-        <!-- LEFT: IMAGE -->
-        <div class="left-block">
-            <div class="product-image-container">
-                <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
-                     alt="{{ page.alt_text | default: page.title }}">
-            </div>
+        <div class="gallery-item">
+            <img src="/assets/images/{{ img }}"
+                 alt="{{ page.title }} detail {{ forloop.index }}"
+                 loading="lazy">
         </div>
 
-        <!-- RIGHT: CONTENT -->
-        <div class="right-container">
-
-            <!-- TITLE -->
-            <h1>{{ page.title }}</h1>
-
-            <!-- STORY -->
-            {% if page.story %}
-            <div class="story-text">
-                {{ page.story }}
-            </div>
-            {% endif %}
-
-            <!-- ACCENTS -->
-            {% if page.accent_h3_1 %}
-                <h3>{{ page.accent_h3_1 }}</h3>
-            {% endif %}
-
-            {% if page.accent_h3_2 %}
-                <h3>{{ page.accent_h3_2 }}</h3>
-            {% endif %}
-
-            <!-- HUMAN PROOF -->
-            {% if page.human_proof %}
-            <div class="human-proof-box">
-                {{ page.human_proof }}
-            </div>
-            {% endif %}
-
-            <!-- PLATFORM SWITCHER -->
-            {% if page.teepublic_url %}
-
-                <div class="platform-switcher">
-
-                    <button class="switch-tab active"
-                        id="tab-tp"
-                        onclick="togglePlatform('TeePublic', '{{ page.teepublic_url }}')">
-                        Apparel
-                    </button>
-
-                    {% if page.redbubble_url and page.redbubble_url != 'none' %}
-
-                        <button class="switch-tab"
-                            id="tab-rb"
-                            onclick="togglePlatform('Redbubble', '{{ page.redbubble_url }}')">
-                            Stickers & Notebooks
-                        </button>
-
-                    {% endif %}
-
-                </div>
-
-                <a href="{{ page.teepublic_url }}"
-                   class="buy-button"
-                   id="action-btn"
-                   target="_blank">
-                    See on TeePublic
-                </a>
-
-            {% endif %}
-
-            <!-- TAGS -->
-            {% if page.tags %}
-            <div class="tags-container">
-                {% for tag in page.tags %}
-                    <span class="product-tag">{{ tag }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <!-- PRODUCT ID (SKU SYSTEM FINAL) -->
-            {% if page.sku %}
-            <div class="product-id-spec">
-                <strong>Product ID:</strong>
-                {{ page.sku }}
-            </div>
-            {% endif %}
-
-        </div>
+        {% endfor %}
 
     </div>
 
-    <!-- SCRIPT -->
-    <script>
-        function togglePlatform(platform, url) {
+    {% endif %}
 
-            const actionBtn = document.getElementById('action-btn');
-            if (!actionBtn) return;
-
-            actionBtn.href = url;
-            actionBtn.textContent = 'See on ' + platform;
-
-            const tp = document.getElementById('tab-tp');
-            const rb = document.getElementById('tab-rb');
-
-            if (tp) tp.classList.remove('active');
-            if (rb) rb.classList.remove('active');
-
-            if (platform === 'TeePublic' && tp) tp.classList.add('active');
-            if (platform === 'Redbubble' && rb) rb.classList.add('active');
-        }
-    </script>
-
-</body>
-</html>
+</div>
