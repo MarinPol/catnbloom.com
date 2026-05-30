@@ -4,10 +4,6 @@ permalink: /cottagecore-cats/
 
 collection: cottagecore
 
-# pagination control
-page_num: 1
-page_size: 24
-
 # SEO + SOCIAL
 hero_title: "Cottagecore Cats"
 hero_subtitle: "Cozy cats, flowers & soft aesthetics"
@@ -33,7 +29,4 @@ intent:
 
 # BRAND FOOTER
 tagline: "Wearable art for soft living"
-
-# SORTING (optional)
-sort_by: "sku"
 ---
