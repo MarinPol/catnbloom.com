@@ -51,27 +51,39 @@
         <h1>{{ page.title }}</h1>
 
         {% if page.story %}
-        <div class="story-text">
-            {{ page.story }}
-        </div>
+        <div class="story-text">{{ page.story }}</div>
         {% endif %}
 
-        {% if page.accent_h3_1 %}
-            <h3>{{ page.accent_h3_1 }}</h3>
-        {% endif %}
-
-        {% if page.accent_h3_2 %}
-            <h3>{{ page.accent_h3_2 }}</h3>
-        {% endif %}
+        {% if page.accent_h3_1 %}<h3>{{ page.accent_h3_1 }}</h3>{% endif %}
+        {% if page.accent_h3_2 %}<h3>{{ page.accent_h3_2 }}</h3>{% endif %}
 
         {% if page.human_proof %}
-        <div class="human-proof-box">
-            {{ page.human_proof }}
-        </div>
+        <div class="human-proof-box">{{ page.human_proof }}</div>
         {% endif %}
 
         {% if page.teepublic_url %}
-        <a class="buy-button" href="{{ page.teepublic_url }}" target="_blank">
+        <div class="platform-switcher">
+
+            <button class="switch-tab active"
+                    id="tab-tp"
+                    onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">
+                Apparel
+            </button>
+
+            {% if page.redbubble_url %}
+            <button class="switch-tab"
+                    id="tab-rb"
+                    onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
+                Stickers
+            </button>
+            {% endif %}
+
+        </div>
+
+        <a href="{{ page.teepublic_url }}"
+           class="buy-button"
+           id="action-btn"
+           target="_blank">
             See on TeePublic
         </a>
         {% endif %}
@@ -93,6 +105,16 @@
     </div>
 
 </div>
+
+<script>
+function togglePlatform(platform, url) {
+    const btn = document.getElementById('action-btn');
+    if (!btn) return;
+
+    btn.href = url;
+    btn.textContent = 'See on ' + platform;
+}
+</script>
 
 </body>
 </html>
