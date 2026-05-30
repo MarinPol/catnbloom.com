@@ -1,5 +1,5 @@
 /* =========================
-RESET 30 may
+RESET 30 may (2)
 ========================= */
 
 * {
@@ -213,25 +213,27 @@ MAIN IMAGE
 }
 
 /* =========================
-DETAIL GALLERY (NEW v1)
+DETAIL GALLERY (UPDATED HORIZONTAL)
 ========================= */
 
 .detail-gallery {
   margin-top: 16px;
   display: flex;
-  flex-direction: column;
   gap: 12px;
 }
 
 .gallery-item {
-  width: 100%;
+  flex: 1;
+  display: block;
 }
 
 .gallery-item img {
   width: 100%;
-  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   display: block;
   border-radius: 8px;
+  border: 1px solid #eee;
 }
 
 /* =========================
