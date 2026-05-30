@@ -1,27 +1,98 @@
-<!-- LEFT: IMAGE -->
-<div class="left-block">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div class="product-image-container">
-        <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
-             alt="{{ page.alt_text | default: page.title }}">
-    </div>
+    <title>{{ page.title }} | CatnBloom Studio</title>
+    <meta name="description" content="{{ page.story | default: page.headline }}">
 
-    {% if page.detail_images and page.detail_images.size > 0 %}
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.story | default: page.headline }}">
+    <meta property="og:image" content="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}">
 
-    <div class="detail-gallery">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
 
-        {% for img in page.detail_images %}
+<body>
 
-        <div class="gallery-item">
-            <img src="/assets/images/{{ img }}"
-                 alt="{{ page.title }} detail {{ forloop.index }}"
-                 loading="lazy">
+{% include header.html %}
+{% include breadcrumbs.html %}
+
+<div class="container">
+
+    <!-- LEFT -->
+    <div class="left-block">
+
+        <div class="product-image-container">
+            <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
+                 alt="{{ page.alt_text | default: page.title }}">
         </div>
 
-        {% endfor %}
+        {% if page.detail_images and page.detail_images.size > 0 %}
+        <div class="detail-gallery">
+
+            {% for img in page.detail_images %}
+            <div class="gallery-item">
+                <img src="/assets/images/{{ img }}"
+                     alt="{{ page.title }} detail {{ forloop.index }}"
+                     loading="lazy">
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endif %}
 
     </div>
 
-    {% endif %}
+    <!-- RIGHT -->
+    <div class="right-container">
+
+        <h1>{{ page.title }}</h1>
+
+        {% if page.story %}
+        <div class="story-text">
+            {{ page.story }}
+        </div>
+        {% endif %}
+
+        {% if page.accent_h3_1 %}
+            <h3>{{ page.accent_h3_1 }}</h3>
+        {% endif %}
+
+        {% if page.accent_h3_2 %}
+            <h3>{{ page.accent_h3_2 }}</h3>
+        {% endif %}
+
+        {% if page.human_proof %}
+        <div class="human-proof-box">
+            {{ page.human_proof }}
+        </div>
+        {% endif %}
+
+        {% if page.teepublic_url %}
+        <a class="buy-button" href="{{ page.teepublic_url }}" target="_blank">
+            See on TeePublic
+        </a>
+        {% endif %}
+
+        {% if page.tags %}
+        <div class="tags-container">
+            {% for tag in page.tags %}
+                <span class="product-tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if page.sku %}
+        <div class="product-id-spec">
+            <strong>Product ID:</strong> {{ page.sku }}
+        </div>
+        {% endif %}
+
+    </div>
 
 </div>
+
+</body>
+</html>
