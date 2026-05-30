@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>{{ page.seo_title | default: page.hero_title }}</title>
@@ -37,10 +36,10 @@
 {% endif %}
 
 {%- comment -%}
-COLLECTION ENGINE (SAFE + UNIVERSAL)
+🔥 FIX: стабильный доступ к коллекции
 {%- endcomment -%}
 
-{% assign items = site[page.collection] | sort: "sku" %}
+{% assign items = site.cottagecore | sort: "sku" %}
 
 <section class="product-grid" id="grid">
 
@@ -48,25 +47,16 @@ COLLECTION ENGINE (SAFE + UNIVERSAL)
 
     <a class="product-card load-item" href="{{ item.url }}">
 
-      {% if item.image_url %}
-        <img src="{{ item.image_url }}" alt="{{ item.alt_text | default: item.title }}">
-
-      {% elsif item.image %}
-        <img src="{{ item.image }}" alt="{{ item.alt_text | default: item.title }}">
-
-      {% else %}
-        <img src="/assets/images/placeholder.jpg" alt="{{ item.title }}">
-      {% endif %}
+      <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}"
+           alt="{{ item.alt_text | default: item.title }}">
 
       <div class="product-title">
         {{ item.headline | default: item.title }}
       </div>
 
-      {% if item.sku %}
       <div class="product-sku">
         {{ item.sku }}
       </div>
-      {% endif %}
 
     </a>
 
