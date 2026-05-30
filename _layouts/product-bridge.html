@@ -3,55 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>{{ page.title }} | CatnBloom Studio</title>
     <meta name="description" content="{{ page.story | default: page.headline }}">
-
     <meta property="og:title" content="{{ page.title }}">
     <meta property="og:description" content="{{ page.story | default: page.headline }}">
     <meta property="og:image" content="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}">
-
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
-
 <body>
 
 {% include header.html %}
 {% include breadcrumbs.html %}
 
 <div class="container">
-
-    <!-- LEFT -->
     <div class="left-block">
-
-        <!-- MAIN IMAGE -->
         <div class="product-image-container">
             <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
                  alt="{{ page.alt_text | default: page.title }}">
         </div>
 
-        <!-- GALLERY (click previews list) -->
         {% if page.detail_images and page.detail_images.size > 0 %}
         <div class="detail-gallery">
-
             {% for img in page.detail_images %}
             <div class="gallery-item">
-                <img src="/assets/images/{{ img }}"
+                <img src="/assets/images/products/{{ img }}"
                      alt="{{ page.title }} detail {{ forloop.index }}"
                      loading="lazy">
             </div>
             {% endfor %}
-
         </div>
         {% endif %}
-
     </div>
 
-    <!-- RIGHT -->
     <div class="right-container">
-
         <h1>{{ page.title }}</h1>
-
         {% if page.story %}
         <div class="story-text">{{ page.story }}</div>
         {% endif %}
@@ -63,34 +48,14 @@
         <div class="human-proof-box">{{ page.human_proof }}</div>
         {% endif %}
 
-        <!-- PLATFORM SWITCHER (FIXED LABELS) -->
         {% if page.teepublic_url %}
-
         <div class="platform-switcher">
-
-            <button class="switch-tab active"
-                    id="tab-tp"
-                    onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">
-                Apparel
-            </button>
-
+            <button class="switch-tab active" id="tab-tp" onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">Apparel</button>
             {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
-            <button class="switch-tab"
-                    id="tab-rb"
-                    onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
-                Stickers & Notebooks
-            </button>
+            <button class="switch-tab" id="tab-rb" onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">Stickers & Notebooks</button>
             {% endif %}
-
         </div>
-
-        <a href="{{ page.teepublic_url }}"
-           class="buy-button"
-           id="action-btn"
-           target="_blank">
-            See on TeePublic
-        </a>
-
+        <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">See on TeePublic</a>
         {% endif %}
 
         {% if page.tags %}
@@ -106,29 +71,22 @@
             <strong>Product ID:</strong> {{ page.sku }}
         </div>
         {% endif %}
-
     </div>
-
 </div>
 
 <script>
 function togglePlatform(platform, url) {
     const btn = document.getElementById('action-btn');
     if (!btn) return;
-
     btn.href = url;
     btn.textContent = 'See on ' + platform;
-
     const tp = document.getElementById('tab-tp');
     const rb = document.getElementById('tab-rb');
-
     if (tp) tp.classList.remove('active');
     if (rb) rb.classList.remove('active');
-
     if (platform === 'TeePublic' && tp) tp.classList.add('active');
     if (platform === 'Redbubble' && rb) rb.classList.add('active');
 }
 </script>
-
 </body>
 </html>
