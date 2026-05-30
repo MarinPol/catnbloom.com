@@ -1,5 +1,5 @@
 /* =========================
-RESET
+RESET 30 may
 ========================= */
 
 * {
@@ -49,7 +49,7 @@ HEADER
 }
 
 /* =========================
-HAMBURGER (FIXED)
+HAMBURGER
 ========================= */
 
 .menu-toggle {
@@ -172,7 +172,7 @@ BREADCRUMBS
 }
 
 /* =========================
-LAYOUT (PRODUCT PAGE)
+LAYOUT
 ========================= */
 
 .container {
@@ -197,7 +197,7 @@ LAYOUT (PRODUCT PAGE)
 }
 
 /* =========================
-IMAGE
+MAIN IMAGE
 ========================= */
 
 .product-image-container {
@@ -210,6 +210,28 @@ IMAGE
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* =========================
+DETAIL GALLERY (NEW v1)
+========================= */
+
+.detail-gallery {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gallery-item {
+  width: 100%;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
 }
 
 /* =========================
@@ -374,7 +396,6 @@ MOBILE
   .breadcrumbs {
     font-size: 12px;
     padding: 0 16px;
-    line-height: 1.5;
   }
 
   .container {
