@@ -9,6 +9,7 @@
     <meta property="og:description" content="{{ page.story | default: page.headline }}">
     <meta property="og:image" content="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -25,7 +26,7 @@
         {% if page.detail_images and page.detail_images.size > 0 %}
         <div class="detail-gallery">
             {% for img in page.detail_images %}
-            <a href="/assets/images/products/{{ img }}" target="_blank" class="gallery-item">
+            <a href="/assets/images/products/{{ img }}" data-lightbox="product-gallery" class="gallery-item">
                 <img src="/assets/images/products/{{ img }}"
                      alt="{{ page.title }} detail {{ forloop.index }}"
                      loading="lazy">
@@ -74,6 +75,8 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
 <script>
 function togglePlatform(platform, url) {
     const btn = document.getElementById('action-btn');
