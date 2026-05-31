@@ -30,22 +30,10 @@ layout: null
     <tbody>
       {% assign all_products = site.cottagecore | concat: site.witchy %}
       
-      {% comment %} Нормализация статуса для корректной сортировки {% endcomment %}
-      {% assign normalized = '' | split: '' %}
-      {% for item in all_products %}
-        {% if item.status == 'hidden' %}
-          {% assign item_with_status = item | merge: 'status: hidden' %}
-          {% assign normalized = normalized | push: item_with_status %}
-        {% else %}
-          {% assign item_with_status = item | merge: 'status: active' %}
-          {% assign normalized = normalized | push: item_with_status %}
-        {% endif %}
-      {% endfor %}
-
-      {% comment %} Сортировка: h (hidden) перед a (active) {% endcomment %}
-      {% assign sorted_products = normalized | sort: "status" %}
+      {% comment %} Присваиваем временный приоритет для сортировки {% endcomment %}
+      {% assign sorted = all_products | sort: "status" %}
       
-      {% for item in sorted_products %}
+      {% for item in sorted %}
       <tr>
         <td>{{ item.sku }}</td>
         <td>{{ item.title }}</td>
