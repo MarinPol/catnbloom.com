@@ -14,6 +14,8 @@ layout: null
     th { background: #f4f4f4; }
     .status-hidden { color: #7b2d2d; font-weight: bold; }
     .status-active { color: #a3b18a; font-weight: bold; }
+    .load-more { margin-top: 20px; padding: 10px 20px; cursor: pointer; }
+    .inventory-row { display: none; }
   </style>
 </head>
 <body>
@@ -27,13 +29,12 @@ layout: null
         <th>Status</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="inventoryBody">
       {% assign all_products = site.cottagecore | concat: site.witchy %}
       
-      {% comment %} Сначала выводим HIDDEN {% endcomment %}
       {% for item in all_products %}
         {% if item.status == 'hidden' %}
-        <tr>
+        <tr class="inventory-row">
           <td>{{ item.sku }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.collection_name }}</td>
@@ -42,10 +43,9 @@ layout: null
         {% endif %}
       {% endfor %}
 
-      {% comment %} Затем выводим все остальные (ACTIVE) {% endcomment %}
       {% for item in all_products %}
         {% if item.status != 'hidden' %}
-        <tr>
+        <tr class="inventory-row">
           <td>{{ item.sku }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.collection_name }}</td>
@@ -55,5 +55,29 @@ layout: null
       {% endfor %}
     </tbody>
   </table>
+
+  <button id="loadMoreBtn" class="load-more">Load more</button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const rows = document.querySelectorAll('.inventory-row');
+      const btn = document.getElementById('loadMoreBtn');
+      let visible = 24;
+
+      function updateView() {
+        rows.forEach((row, index) => {
+          row.style.display = index < visible ? 'table-row' : 'none';
+        });
+        if (visible >= rows.length) btn.style.display = 'none';
+      }
+
+      btn.addEventListener('click', () => {
+        visible += 24;
+        updateView();
+      });
+
+      updateView();
+    });
+  </script>
 </body>
 </html>
