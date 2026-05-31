@@ -1,5 +1,5 @@
 /* =========================
-RESET 30 may (4)
+RESET 30 may (5)
 ========================= */
 
 * {
@@ -275,6 +275,37 @@ AUTHOR NOTE
 
 .author-note-box p:last-child {
   margin-bottom: 0;
+}
+
+/* =========================
+EXTRA LINKS SECTION
+========================= */
+
+.extra-links-section {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #eee;
+}
+
+.extra-links-section h3 {
+  font-size: 0.95rem;
+  color: #2d2d2d;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.extra-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.extra-link {
+  font-size: 0.95rem;
+  color: #7b2d2d;
+  text-decoration: underline;
 }
 
 /* =========================
