@@ -1,5 +1,5 @@
 /* =========================
-RESET 31 May (2)
+RESET 31 May (3)
 ========================= */
 
 * {
@@ -198,17 +198,18 @@ MAIN IMAGE
 }
 
 /* =========================
-DETAIL GALLERY
+DETAIL GALLERY (GRID LAYOUT 3xN)
 ========================= */
 
 .detail-gallery {
   margin-top: 16px;
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
 .gallery-item {
-  flex: 1;
+  width: calc(33.333% - 8px);
   display: block;
 }
 
