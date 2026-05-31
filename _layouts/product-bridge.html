@@ -63,12 +63,14 @@
         <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">See on TeePublic</a>
         {% endif %}
 
-        <!-- Дополнительные ссылки -->
         {% if page.extra_links %}
-        <div class="extra-links-container">
-            {% for link in page.extra_links %}
-                <a href="{{ link.url }}" class="extra-link" target="_blank">{{ link.title }}</a>
-            {% endfor %}
+        <div class="extra-links-section">
+            <h3>More from Studio</h3>
+            <div class="extra-links-list">
+                {% for link in page.extra_links %}
+                    <a href="{{ link.url }}" class="extra-link" target="_blank">{{ link.title }}</a>
+                {% endfor %}
+            </div>
         </div>
         {% endif %}
 
