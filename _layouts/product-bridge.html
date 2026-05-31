@@ -98,7 +98,7 @@
             {% if page.sku %}
             <strong>Product ID:</strong> {{ page.sku }}<br>
             {% endif %}
-            <strong>Last updated:</strong> {{ page.last_modified_at | date: "%B %d, %Y" }}
+            <strong>Last updated:</strong> {{ site.time | date: "%B %d, %Y" }}
         </div>
     </div>
 </div>
