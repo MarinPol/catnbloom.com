@@ -44,7 +44,7 @@
 <section class="product-grid" id="grid">
 
   {% for item in items %}
-
+    {% if item.status != 'hidden' %}
     <a class="product-card load-item" href="{{ item.url }}">
 
       <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}"
@@ -59,7 +59,7 @@
       </div>
 
     </a>
-
+    {% endif %}
   {% endfor %}
 
 </section>
