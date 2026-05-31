@@ -6,6 +6,8 @@ layout: null
 <head>
   <meta charset="utf-8">
   <title>Inventory Dashboard</title>
+  <!-- Запрет индексации -->
+  <meta name="robots" content="noindex, nofollow">
   <style>
     body { font-family: sans-serif; padding: 20px; line-height: 1.5; }
     table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -28,7 +30,10 @@ layout: null
     </thead>
     <tbody>
       {% assign all_products = site.cottagecore | concat: site.witchy %}
-      {% for item in all_products %}
+      {% comment %} Сортировка: скрытые (hidden) вверху, активные внизу {% endcomment %}
+      {% assign sorted_products = all_products | sort: "status" | reverse %}
+      
+      {% for item in sorted_products %}
       <tr>
         <td>{{ item.sku }}</td>
         <td>{{ item.title }}</td>
