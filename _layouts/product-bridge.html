@@ -41,6 +41,11 @@
 
     <div class="right-container">
         <h1>{{ page.title }}</h1>
+        
+        {% if page.status == 'hidden' %}
+        <div class="inactive-badge-page">INACTIVE</div>
+        {% endif %}
+
         {% if page.story %}
         <div class="story-text">{{ page.story }}</div>
         {% endif %}
