@@ -1,5 +1,5 @@
 /* =========================
-RESET 30 may (2)
+RESET 30 may (3)
 ========================= */
 
 * {
@@ -412,11 +412,15 @@ MOBILE
 
   .product-image-container {
     height: auto;
+    display: flex;
+    align-items: flex-start;
   }
 
   .product-image-container img {
     height: auto;
+    width: 100%;
     object-fit: contain;
+    display: block;
   }
 
   h1 {
