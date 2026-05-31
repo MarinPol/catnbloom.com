@@ -170,6 +170,14 @@ LAYOUT
   gap: 50px;
 }
 
+/* МОБИЛЬНАЯ АДАПТАЦИЯ (КОЛОНКА) */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
 .left-block {
   flex: 1.1;
 }
@@ -198,7 +206,7 @@ MAIN IMAGE
 }
 
 /* =========================
-DETAIL GALLERY (GRID LAYOUT 3xN)
+DETAIL GALLERY (GRID 3xN)
 ========================= */
 
 .detail-gallery {
