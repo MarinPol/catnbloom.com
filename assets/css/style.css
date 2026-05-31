@@ -1,5 +1,5 @@
 /* =========================
-RESET 30 may (3)
+RESET 30 may (4)
 ========================= */
 
 * {
@@ -254,6 +254,27 @@ h3 {
 
 .story-text {
   color: #444;
+}
+
+/* =========================
+AUTHOR NOTE
+========================= */
+
+.author-note-box {
+  margin-top: 18px;
+  padding: 16px;
+  background: #fcfcfc;
+  border-left: 4px solid #a3b18a;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.author-note-box p {
+  margin: 0 0 10px 0;
+}
+
+.author-note-box p:last-child {
+  margin-bottom: 0;
 }
 
 /* =========================
