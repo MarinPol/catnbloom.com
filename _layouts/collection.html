@@ -46,19 +46,18 @@
   {% for item in items %}
     {% if item.status != 'hidden' %}
     <a class="product-card load-item" href="{{ item.url }}">
-
       <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}"
            alt="{{ item.alt_text | default: item.title }}">
-
-      <div class="product-title">
-        {{ item.headline | default: item.title }}
-      </div>
-
-      <div class="product-sku">
-        {{ item.sku }}
-      </div>
-
+      <div class="product-title">{{ item.headline | default: item.title }}</div>
+      <div class="product-sku">{{ item.sku }}</div>
     </a>
+    {% else %}
+    <div class="product-card load-item inactive-card">
+      <div class="inactive-label">INACTIVE</div>
+      <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}" alt="Inactive" style="opacity: 0.4;">
+      <div class="product-title">{{ item.headline | default: item.title }}</div>
+      <div class="product-sku">{{ item.sku }}</div>
+    </div>
     {% endif %}
   {% endfor %}
 
