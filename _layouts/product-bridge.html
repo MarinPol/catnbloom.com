@@ -42,6 +42,10 @@
     <div class="right-container">
         <h1>{{ page.title }}</h1>
         
+        {% if page.date_added %}
+        <div class="meta-date">Added: {{ page.date_added | date: "%B %d, %Y" }}</div>
+        {% endif %}
+        
         {% if page.status == 'hidden' %}
         <span class="inactive-badge-compact">Inactive</span>
         {% endif %}
@@ -90,11 +94,12 @@
         </div>
         {% endif %}
 
-        {% if page.sku %}
         <div class="product-id-spec">
-            <strong>Product ID:</strong> {{ page.sku }}
+            {% if page.sku %}
+            <strong>Product ID:</strong> {{ page.sku }}<br>
+            {% endif %}
+            <strong>Last updated:</strong> {{ page.last_modified_at | date: "%B %d, %Y" }}
         </div>
-        {% endif %}
     </div>
 </div>
 
