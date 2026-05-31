@@ -1,5 +1,5 @@
 /* =========================
-RESET 30 may (8)
+RESET 31 May (1)
 ========================= */
 
 * {
@@ -354,6 +354,25 @@ TAGS
 }
 
 /* =========================
+META DATES
+========================= */
+
+.meta-date {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.product-id-spec {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+/* =========================
 COLLECTION GRID
 ========================= */
 
@@ -389,115 +408,4 @@ COLLECTION GRID
 }
 
 .product-sku {
-  margin-top: 6px;
-  font-size: 12px;
-  opacity: 0.6;
-}
-
-/* =========================
-INACTIVE STATUS
-========================= */
-
-.inactive-card {
-  position: relative;
-  cursor: default;
-}
-
-.inactive-label {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #7b2d2d;
-  color: #fff;
-  padding: 4px 8px;
-  font-size: 10px;
-  font-weight: bold;
-  border-radius: 4px;
-  z-index: 10;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.inactive-badge-compact {
-  display: inline-block;
-  background: #7b2d2d;
-  color: #fff;
-  padding: 2px 6px;
-  font-size: 10px;
-  font-weight: bold;
-  border-radius: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 1;
-  margin-bottom: 10px;
-  align-self: flex-start;
-}
-
-/* =========================
-MOBILE
-========================= */
-
-@media (max-width: 768px) {
-  .header-content {
-    height: 120px;
-    padding: 10px 16px;
-    background: url('/assets/images/header-mobile.jpg') center/cover no-repeat;
-  }
-  .menu-toggle {
-    display: block;
-  }
-  .nav-bar {
-    display: none;
-  }
-  .nav-bar.open {
-    display: flex;
-    flex-direction: column;
-  }
-  .nav-right {
-    flex-direction: column;
-    gap: 12px;
-    padding: 12px;
-  }
-  .breadcrumbs {
-    font-size: 12px;
-    padding: 0 16px;
-  }
-  .container {
-    flex-direction: column;
-    padding: 16px;
-  }
-  .left-block,
-  .right-container {
-    width: 100%;
-  }
-  .product-image-container {
-    height: auto;
-    display: flex;
-    align-items: flex-start;
-  }
-  .product-image-container img {
-    height: auto;
-    width: 100%;
-    object-fit: contain;
-    display: block;
-  }
-  h1 {
-    font-size: 1.7rem;
-  }
-  h3 {
-    font-size: 1rem;
-  }
-  .story-text {
-    font-size: 0.98rem;
-  }
-  .platform-switcher {
-    flex-direction: column;
-  }
-  .switch-tab,
-  .buy-button {
-    width: 100%;
-  }
-  .product-tag {
-    font-size: 11px;
-  }
-}
+  margin-top:
