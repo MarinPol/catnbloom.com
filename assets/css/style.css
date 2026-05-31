@@ -1,5 +1,5 @@
 /* =========================
-RESET 30 may (6)
+RESET 30 may (7)
 ========================= */
 
 * {
@@ -26,9 +26,7 @@ HEADER
 .header-content {
   height: 240px;
   padding: 12px 50px;
-
   background: url('/assets/images/header-bg.jpg') center/cover no-repeat;
-
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -70,7 +68,6 @@ NAV BAR
   background: #f7f7f7;
   border-top: 1px solid #eaeaea;
   border-bottom: 1px solid #eaeaea;
-
   display: flex;
   justify-content: center;
 }
@@ -100,28 +97,21 @@ DROPDOWN
 
 .dropdown-menu {
   display: none;
-
   position: absolute;
   top: 100%;
   left: 0;
-
   background: #fff;
   border: 1px solid #eee;
-
   padding: 10px;
   min-width: 220px;
-
   z-index: 1000;
-
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
-/* desktop hover */
 @media (min-width: 769px) {
   .dropdown:hover .dropdown-menu {
     display: block;
   }
-
   .dropdown-menu a {
     display: block;
     padding: 8px 10px;
@@ -130,7 +120,6 @@ DROPDOWN
   }
 }
 
-/* mobile dropdown */
 @media (max-width: 768px) {
   .dropdown-menu {
     position: static;
@@ -148,10 +137,8 @@ BREADCRUMBS
   max-width: 1050px;
   margin: 18px auto 0;
   padding: 0 20px;
-
   font-size: 13px;
   color: #888;
-
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -179,7 +166,6 @@ LAYOUT
   max-width: 1050px;
   margin: 40px auto;
   padding: 20px;
-
   display: flex;
   gap: 50px;
 }
@@ -190,7 +176,6 @@ LAYOUT
 
 .right-container {
   flex: 1;
-
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -335,17 +320,12 @@ SWITCHER
 .switch-tab {
   flex: 1;
   padding: 12px 14px;
-
   border: 1px solid #ddd;
   background: #f7f7f7;
-
   cursor: pointer;
-
   border-radius: 6px;
-
   font-size: 14px;
   font-weight: 600;
-
   color: #2d2d2d;
   text-align: center;
 }
@@ -381,11 +361,9 @@ COLLECTION GRID
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px;
-
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 24px;
-
   align-items: start;
 }
 
@@ -440,86 +418,83 @@ INACTIVE STATUS (Шаг 3)
   letter-spacing: 0.5px;
 }
 
+.inactive-badge-page {
+  display: inline-block;
+  background: #7b2d2d;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 /* =========================
 MOBILE
 ========================= */
 
 @media (max-width: 768px) {
-
   .header-content {
     height: 120px;
     padding: 10px 16px;
     background: url('/assets/images/header-mobile.jpg') center/cover no-repeat;
   }
-
   .menu-toggle {
     display: block;
   }
-
   .nav-bar {
     display: none;
   }
-
   .nav-bar.open {
     display: flex;
     flex-direction: column;
   }
-
   .nav-right {
     flex-direction: column;
     gap: 12px;
     padding: 12px;
   }
-
   .breadcrumbs {
     font-size: 12px;
     padding: 0 16px;
   }
-
   .container {
     flex-direction: column;
     padding: 16px;
   }
-
   .left-block,
   .right-container {
     width: 100%;
   }
-
   .product-image-container {
     height: auto;
     display: flex;
     align-items: flex-start;
   }
-
   .product-image-container img {
     height: auto;
     width: 100%;
     object-fit: contain;
     display: block;
   }
-
   h1 {
     font-size: 1.7rem;
   }
-
   h3 {
     font-size: 1rem;
   }
-
   .story-text {
     font-size: 0.98rem;
   }
-
   .platform-switcher {
     flex-direction: column;
   }
-
   .switch-tab,
   .buy-button {
     width: 100%;
   }
-
   .product-tag {
     font-size: 11px;
   }
