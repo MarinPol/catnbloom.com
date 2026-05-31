@@ -1,5 +1,5 @@
 /* =========================
-RESET 30 may (7)
+RESET 30 may (8)
 ========================= */
 
 * {
@@ -395,7 +395,7 @@ COLLECTION GRID
 }
 
 /* =========================
-INACTIVE STATUS (Шаг 3)
+INACTIVE STATUS (COMPACT)
 ========================= */
 
 .inactive-card {
@@ -418,17 +418,18 @@ INACTIVE STATUS (Шаг 3)
   letter-spacing: 0.5px;
 }
 
-.inactive-badge-page {
+.inactive-badge-compact {
   display: inline-block;
   background: #7b2d2d;
   color: #fff;
-  padding: 6px 12px;
-  font-size: 0.8rem;
+  padding: 2px 6px;
+  font-size: 10px;
   font-weight: bold;
-  border-radius: 4px;
-  margin-bottom: 12px;
+  border-radius: 3px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  line-height: 1;
+  margin-bottom: 10px;
 }
 
 /* =========================
