@@ -30,22 +30,28 @@ layout: null
     <tbody>
       {% assign all_products = site.cottagecore | concat: site.witchy %}
       
-      {% comment %} Присваиваем временный приоритет для сортировки {% endcomment %}
-      {% assign sorted = all_products | sort: "status" %}
-      
-      {% for item in sorted %}
-      <tr>
-        <td>{{ item.sku }}</td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.collection_name }}</td>
-        <td>
-          {% if item.status == 'hidden' %}
-            <span class="status-hidden">HIDDEN</span>
-          {% else %}
-            <span class="status-active">ACTIVE</span>
-          {% endif %}
-        </td>
-      </tr>
+      {% comment %} Сначала выводим HIDDEN {% endcomment %}
+      {% for item in all_products %}
+        {% if item.status == 'hidden' %}
+        <tr>
+          <td>{{ item.sku }}</td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.collection_name }}</td>
+          <td><span class="status-hidden">HIDDEN</span></td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+
+      {% comment %} Затем выводим все остальные (ACTIVE) {% endcomment %}
+      {% for item in all_products %}
+        {% if item.status != 'hidden' %}
+        <tr>
+          <td>{{ item.sku }}</td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.collection_name }}</td>
+          <td><span class="status-active">ACTIVE</span></td>
+        </tr>
+        {% endif %}
       {% endfor %}
     </tbody>
   </table>
