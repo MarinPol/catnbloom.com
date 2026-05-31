@@ -1,5 +1,5 @@
 /* =========================
-RESET 30 may (7)
+RESET 30 may (8)
 ========================= */
 
 * {
@@ -395,7 +395,7 @@ COLLECTION GRID
 }
 
 /* =========================
-INACTIVE STATUS (COMPACT)
+INACTIVE STATUS
 ========================= */
 
 .inactive-card {
@@ -430,6 +430,7 @@ INACTIVE STATUS (COMPACT)
   letter-spacing: 0.5px;
   line-height: 1;
   margin-bottom: 10px;
+  align-self: flex-start;
 }
 
 /* =========================
