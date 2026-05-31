@@ -1,5 +1,5 @@
 /* =========================
-RESET 31 May (4)
+RESET 31 May (5)
 ========================= */
 
 * {
@@ -30,6 +30,13 @@ HEADER
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    height: 120px;
+    padding: 10px 20px;
+  }
 }
 
 /* BRAND */
@@ -200,6 +207,7 @@ LAYOUT
   .container {
     flex-direction: column;
     gap: 20px;
+    margin: 20px auto;
   }
 }
 
@@ -221,12 +229,12 @@ MAIN IMAGE
 .product-image-container {
   border-radius: 8px;
   overflow: hidden;
+  width: 100%;
 }
 
 .product-image-container img {
   width: 100%;
   height: auto;
-  aspect-ratio: auto;
   display: block;
 }
 
