@@ -1,5 +1,5 @@
 /* =========================
-RESET 31 May (3)
+RESET 31 May (4)
 ========================= */
 
 * {
@@ -59,6 +59,12 @@ HAMBURGER
   color: #2d2d2d;
 }
 
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+}
+
 /* =========================
 NAV BAR
 ========================= */
@@ -72,12 +78,31 @@ NAV BAR
   justify-content: center;
 }
 
+@media (max-width: 768px) {
+  .nav-bar {
+    display: none;
+    flex-direction: column;
+  }
+  .nav-bar.open {
+    display: flex;
+  }
+}
+
 .nav-right {
   display: flex;
   gap: 28px;
   list-style: none;
   margin: 0;
   padding: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .nav-right {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
+  }
 }
 
 .nav-right a {
@@ -125,7 +150,8 @@ DROPDOWN
     position: static;
     border: none;
     box-shadow: none;
-    padding-left: 12px;
+    padding-left: 0;
+    text-align: center;
   }
 }
 
@@ -170,7 +196,6 @@ LAYOUT
   gap: 50px;
 }
 
-/* МОБИЛЬНАЯ АДАПТАЦИЯ (КОЛОНКА) */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -194,15 +219,15 @@ MAIN IMAGE
 ========================= */
 
 .product-image-container {
-  height: 500px;
-  overflow: hidden;
   border-radius: 8px;
+  overflow: hidden;
 }
 
 .product-image-container img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: auto;
+  display: block;
 }
 
 /* =========================
