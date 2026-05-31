@@ -1,1 +1,48 @@
-
+---
+layout: null
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Inventory Dashboard</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+    th { background: #f4f4f4; }
+    .status-hidden { color: #7b2d2d; font-weight: bold; }
+    .status-active { color: #a3b18a; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Inventory Dashboard</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Title</th>
+        <th>Collection</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% assign all_products = site.cottagecore | concat: site.witchy %}
+      {% for item in all_products %}
+      <tr>
+        <td>{{ item.sku }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.collection_name }}</td>
+        <td>
+          {% if item.status == 'hidden' %}
+            <span class="status-hidden">HIDDEN</span>
+          {% else %}
+            <span class="status-active">ACTIVE</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
