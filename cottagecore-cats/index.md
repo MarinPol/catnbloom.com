@@ -1,8 +1,8 @@
 ---
 layout: collection
 permalink: /cottagecore-cats/
-
-collection: cottagecore
+type: core
+collection_id: cottagecore
 
 hero_title: "Cottagecore Cats"
 hero_subtitle: "Cozy cats, flowers & soft aesthetics"
