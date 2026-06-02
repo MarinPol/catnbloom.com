@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 1 (2)
+RESET Jun 1 (4)
 ========================= */
 
 * {
@@ -159,6 +159,11 @@ DROPDOWN
     box-shadow: none;
     padding-left: 0;
     text-align: center;
+  }
+  /* ИСПРАВЛЕНИЕ: принудительно делаем ссылки блочными для мобильных */
+  .dropdown-menu a {
+    display: block !important;
+    padding: 8px 10px !important;
   }
 }
 
