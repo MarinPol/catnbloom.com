@@ -3,14 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>{{ page.seo_title | default: page.hero_title }}</title>
   <meta name="description" content="{{ page.seo_description }}">
-
   <meta property="og:title" content="{{ page.seo_title | default: page.hero_title }}">
   <meta property="og:description" content="{{ page.seo_description }}">
   <meta property="og:image" content="{{ page.og_image }}">
-
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
@@ -36,13 +33,24 @@
 {% endif %}
 
 {%- comment -%}
-🔥 FIX: стабильный доступ к коллекции
+ENGINE v2.4: CORE vs SMART_MANUAL Binding
 {%- endcomment -%}
 
-{% assign items = site.cottagecore | sort: "sku" %}
+{% if page.type == 'core' %}
+  {% assign items = site.products | where: "collection", page.collection_id | sort: "sku" %}
+{% elsif page.type == 'smart_manual' %}
+  {% assign items = "" | split: "," %}
+  {% for sku in page.featured_items %}
+    {% for product in site.products %}
+      {% if product.sku == sku %}
+        {% assign items = items | push: product %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+{% endif %}
 
 <section class="product-grid" id="grid">
-
   {% for item in items %}
     {% if item.status != 'hidden' %}
     <a class="product-card load-item" href="{{ item.url }}">
@@ -60,7 +68,6 @@
     </div>
     {% endif %}
   {% endfor %}
-
 </section>
 
 <button id="loadMoreBtn" class="load-more">
@@ -75,17 +82,14 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
   const items = document.querySelectorAll('.load-item');
   const btn = document.getElementById('loadMoreBtn');
-
   let visible = 24;
 
   function updateView() {
     items.forEach((el, index) => {
       el.style.display = index < visible ? 'flex' : 'none';
     });
-
     if (visible >= items.length && btn) {
       btn.style.display = 'none';
     }
@@ -97,7 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
       updateView();
     });
   }
-
   updateView();
 });
 </script>
