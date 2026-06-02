@@ -1,5 +1,5 @@
 /* =========================
-RESET 31 May (5)
+RESET Jun 1 (1)
 ========================= */
 
 * {
@@ -471,4 +471,11 @@ COLLECTION GRID
   margin-top: 4px;
   font-size: 12px;
   color: #999;
+}
+
+/* Точечное исправление мобильного меню */
+@media (max-width: 768px) {
+  .dropdown-menu.is-open {
+    display: block !important;
+  }
 }
