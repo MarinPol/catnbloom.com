@@ -33,22 +33,10 @@
 {% endif %}
 
 {%- comment -%}
-ENGINE v2.4: CORE vs SMART_MANUAL Binding
+ИСПРАВЛЕНО: Прямое обращение к коллекции через site[page.collection_id]
 {%- endcomment -%}
 
-{% if page.type == 'core' %}
-  {% assign items = site.products | where: "collection", page.collection_id | sort: "sku" %}
-{% elsif page.type == 'smart_manual' %}
-  {% assign items = "" | split: "," %}
-  {% for sku in page.featured_items %}
-    {% for product in site.products %}
-      {% if product.sku == sku %}
-        {% assign items = items | push: product %}
-        {% break %}
-      {% endif %}
-    {% endfor %}
-  {% endfor %}
-{% endif %}
+{% assign items = site[page.collection_id] | sort: "sku" %}
 
 <section class="product-grid" id="grid">
   {% for item in items %}
@@ -104,6 +92,5 @@ document.addEventListener("DOMContentLoaded", function () {
   updateView();
 });
 </script>
-
 </body>
 </html>
