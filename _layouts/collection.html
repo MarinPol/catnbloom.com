@@ -36,15 +36,19 @@
   <section class="product-grid">
     {% if page.type == 'core' and site.products %}
       {% assign items = site.products | where: "collection", page.collection_id | sort: "sku" %}
-      {% for product in items %}
-        <div class="product-item">
-          <a href="{{ product.url }}">
-            <img src="{{ product.image_url }}" alt="{{ product.title }}">
-            <h3>{{ product.title }}</h3>
-            <p>{{ product.sku }}</p>
-          </a>
-        </div>
-      {% endfor %}
+      {% if items.size > 0 %}
+        {% for product in items %}
+          <div class="product-item">
+            <a href="{{ product.url }}">
+              <img src="{{ product.image_url }}" alt="{{ product.title }}">
+              <h3>{{ product.title }}</h3>
+              <p>{{ product.sku }}</p>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No products found for this collection.</p>
+      {% endif %}
     {% elsif page.type == 'smart_manual' and page.featured_items %}
       {% for sku in page.featured_items %}
         {% for product in site.products %}
@@ -60,6 +64,8 @@
           {% endif %}
         {% endfor %}
       {% endfor %}
+    {% else %}
+      <p>Collection type not defined or no products available.</p>
     {% endif %}
   </section>
 
