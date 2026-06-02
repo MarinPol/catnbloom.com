@@ -35,10 +35,19 @@
   </section>
 
   <section class="product-grid">
-    {% if page.type == 'core' %}
-      {% assign items = site.products | where: "collection", page.collection_id | sort: "sku" %}
+    {% if page.type == 'core' and site[page.collection_id] %}
+      {% assign items = site[page.collection_id] | sort: "sku" %}
       {% for product in items %}
         {% include product-card.html product=product %}
+      {% endfor %}
+    {% elsif page.type == 'smart_manual' and page.featured_items %}
+      {% for sku in page.featured_items %}
+        {% for product in site.products %}
+          {% if product.sku == sku %}
+            {% include product-card.html product=product %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
       {% endfor %}
     {% endif %}
   </section>
