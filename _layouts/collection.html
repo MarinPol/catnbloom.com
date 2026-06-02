@@ -33,29 +33,35 @@
 {% endif %}
 
 {%- comment -%}
-ИСПРАВЛЕНО: Прямое обращение к коллекции через site[page.collection_id]
+ИСПРАВЛЕНО: Безопасное получение коллекции
 {%- endcomment -%}
 
-{% assign items = site[page.collection_id] | sort: "sku" %}
+{% assign collection_name = page.collection_id %}
+{% assign items = site[collection_name] %}
 
 <section class="product-grid" id="grid">
-  {% for item in items %}
-    {% if item.status != 'hidden' %}
-    <a class="product-card load-item" href="{{ item.url }}">
-      <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}"
-           alt="{{ item.alt_text | default: item.title }}">
-      <div class="product-title">{{ item.headline | default: item.title }}</div>
-      <div class="product-sku">{{ item.sku }}</div>
-    </a>
-    {% else %}
-    <div class="product-card load-item inactive-card">
-      <div class="inactive-label">INACTIVE</div>
-      <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}" alt="Inactive" style="opacity: 0.4;">
-      <div class="product-title">{{ item.headline | default: item.title }}</div>
-      <div class="product-sku">{{ item.sku }}</div>
-    </div>
-    {% endif %}
-  {% endfor %}
+  {% if items %}
+    {% assign sorted_items = items | sort: "sku" %}
+    {% for item in sorted_items %}
+      {% if item.status != 'hidden' %}
+      <a class="product-card load-item" href="{{ item.url }}">
+        <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}"
+             alt="{{ item.alt_text | default: item.title }}">
+        <div class="product-title">{{ item.headline | default: item.title }}</div>
+        <div class="product-sku">{{ item.sku }}</div>
+      </a>
+      {% else %}
+      <div class="product-card load-item inactive-card">
+        <div class="inactive-label">INACTIVE</div>
+        <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}" alt="Inactive" style="opacity: 0.4;">
+        <div class="product-title">{{ item.headline | default: item.title }}</div>
+        <div class="product-sku">{{ item.sku }}</div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <p>No items found in this collection.</p>
+  {% endif %}
 </section>
 
 <button id="loadMoreBtn" class="load-more">
