@@ -10,7 +10,6 @@
       </a>
     </div>
 
-    <!-- HAMBURGER -->
     <button class="menu-toggle" onclick="toggleMenu()">
       ☰
     </button>
@@ -48,4 +47,11 @@
 function toggleMenu() {
   document.getElementById("navBar").classList.toggle("open");
 }
+
+document.querySelector('.dropdown > a').addEventListener('click', function(e) {
+  if (window.innerWidth <= 768) {
+    e.preventDefault();
+    this.nextElementSibling.classList.toggle('is-open');
+  }
+});
 </script>
