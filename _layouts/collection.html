@@ -11,7 +11,7 @@
   <header class="collection-hero">
     <h1>{{ page.hero_title }}</h1>
     {% if page.hero_image %}
-    <div class="product-card">
+    <div class="collection-hero-image">
       <img src="{{ page.hero_image }}" alt="{{ page.hero_title }}">
     </div>
     {% endif %}
@@ -36,19 +36,16 @@
   <section class="product-grid">
     {% if page.type == 'core' and site.products %}
       {% assign items = site.products | where: "collection", page.collection_id | sort: "sku" %}
-      {% if items.size > 0 %}
-        {% for product in items %}
-          <div class="product-item">
-            <a href="{{ product.url }}">
-              <img src="{{ product.image_url }}" alt="{{ product.title }}">
-              <h3>{{ product.title }}</h3>
-              <p>{{ product.sku }}</p>
-            </a>
-          </div>
-        {% endfor %}
-      {% else %}
-        <p>No products found for this collection.</p>
-      {% endif %}
+      {% for product in items %}
+        <div class="product-item">
+          <a href="{{ product.url }}">
+            <img src="{{ product.image_url }}" alt="{{ product.title }}">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.sku }}</p>
+            {% if product.status == 'hidden' %}<span class="badge">Inactive</span>{% endif %}
+          </a>
+        </div>
+      {% endfor %}
     {% elsif page.type == 'smart_manual' and page.featured_items %}
       {% for sku in page.featured_items %}
         {% for product in site.products %}
@@ -58,6 +55,7 @@
                 <img src="{{ product.image_url }}" alt="{{ product.title }}">
                 <h3>{{ product.title }}</h3>
                 <p>{{ product.sku }}</p>
+                {% if product.status == 'hidden' %}<span class="badge">Inactive</span>{% endif %}
               </a>
             </div>
             {% break %}
