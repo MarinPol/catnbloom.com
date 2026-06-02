@@ -3,100 +3,48 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.seo_title | default: page.hero_title }}</title>
-  <meta name="description" content="{{ page.seo_description }}">
-  <meta property="og:title" content="{{ page.seo_title | default: page.hero_title }}">
-  <meta property="og:description" content="{{ page.seo_description }}">
-  <meta property="og:image" content="{{ page.og_image }}">
+  <title>{{ page.hero_title }}</title>
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
-
 <body>
+  {% include header.html %}
 
-{% include header.html %}
+  <header class="collection-hero">
+    <h1>{{ page.hero_title }}</h1>
+    {% if page.hero_image %}
+    <div class="product-card">
+      <img src="{{ page.hero_image }}" alt="{{ page.hero_title }}">
+    </div>
+    {% endif %}
+    <p class="subtitle">{{ page.hero_subtitle }}</p>
+  </header>
 
-<nav class="breadcrumbs">
-  <a href="/">Home</a>
-  <span>/</span>
-  <span class="current-page">{{ page.hero_title }}</span>
-</nav>
+  <section class="collection-intro">
+    {% if page.about_collection %}
+      <h3>About Collection</h3>
+      <p>{{ page.about_collection }}</p>
+    {% endif %}
+    {% if page.artistic_direction %}
+      <h3>Artistic Direction</h3>
+      <p>{{ page.artistic_direction }}</p>
+    {% endif %}
+    {% if page.design_intent %}
+      <h3>Design Intent</h3>
+      <p>{{ page.design_intent }}</p>
+    {% endif %}
+  </section>
 
-<header class="collection-hero">
-  <h1>{{ page.hero_title }}</h1>
-  <p class="subtitle">{{ page.hero_subtitle }}</p>
-</header>
+  <section class="product-grid">
+    {% if page.type == 'core' %}
+      {% assign items = site.products | where: "collection", page.collection_id | sort: "sku" %}
+      {% for product in items %}
+        {% include product-card.html product=product %}
+      {% endfor %}
+    {% endif %}
+  </section>
 
-{% if page.intro %}
-<section class="collection-intro">
-  <p>{{ page.intro }}</p>
-</section>
-{% endif %}
-
-{%- comment -%}
-ИСПРАВЛЕНО: Безопасное получение коллекции
-{%- endcomment -%}
-
-{% assign collection_name = page.collection_id %}
-{% assign items = site[collection_name] %}
-
-<section class="product-grid" id="grid">
-  {% if items %}
-    {% assign sorted_items = items | sort: "sku" %}
-    {% for item in sorted_items %}
-      {% if item.status != 'hidden' %}
-      <a class="product-card load-item" href="{{ item.url }}">
-        <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}"
-             alt="{{ item.alt_text | default: item.title }}">
-        <div class="product-title">{{ item.headline | default: item.title }}</div>
-        <div class="product-sku">{{ item.sku }}</div>
-      </a>
-      {% else %}
-      <div class="product-card load-item inactive-card">
-        <div class="inactive-label">INACTIVE</div>
-        <img src="{{ item.image_url | default: '/assets/images/placeholder.jpg' }}" alt="Inactive" style="opacity: 0.4;">
-        <div class="product-title">{{ item.headline | default: item.title }}</div>
-        <div class="product-sku">{{ item.sku }}</div>
-      </div>
-      {% endif %}
-    {% endfor %}
-  {% else %}
-    <p>No items found in this collection.</p>
-  {% endif %}
-</section>
-
-<button id="loadMoreBtn" class="load-more">
-  Load more
-</button>
-
-{% if page.tagline %}
-<footer class="collection-footer">
-  <p>{{ page.tagline }}</p>
-</footer>
-{% endif %}
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const items = document.querySelectorAll('.load-item');
-  const btn = document.getElementById('loadMoreBtn');
-  let visible = 24;
-
-  function updateView() {
-    items.forEach((el, index) => {
-      el.style.display = index < visible ? 'flex' : 'none';
-    });
-    if (visible >= items.length && btn) {
-      btn.style.display = 'none';
-    }
-  }
-
-  if (btn) {
-    btn.addEventListener('click', () => {
-      visible += 24;
-      updateView();
-    });
-  }
-  updateView();
-});
-</script>
+  <footer class="collection-footer">
+    <p>{{ page.tagline }}</p>
+  </footer>
 </body>
 </html>
