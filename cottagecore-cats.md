@@ -1,8 +1,25 @@
+/* — SYSTEM LOG —
+PROJECT: CatnBloom
+FILE: cottagecore-cats.md
+PURPOSE: Индексная страница коллекции Cottagecore
+DEPENDS ON: _layouts/collection.html
+USED BY: Навигация сайта
+LAST COMPLETED: Добавлены параметры type и collection_id для соответствия шаблону
+CURRENT TASK: Синхронизация метаданных для корректного вывода товаров
+RULES:
+* GitHub Web Interface Only
+* File By File Editing
+* Request Full File Before Editing
+* Do Not Rename Files
+* Preserve Existing Links
+— */
+
 ---
 layout: collection
 permalink: /cottagecore-cats/
 
-collection: cottagecore
+type: core
+collection_id: cottagecore
 
 # SEO + SOCIAL
 hero_title: "Cottagecore Cats"
