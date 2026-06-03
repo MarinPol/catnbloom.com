@@ -1,3 +1,14 @@
+/* — SYSTEM LOG —
+PROJECT: CatnBloom
+FILE: _layouts/collection.html
+PURPOSE: Универсальный шаблон для отображения коллекций (Core и Smart)
+DEPENDS ON: site.products, page.collection_id, page.featured_items
+USED BY: Все страницы с layout: collection
+LAST COMPLETED: Внедрена универсальная логика обработки типов коллекций
+CURRENT TASK: Тестирование работы шаблона для Core и Smart типов
+RULES: GitHub Web Interface Only, Full File Only
+— */
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -34,7 +45,7 @@
   </section>
 
   <section class="product-grid">
-    {% if page.type == 'core' and site.products %}
+    {% if page.type == 'core' %}
       {% assign items = site.products | where: "collection", page.collection_id | sort: "sku" %}
       {% for product in items %}
         <div class="product-item">
@@ -46,7 +57,7 @@
           </a>
         </div>
       {% endfor %}
-    {% elsif page.type == 'smart_manual' and page.featured_items %}
+    {% elsif page.type == 'smart_manual' %}
       {% for sku in page.featured_items %}
         {% for product in site.products %}
           {% if product.sku == sku %}
@@ -63,7 +74,7 @@
         {% endfor %}
       {% endfor %}
     {% else %}
-      <p>Collection type not defined or no products available.</p>
+      <p>Collection type not defined.</p>
     {% endif %}
   </section>
 
