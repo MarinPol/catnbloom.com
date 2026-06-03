@@ -1,11 +1,11 @@
 /* — SYSTEM LOG —
 PROJECT: CatnBloom
 FILE: _layouts/collection.html
-PURPOSE: Универсальный шаблон для отображения коллекций (Core и Smart)
-DEPENDS ON: site.products, page.collection_id, page.featured_items
+PURPOSE: Универсальный шаблон коллекции с динамическим доступом к данным
+DEPENDS ON: site[page.collection_id]
 USED BY: Все страницы с layout: collection
-LAST COMPLETED: Внедрена универсальная логика обработки типов коллекций
-CURRENT TASK: Тестирование работы шаблона для Core и Smart типов
+LAST COMPLETED: Замена жесткой привязки на динамический доступ через site[page.collection_id]
+CURRENT TASK: Обеспечение универсальности для всех коллекций
 RULES: GitHub Web Interface Only, Full File Only
 — */
 
@@ -46,7 +46,7 @@ RULES: GitHub Web Interface Only, Full File Only
 
   <section class="product-grid">
     {% if page.type == 'core' %}
-      {% assign items = site.products | where: "collection", page.collection_id | sort: "sku" %}
+      {% assign items = site[page.collection_id] | sort: "sku" %}
       {% for product in items %}
         <div class="product-item">
           <a href="{{ product.url }}">
@@ -59,22 +59,20 @@ RULES: GitHub Web Interface Only, Full File Only
       {% endfor %}
     {% elsif page.type == 'smart_manual' %}
       {% for sku in page.featured_items %}
-        {% for product in site.products %}
-          {% if product.sku == sku %}
-            <div class="product-item">
-              <a href="{{ product.url }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }}">
-                <h3>{{ product.title }}</h3>
-                <p>{{ product.sku }}</p>
-                {% if product.status == 'hidden' %}<span class="badge">Inactive</span>{% endif %}
-              </a>
-            </div>
-            {% break %}
-          {% endif %}
-        {% endfor %}
+        {% assign product = site[page.collection_id] | where: "sku", sku | first %}
+        {% if product %}
+          <div class="product-item">
+            <a href="{{ product.url }}">
+              <img src="{{ product.image_url }}" alt="{{ product.title }}">
+              <h3>{{ product.title }}</h3>
+              <p>{{ product.sku }}</p>
+              {% if product.status == 'hidden' %}<span class="badge">Inactive</span>{% endif %}
+            </a>
+          </div>
+        {% endif %}
       {% endfor %}
     {% else %}
-      <p>Collection type not defined.</p>
+      <p>Collection type or ID not defined correctly.</p>
     {% endif %}
   </section>
 
