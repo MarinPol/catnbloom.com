@@ -1,11 +1,11 @@
 /* — SYSTEM LOG —
 PROJECT: CatnBloom
 FILE: _layouts/collection.html
-PURPOSE: Универсальный шаблон коллекции с динамическим доступом к данным
+PURPOSE: Универсальный шаблон коллекции с динамическим доступом и фильтром default
 DEPENDS ON: site[page.collection_id]
 USED BY: Все страницы с layout: collection
-LAST COMPLETED: Замена жесткой привязки на динамический доступ через site[page.collection_id]
-CURRENT TASK: Обеспечение универсальности для всех коллекций
+LAST COMPLETED: Добавлен фильтр | default: empty для полной защиты от null
+CURRENT TASK: Финализация шаблона и подготовка к тесту одного товара
 RULES: GitHub Web Interface Only, Full File Only
 — */
 
@@ -45,8 +45,10 @@ RULES: GitHub Web Interface Only, Full File Only
   </section>
 
   <section class="product-grid">
+    {% assign collection_data = site[page.collection_id] | default: empty %}
+
     {% if page.type == 'core' %}
-      {% assign items = site[page.collection_id] | sort: "sku" %}
+      {% assign items = collection_data | sort: "sku" %}
       {% for product in items %}
         <div class="product-item">
           <a href="{{ product.url }}">
@@ -57,9 +59,10 @@ RULES: GitHub Web Interface Only, Full File Only
           </a>
         </div>
       {% endfor %}
+
     {% elsif page.type == 'smart_manual' %}
       {% for sku in page.featured_items %}
-        {% assign product = site[page.collection_id] | where: "sku", sku | first %}
+        {% assign product = collection_data | where: "sku", sku | first %}
         {% if product %}
           <div class="product-item">
             <a href="{{ product.url }}">
@@ -72,7 +75,7 @@ RULES: GitHub Web Interface Only, Full File Only
         {% endif %}
       {% endfor %}
     {% else %}
-      <p>Collection type or ID not defined correctly.</p>
+      <p>Collection type not defined.</p>
     {% endif %}
   </section>
 
