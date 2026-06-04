@@ -45,13 +45,25 @@
 
 <script>
 function toggleMenu() {
-  document.getElementById("navBar").classList.toggle("open");
+  const nav = document.getElementById("navBar");
+  if (nav) nav.classList.toggle("open");
 }
 
-document.querySelector('.dropdown > a').addEventListener('click', function(e) {
-  if (window.innerWidth <= 768) {
-    e.preventDefault();
-    this.nextElementSibling.classList.toggle('is-open');
-  }
+document.addEventListener('DOMContentLoaded', function () {
+  const dropdowns = document.querySelectorAll('.dropdown > a');
+
+  dropdowns.forEach(function (toggle) {
+    toggle.addEventListener('click', function (e) {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+
+        const menu = this.parentElement.querySelector('.dropdown-menu');
+
+        if (menu) {
+          menu.classList.toggle('is-open');
+        }
+      }
+    });
+  });
 });
 </script>
