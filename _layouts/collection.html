@@ -1,72 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>{{ page.hero_title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.hero_title }} | CatnBloom Studio</title>
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
   {% include header.html %}
 
-  <header class="collection-hero">
-    <h1>{{ page.hero_title }}</h1>
-    {% if page.hero_image %}
-    <div class="collection-hero-image">
-      <img src="{{ page.hero_image }}" alt="{{ page.hero_title }}">
-    </div>
-    {% endif %}
-    <p class="subtitle">{{ page.hero_subtitle }}</p>
-  </header>
+  <div class="container">
+    <header class="collection-hero">
+      <h1>{{ page.hero_title }}</h1>
+      {% if page.hero_image %}
+      <div class="collection-hero-image">
+        <img src="{{ page.hero_image }}" alt="{{ page.hero_title }}">
+      </div>
+      {% endif %}
+      <p class="subtitle">{{ page.hero_subtitle }}</p>
+    </header>
 
-  <section class="collection-intro">
-    {% if page.about_collection %}
-      <h3>About Collection</h3>
-      <p>{{ page.about_collection }}</p>
-    {% endif %}
-    {% if page.artistic_direction %}
-      <h3>Artistic Direction</h3>
-      <p>{{ page.artistic_direction }}</p>
-    {% endif %}
-    {% if page.design_intent %}
-      <h3>Design Intent</h3>
-      <p>{{ page.design_intent }}</p>
-    {% endif %}
-  </section>
+    <section class="collection-intro">
+      {% if page.about_collection %}
+        <h3>About Collection</h3>
+        <p>{{ page.about_collection }}</p>
+      {% endif %}
+      {% if page.artistic_direction %}
+        <h3>Artistic Direction</h3>
+        <p>{{ page.artistic_direction }}</p>
+      {% endif %}
+      {% if page.design_intent %}
+        <h3>Design Intent</h3>
+        <p>{{ page.design_intent }}</p>
+      {% endif %}
+    </section>
 
-  <section class="product-grid">
-    {% assign collection_data = site[page.collection_id] | default: empty %}
+    <section class="product-grid">
+      {% assign collection_data = site[page.collection_id] %}
+      
+      {% if collection_data %}
+        {% if page.type == 'core' %}
+          {% assign items = collection_data | sort: "sku" %}
+          {% for product in items %}
+            <div class="product-item">
+              <a href="{{ product.url }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                <h3>{{ product.title }}</h3>
+                <p>{{ product.sku }}</p>
+                {% if product.status == 'hidden' %}<span class="badge">Inactive</span>{% endif %}
+              </a>
+            </div>
+          {% endfor %}
 
-    {% if page.type == 'core' %}
-      {% assign items = collection_data | sort: "sku" %}
-      {% for product in items %}
-        <div class="product-item">
-          <a href="{{ product.url }}">
-            <img src="{{ product.image_url }}" alt="{{ product.title }}">
-            <h3>{{ product.title }}</h3>
-            <p>{{ product.sku }}</p>
-            {% if product.status == 'hidden' %}<span class="badge">Inactive</span>{% endif %}
-          </a>
-        </div>
-      {% endfor %}
-
-    {% elsif page.type == 'smart_manual' %}
-      {% for sku in page.featured_items %}
-        {% assign product = collection_data | where: "sku", sku | first %}
-        {% if product %}
-          <div class="product-item">
-            <a href="{{ product.url }}">
-              <img src="{{ product.image_url }}" alt="{{ product.title }}">
-              <h3>{{ product.title }}</h3>
-              <p>{{ product.sku }}</p>
-              {% if product.status == 'hidden' %}<span class="badge">Inactive</span>{% endif %}
-            </a>
-          </div>
+        {% elsif page.type == 'smart_manual' %}
+          {% for sku in page.featured_items %}
+            {% assign product = collection_data | where: "sku", sku | first %}
+            {% if product %}
+              <div class="product-item">
+                <a href="{{ product.url }}">
+                  <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                  <h3>{{ product.title }}</h3>
+                  <p>{{ product.sku }}</p>
+                  {% if product.status == 'hidden' %}<span class="badge">Inactive</span>{% endif %}
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <p>Collection type not defined.</p>
         {% endif %}
-      {% endfor %}
-    {% else %}
-      <p>Collection type not defined.</p>
-    {% endif %}
-  </section>
+      {% else %}
+        <p>Collection data for '{{ page.collection_id }}' not found.</p>
+      {% endif %}
+    </section>
+  </div>
 
   <footer class="collection-footer">
     <p>{{ page.tagline }}</p>
