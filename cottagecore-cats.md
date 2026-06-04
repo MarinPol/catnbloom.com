@@ -21,14 +21,3 @@ design_intent: "Created as wearable art for a slower, more intentional lifestyle
 # BRAND FOOTER
 tagline: "Find your everyday magic with CatnBloom."
 ---
-
-/* — SYSTEM LOG —
-PROJECT: CatnBloom
-FILE: cottagecore-cats.md
-PURPOSE: Индексная страница коллекции Cottagecore
-DEPENDS ON: _layouts/collection.html
-USED BY: Навигация сайта
-LAST COMPLETED: Синхронизация метаданных для корректной работы liquid фильтров
-CURRENT TASK: Устранение конфликтов разметки
-RULES: GitHub Web Interface Only, Full File Only
-— */
