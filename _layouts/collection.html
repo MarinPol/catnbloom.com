@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio Jun 6 7:23</title>
+  <title>{{ page.hero_title }} | CatnBloom Studio Jun 6 7:27</title>
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
@@ -112,6 +112,28 @@
     {% endif %}
 
   </section>
+
+<script>
+let showcaseIndex = 0;
+
+function moveShowcase(dir) {
+  const track = document.getElementById("showcaseTrack");
+  const items = document.querySelectorAll(".showcase-item");
+
+  if (!track || items.length === 0) return;
+
+  const visible = 3;
+  const maxIndex = Math.max(0, items.length - visible);
+
+  showcaseIndex = showcaseIndex + dir;
+  if (showcaseIndex < 0) showcaseIndex = 0;
+  if (showcaseIndex > maxIndex) showcaseIndex = maxIndex;
+
+  const offset = showcaseIndex * (100 / visible);
+  track.style.transform = `translateX(-${offset}%)`;
+}
+</script>
+  
 
 </body>
 </html>
