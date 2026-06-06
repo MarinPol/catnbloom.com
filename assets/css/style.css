@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 1 (4)
+RESET Jun 6 (1)
 ========================= */
 
 * {
@@ -487,4 +487,119 @@ COLLECTION GRID
   margin-top: 4px;
   font-size: 12px;
   color: #999;
+}
+
+/* =========================
+SHOWCASE (DESKTOP SLIDER / MOBILE ROW)
+========================= */
+
+.product-showcase {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* desktop slider-like horizontal scroll */
+.showcase-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
+}
+
+/* hide scrollbar (clean UI) */
+.showcase-track::-webkit-scrollbar {
+  display: none;
+}
+
+.showcase-item {
+  flex: 0 0 auto;
+  width: 180px;
+  scroll-snap-align: start;
+}
+
+.showcase-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.showcase-item h3 {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #2d2d2d;
+}
+
+/* MOBILE = grid (no slider) */
+@media (max-width: 768px) {
+  .showcase-track {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow: visible;
+  }
+
+  .showcase-item {
+    width: 100%;
+  }
+}
+
+
+/* =========================
+SHOWCASE (DESKTOP SLIDER / MOBILE ROW)
+========================= */
+
+.product-showcase {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* desktop slider-like horizontal scroll */
+.showcase-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
+}
+
+/* hide scrollbar (clean UI) */
+.showcase-track::-webkit-scrollbar {
+  display: none;
+}
+
+.showcase-item {
+  flex: 0 0 auto;
+  width: 180px;
+  scroll-snap-align: start;
+}
+
+.showcase-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.showcase-item h3 {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #2d2d2d;
+}
+
+/* MOBILE = grid (no slider) */
+@media (max-width: 768px) {
+  .showcase-track {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow: visible;
+  }
+
+  .showcase-item {
+    width: 100%;
+  }
 }
