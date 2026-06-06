@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio June 5 9:08</title>
+  <title>{{ page.hero_title }} | CatnBloom Studio - Jun 5 9:28</title>
   <link rel="stylesheet" href="/assets/css/style.css">
 
   <style>
@@ -18,6 +18,9 @@
 <body>
 
   {% include header.html %}
+  
+  {% assign collection_name = page.hero_title %}
+  {% assign title = page.hero_title %}
   {% include breadcrumbs.html %}
 
   <div class="container collection-page">
@@ -112,9 +115,7 @@
 
   </div>
 
-  <footer class="collection-footer">
-    <p>{{ page.tagline }}</p>
-  </footer>
+  {% include footer.html %}
 
 </body>
 </html>
