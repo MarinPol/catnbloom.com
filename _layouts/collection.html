@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio Jun 5 10:52</title>
+  <title>{{ page.hero_title }} | CatnBloom Studio Jun 5 11:19</title>
   <link rel="stylesheet" href="/assets/css/style.css">
 
   <style>
@@ -19,11 +19,11 @@
   {% include header.html %}
 
   {%- comment -%}
-  FIX: breadcrumbs data contract
+  FIX: breadcrumbs data contract (collection context)
   {%- endcomment -%}
 
-  {% assign page.collection_slug = page.collection_id %}
   {% assign page.collection_name = page.hero_title %}
+  {% assign page.collection_slug = page.collection_id %}
 
   {% include breadcrumbs.html %}
 
