@@ -1,18 +1,15 @@
 <nav class="breadcrumbs">
   <a href="/">Home</a>
 
-  {% if page.breadcrumbs %}
-    {% for crumb in page.breadcrumbs %}
-      <span>/</span>
-
-      {% if forloop.last %}
-        <span class="current-page">{{ crumb.title }}</span>
-      {% else %}
-        <a href="{{ crumb.url }}">{{ crumb.title }}</a>
-      {% endif %}
-    {% endfor %}
-  {% else %}
+  {% if page.collection_name %}
     <span>/</span>
-    <span class="current-page">{{ page.title }}</span>
+    <a href="/{{ page.collection_slug }}/">
+      {{ page.collection_name }}
+    </a>
   {% endif %}
+
+  <span>/</span>
+  <span class="current-page">
+    {{ page.title }}
+  </span>
 </nav>
