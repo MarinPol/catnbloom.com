@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio Jun 5 11:19</title>
+  <title>{{ page.hero_title }} | CatnBloom Studio Jun 6 5:30</title>
   <link rel="stylesheet" href="/assets/css/style.css">
 
   <style>
@@ -29,55 +29,67 @@
 
   <div class="container collection-page">
 
-    <header class="collection-hero">
-      <h1>{{ page.hero_title }}</h1>
+    <div class="left-block">
 
       {% if page.hero_image %}
-      <div class="collection-hero-image">
+      <div class="product-image-container">
         <img src="{{ page.hero_image }}" alt="{{ page.hero_title }}">
       </div>
       {% endif %}
 
-      <p class="subtitle">{{ page.hero_subtitle }}</p>
-    </header>
+    </div>
 
-    <section class="collection-intro">
+    <div class="right-container">
 
-      {% if page.about_collection %}
-        <h3>About Collection</h3>
-        <p>{{ page.about_collection }}</p>
-      {% endif %}
+      <header class="collection-hero">
+        <h1>{{ page.hero_title }}</h1>
 
-      {% if page.artistic_direction %}
-        <h3>Artistic Direction</h3>
-        <p>{{ page.artistic_direction }}</p>
-      {% endif %}
+        {% if page.hero_subtitle %}
+        <div class="story-text">
+          {{ page.hero_subtitle }}
+        </div>
+        {% endif %}
+      </header>
 
-      {% if page.design_intent %}
-        <h3>Design Intent</h3>
-        <p>{{ page.design_intent }}</p>
-      {% endif %}
+      <section class="collection-intro">
 
-    </section>
+        {% if page.about_collection %}
+          <h3>About Collection</h3>
+          <p>{{ page.about_collection }}</p>
+        {% endif %}
 
-    <section class="product-grid">
+        {% if page.artistic_direction %}
+          <h3>Artistic Direction</h3>
+          <p>{{ page.artistic_direction }}</p>
+        {% endif %}
 
-      {% assign items = site[page.collection_id] %}
+        {% if page.design_intent %}
+          <h3>Design Intent</h3>
+          <p>{{ page.design_intent }}</p>
+        {% endif %}
 
-      {% if items %}
-        {% for product in items %}
-          <div class="product-item">
-            <a href="{{ product.url }}">
-              <img src="{{ product.image_url }}" alt="{{ product.title }}">
-              <h3>{{ product.title }}</h3>
-            </a>
-          </div>
-        {% endfor %}
-      {% endif %}
+      </section>
 
-    </section>
+    </div>
 
   </div>
+
+  <section class="product-grid">
+
+    {% assign items = site[page.collection_id] %}
+
+    {% if items %}
+      {% for product in items %}
+        <div class="product-item">
+          <a href="{{ product.url }}">
+            <img src="{{ product.image_url }}" alt="{{ product.title }}">
+            <h3>{{ product.title }}</h3>
+          </a>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+  </section>
 
 </body>
 </html>
