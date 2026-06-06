@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio Jun 6 6:54</title>
+  <title>{{ page.hero_title }} | CatnBloom Studio Jun 6 7:23</title>
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
@@ -67,10 +67,16 @@
   <!-- ===================== -->
   <!-- SHOWCASE (FIRST 6) -->
   <!-- ===================== -->
+
   <section class="product-showcase">
 
-    {% if showcase_items %}
-      <div class="showcase-track">
+  <div class="showcase-wrapper">
+
+    <button class="showcase-btn left" onclick="moveShowcase(-1)">‹</button>
+
+    <div class="showcase-viewport">
+      <div class="showcase-track" id="showcaseTrack">
+
         {% for product in showcase_items %}
           <div class="showcase-item">
             <a href="{{ product.url }}">
@@ -79,10 +85,15 @@
             </a>
           </div>
         {% endfor %}
-      </div>
-    {% endif %}
 
-  </section>
+      </div>
+    </div>
+
+    <button class="showcase-btn right" onclick="moveShowcase(1)">›</button>
+
+  </div>
+
+</section>
 
   <!-- ===================== -->
   <!-- MAIN GRID (REST) -->
