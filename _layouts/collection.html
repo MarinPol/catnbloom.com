@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio</title>
+  <title>{{ page.hero_title }} | CatnBloom Studio Jun 5 10:52</title>
   <link rel="stylesheet" href="/assets/css/style.css">
 
   <style>
@@ -18,8 +18,12 @@
 
   {% include header.html %}
 
+  {%- comment -%}
+  FIX: breadcrumbs data contract
+  {%- endcomment -%}
+
+  {% assign page.collection_slug = page.collection_id %}
   {% assign page.collection_name = page.hero_title %}
-  {% assign page.collection_slug = page.collection_id | default: page.slug %}
 
   {% include breadcrumbs.html %}
 
@@ -60,14 +64,16 @@
 
       {% assign items = site[page.collection_id] %}
 
-      {% for product in items %}
-        <div class="product-item">
-          <a href="{{ product.url }}">
-            <img src="{{ product.image_url }}" alt="{{ product.title }}">
-            <h3>{{ product.title }}</h3>
-          </a>
-        </div>
-      {% endfor %}
+      {% if items %}
+        {% for product in items %}
+          <div class="product-item">
+            <a href="{{ product.url }}">
+              <img src="{{ product.image_url }}" alt="{{ product.title }}">
+              <h3>{{ product.title }}</h3>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
 
     </section>
 
