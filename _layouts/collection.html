@@ -18,23 +18,8 @@
 
   {% include header.html %}
 
-  {%- comment -%}
-  Breadcrumb contract (SAFE Jekyll version)
-  {%- endcomment -%}
-
-  {% capture breadcrumbs_raw %}
-  Home|/|{{ page.hero_title }}|{{ page.url }}
-  {% endcapture %}
-
-  {% assign parts = breadcrumbs_raw | strip | split: "|" %}
-
-  {% assign page.breadcrumbs = "" | split: "," %}
-
-  {% assign home = "title:Home,url:/" %}
-  {% assign current = "title:" | append: parts[2] | append: ",url:" | append: parts[3] %}
-
-  {% assign page.breadcrumbs = page.breadcrumbs | push: home %}
-  {% assign page.breadcrumbs = page.breadcrumbs | push: current %}
+  {% assign page.collection_name = page.hero_title %}
+  {% assign page.collection_slug = page.collection_id | default: page.slug %}
 
   {% include breadcrumbs.html %}
 
@@ -75,16 +60,14 @@
 
       {% assign items = site[page.collection_id] %}
 
-      {% if items %}
-        {% for product in items %}
-          <div class="product-item">
-            <a href="{{ product.url }}">
-              <img src="{{ product.image_url }}" alt="{{ product.title }}">
-              <h3>{{ product.title }}</h3>
-            </a>
-          </div>
-        {% endfor %}
-      {% endif %}
+      {% for product in items %}
+        <div class="product-item">
+          <a href="{{ product.url }}">
+            <img src="{{ product.image_url }}" alt="{{ product.title }}">
+            <h3>{{ product.title }}</h3>
+          </a>
+        </div>
+      {% endfor %}
 
     </section>
 
