@@ -3,11 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio Jun 5 9:45</title>
+  <title>{{ page.hero_title }} | CatnBloom Studio</title>
   <link rel="stylesheet" href="/assets/css/style.css">
 
   <style>
-    /* FIX: stacking context for mobile dropdown stability */
     .collection-page {
       position: relative;
       z-index: 1;
@@ -18,7 +17,25 @@
 <body>
 
   {% include header.html %}
-  
+
+  {%- comment -%}
+  Breadcrumb contract (SAFE Jekyll version)
+  {%- endcomment -%}
+
+  {% capture breadcrumbs_raw %}
+  Home|/|{{ page.hero_title }}|{{ page.url }}
+  {% endcapture %}
+
+  {% assign parts = breadcrumbs_raw | strip | split: "|" %}
+
+  {% assign page.breadcrumbs = "" | split: "," %}
+
+  {% assign home = "title:Home,url:/" %}
+  {% assign current = "title:" | append: parts[2] | append: ",url:" | append: parts[3] %}
+
+  {% assign page.breadcrumbs = page.breadcrumbs | push: home %}
+  {% assign page.breadcrumbs = page.breadcrumbs | push: current %}
+
   {% include breadcrumbs.html %}
 
   <div class="container collection-page">
@@ -59,54 +76,14 @@
       {% assign items = site[page.collection_id] %}
 
       {% if items %}
-        {% if page.type == 'core' %}
-
-          {% for product in items %}
-            <div class="product-item">
-              <a href="{{ product.url }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }}">
-                <h3>{{ product.title }}</h3>
-                <p>{{ product.sku }}</p>
-
-                {% if product.status == 'hidden' %}
-                  <span class="badge">Inactive</span>
-                {% endif %}
-              </a>
-            </div>
-          {% endfor %}
-
-        {% elsif page.type == 'smart_manual' %}
-
-          {% for sku in page.featured_items %}
-
-            {% assign product = collection_data | where: "sku", sku | first %}
-
-            {% if product %}
-              <div class="product-item">
-                <a href="{{ product.url }}">
-                  <img src="{{ product.image_url }}" alt="{{ product.title }}">
-                  <h3>{{ product.title }}</h3>
-                  <p>{{ product.sku }}</p>
-
-                  {% if product.status == 'hidden' %}
-                    <span class="badge">Inactive</span>
-                  {% endif %}
-                </a>
-              </div>
-            {% endif %}
-
-          {% endfor %}
-
-        {% else %}
-
-          <p>Collection type not defined.</p>
-
-        {% endif %}
-
-      {% else %}
-
-        <p>Collection data for '{{ page.collection_id }}' not found.</p>
-
+        {% for product in items %}
+          <div class="product-item">
+            <a href="{{ product.url }}">
+              <img src="{{ product.image_url }}" alt="{{ product.title }}">
+              <h3>{{ product.title }}</h3>
+            </a>
+          </div>
+        {% endfor %}
       {% endif %}
 
     </section>
