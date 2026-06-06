@@ -3,32 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio Jun 6 5:30</title>
+  <title>{{ page.hero_title }} | CatnBloom Studio Jun 6 6:54</title>
   <link rel="stylesheet" href="/assets/css/style.css">
-
-  <style>
-    .collection-page {
-      position: relative;
-      z-index: 1;
-    }
-  </style>
 </head>
 
 <body>
 
   {% include header.html %}
-
-  {%- comment -%}
-  FIX: breadcrumbs data contract (collection context)
-  {%- endcomment -%}
-
-  {% assign page.collection_name = page.hero_title %}
-  {% assign page.collection_slug = page.collection_id %}
-
   {% include breadcrumbs.html %}
 
   <div class="container collection-page">
 
+    {% assign items = site[page.collection_id] %}
+    {% assign showcase_items = items | slice: 0, 6 %}
+    {% assign grid_items = items | slice: 6, 999 %}
+
+    <!-- LEFT BLOCK -->
     <div class="left-block">
 
       {% if page.hero_image %}
@@ -39,6 +29,7 @@
 
     </div>
 
+    <!-- RIGHT BLOCK -->
     <div class="right-container">
 
       <header class="collection-hero">
@@ -71,15 +62,35 @@
       </section>
 
     </div>
-
   </div>
 
+  <!-- ===================== -->
+  <!-- SHOWCASE (FIRST 6) -->
+  <!-- ===================== -->
+  <section class="product-showcase">
+
+    {% if showcase_items %}
+      <div class="showcase-track">
+        {% for product in showcase_items %}
+          <div class="showcase-item">
+            <a href="{{ product.url }}">
+              <img src="{{ product.image_url }}" alt="{{ product.title }}">
+              <h3>{{ product.title }}</h3>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </section>
+
+  <!-- ===================== -->
+  <!-- MAIN GRID (REST) -->
+  <!-- ===================== -->
   <section class="product-grid">
 
-    {% assign items = site[page.collection_id] %}
-
-    {% if items %}
-      {% for product in items %}
+    {% if grid_items %}
+      {% for product in grid_items %}
         <div class="product-item">
           <a href="{{ product.url }}">
             <img src="{{ product.image_url }}" alt="{{ product.title }}">
