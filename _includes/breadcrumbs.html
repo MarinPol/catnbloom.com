@@ -1,16 +1,17 @@
 <nav class="breadcrumbs">
   <a href="/">Home</a>
 
-  {% if page.collection_name %}
+  {% if page.collection_name or page.collection_id %}
     <span>/</span>
-    <a href="/{{ page.collection_slug }}/">
-      {{ page.collection_name }}
+
+    <a href="/{{ page.collection_slug | default: page.collection_id }}/">
+      {{ page.collection_name | default: page.collection_id | capitalize }}
     </a>
   {% endif %}
 
   <span>/</span>
 
   <span class="current-page">
-    {{ page.hero_title }}
+    {{ page.title | default: page.hero_title }}
   </span>
 </nav>
