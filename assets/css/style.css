@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 6 (3)
+RESET Jun 6 (4)
 ========================= */
 
 * {
@@ -121,30 +121,26 @@ NAV BAR
 }
 
 /* =========================
-DROPDOWN (STABLE FIXED VERSION)
+DROPDOWN
 ========================= */
 
 .dropdown {
   position: relative;
 }
 
-/* базовое скрытие */
 .dropdown-menu {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-
   background: #fff;
   border: 1px solid #eee;
   padding: 10px;
   min-width: 220px;
-
   z-index: 1000;
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
-/* desktop hover */
 @media (min-width: 769px) {
   .dropdown:hover > .dropdown-menu {
     display: block;
@@ -158,7 +154,6 @@ DROPDOWN (STABLE FIXED VERSION)
   }
 }
 
-/* mobile behavior */
 @media (max-width: 768px) {
   .dropdown-menu {
     position: static;
@@ -196,10 +191,6 @@ BREADCRUMBS
 .breadcrumbs a {
   color: #777;
   text-decoration: none;
-}
-
-.breadcrumbs a:hover {
-  color: #2d2d2d;
 }
 
 .current-page {
@@ -462,19 +453,19 @@ COLLECTION GRID
   align-items: start;
 }
 
-.product-card {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
+/* ✅ CRITICAL FIX: prevents oversized images */
+.product-item {
+  overflow: hidden;
 }
 
-.product-card img {
+/* ✅ CRITICAL FIX: consistent square behavior */
+.product-item img {
   width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 12px;
-  display: block;
 }
 
 .product-title {
@@ -499,20 +490,17 @@ SHOWCASE FINAL FIX (SLIDER CORE)
   padding: 0 20px;
 }
 
-/* wrapper */
 .showcase-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* viewport window */
 .showcase-viewport {
   overflow: hidden;
   width: 100%;
 }
 
-/* TRACK */
 .showcase-track {
   display: flex;
   gap: 18px;
@@ -520,9 +508,8 @@ SHOWCASE FINAL FIX (SLIDER CORE)
   will-change: transform;
 }
 
-/* ITEM = FIXED BASIS (CRITICAL) */
 .showcase-item {
-  flex: 0 0 calc((100% - 36px) / 3); /* 3 items visible */
+  flex: 0 0 calc((100% - 36px) / 3);
 }
 
 .showcase-item img {
@@ -539,7 +526,6 @@ SHOWCASE FINAL FIX (SLIDER CORE)
   color: #2d2d2d;
 }
 
-/* BUTTONS */
 .showcase-btn {
   background: #fff;
   border: 1px solid #ddd;
@@ -554,7 +540,6 @@ SHOWCASE FINAL FIX (SLIDER CORE)
   background: #f5f5f5;
 }
 
-/* MOBILE */
 @media (max-width: 768px) {
   .showcase-wrapper {
     display: block;
