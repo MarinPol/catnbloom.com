@@ -1,17 +1,77 @@
 <nav class="breadcrumbs">
   <a href="/">Home</a>
 
-  {% if page.collection_name or page.collection_id %}
+  {%- comment -%}
+  =========================
+  COLLECTION PAGE LOGIC
+  =========================
+  {%- endcomment -%}
+
+  {% if page.layout == "collection" %}
+
     <span>/</span>
 
-    <a href="/{{ page.collection_slug | default: page.collection_id }}/">
-      {{ page.collection_name | default: page.collection_id | capitalize }}
-    </a>
+    {% if page.collection_name %}
+      <span class="current-page">
+        {{ page.collection_name }}
+      </span>
+    {% else %}
+      <span class="current-page">
+        Collection
+      </span>
+    {% endif %}
+
+  {%- comment -%}
+  =========================
+  PRODUCT PAGE LOGIC (MATERIAL - НЕ ТРОГАЕМ ЛОГИКУ)
+  =========================
+  {%- endcomment -%}
+
+  {% elsif page.layout == "product" %}
+
+    {% if page.collection_name or page.collection_id %}
+
+      <span>/</span>
+
+      <a href="/{{ page.collection_slug | default: page.collection_id }}/">
+        {{ page.collection_name | default: page.collection_id | capitalize }}
+      </a>
+
+    {% endif %}
+
+    <span>/</span>
+
+    <span class="current-page">
+      {{ page.title | default: page.hero_title }}
+    </span>
+
+  {%- comment -%}
+  =========================
+  SAFETY FALLBACK (НЕ ЛОМАЕТ НИЧЕГО)
+  =========================
+  {%- endcomment -%}
+
+  {% else %}
+
+    {% if page.collection_name or page.collection_id %}
+
+      <span>/</span>
+
+      <span class="current-page">
+        {{ page.collection_name | default: page.collection_id | capitalize }}
+      </span>
+
+    {% endif %}
+
+    {% if page.title or page.hero_title %}
+
+      <span>/</span>
+
+      <span class="current-page">
+        {{ page.title | default: page.hero_title }}
+      </span>
+
+    {% endif %}
+
   {% endif %}
-
-  <span>/</span>
-
-  <span class="current-page">
-    {{ page.title | default: page.hero_title }}
-  </span>
 </nav>
