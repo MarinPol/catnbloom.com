@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 6 (2)
+RESET Jun 6 (3)
 ========================= */
 
 * {
@@ -490,7 +490,7 @@ COLLECTION GRID
 }
 
 /* =========================
-SHOWCASE (DESKTOP SLIDER / MOBILE ROW)
+SHOWCASE FINAL FIX (SLIDER CORE)
 ========================= */
 
 .product-showcase {
@@ -499,140 +499,30 @@ SHOWCASE (DESKTOP SLIDER / MOBILE ROW)
   padding: 0 20px;
 }
 
-/* desktop slider-like horizontal scroll */
-.showcase-track {
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 10px;
-}
-
-/* hide scrollbar (clean UI) */
-.showcase-track::-webkit-scrollbar {
-  display: none;
-}
-
-.showcase-item {
-  flex: 0 0 auto;
-  width: 180px;
-  scroll-snap-align: start;
-}
-
-.showcase-item img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
-}
-
-.showcase-item h3 {
-  font-size: 13px;
-  margin-top: 8px;
-  color: #2d2d2d;
-}
-
-/* MOBILE = grid (no slider) */
-@media (max-width: 768px) {
-  .showcase-track {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    overflow: visible;
-  }
-
-  .showcase-item {
-    width: 100%;
-  }
-}
-
-
-/* =========================
-SHOWCASE (DESKTOP SLIDER / MOBILE ROW)
-========================= */
-
-.product-showcase {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 0 20px;
-}
-
-/* desktop slider-like horizontal scroll */
-.showcase-track {
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 10px;
-}
-
-/* hide scrollbar (clean UI) */
-.showcase-track::-webkit-scrollbar {
-  display: none;
-}
-
-.showcase-item {
-  flex: 0 0 auto;
-  width: 180px;
-  scroll-snap-align: start;
-}
-
-.showcase-item img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
-}
-
-.showcase-item h3 {
-  font-size: 13px;
-  margin-top: 8px;
-  color: #2d2d2d;
-}
-
-/* MOBILE = grid (no slider) */
-@media (max-width: 768px) {
-  .showcase-track {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    overflow: visible;
-  }
-
-  .showcase-item {
-    width: 100%;
-  }
-}
-
-/* =========================
-SHOWCASE CAROUSEL (REAL SLIDER)
-========================= */
-
+/* wrapper */
 .showcase-wrapper {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 0 20px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* viewport = window of 3 cards */
+/* viewport window */
 .showcase-viewport {
   overflow: hidden;
   width: 100%;
 }
 
-/* track movement */
+/* TRACK */
 .showcase-track {
   display: flex;
   gap: 18px;
   transition: transform 0.4s ease;
+  will-change: transform;
 }
 
-/* exactly 3 visible cards */
+/* ITEM = FIXED BASIS (CRITICAL) */
 .showcase-item {
-  flex: 0 0 calc(33.333% - 12px);
+  flex: 0 0 calc((100% - 36px) / 3); /* 3 items visible */
 }
 
 .showcase-item img {
@@ -643,7 +533,13 @@ SHOWCASE CAROUSEL (REAL SLIDER)
   display: block;
 }
 
-/* buttons */
+.showcase-item h3 {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #2d2d2d;
+}
+
+/* BUTTONS */
 .showcase-btn {
   background: #fff;
   border: 1px solid #ddd;
@@ -652,14 +548,13 @@ SHOWCASE CAROUSEL (REAL SLIDER)
   border-radius: 50%;
   cursor: pointer;
   font-size: 18px;
-  line-height: 1;
 }
 
 .showcase-btn:hover {
   background: #f5f5f5;
 }
 
-/* MOBILE = grid */
+/* MOBILE */
 @media (max-width: 768px) {
   .showcase-wrapper {
     display: block;
@@ -669,6 +564,7 @@ SHOWCASE CAROUSEL (REAL SLIDER)
     transform: none !important;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   .showcase-btn {
