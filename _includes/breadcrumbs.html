@@ -11,15 +11,9 @@
 
     <span>/</span>
 
-    {% if page.collection_name %}
-      <span class="current-page">
-        {{ page.collection_name }}
-      </span>
-    {% else %}
-      <span class="current-page">
-        Collection
-      </span>
-    {% endif %}
+    <span class="current-page">
+      {{ page.hero_title }}
+    </span>
 
   {%- comment -%}
   =========================
