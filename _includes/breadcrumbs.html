@@ -17,7 +17,7 @@
 
   {%- comment -%}
   =========================
-  PRODUCT PAGE LOGIC (MATERIAL - НЕ ТРОГАЕМ ЛОГИКУ)
+  PRODUCT PAGE LOGIC (MATERIAL - FIXED SAFE LINK)
   =========================
   {%- endcomment -%}
 
@@ -27,7 +27,9 @@
 
       <span>/</span>
 
-      <a href="/{{ page.collection_slug | default: page.collection_id }}/">
+      {% assign collection_url = page.collection_slug | default: page.collection_id %}
+
+      <a href="/{{ collection_url }}/">
         {{ page.collection_name | default: page.collection_id | capitalize }}
       </a>
 
@@ -41,7 +43,7 @@
 
   {%- comment -%}
   =========================
-  SAFETY FALLBACK (НЕ ЛОМАЕТ НИЧЕГО)
+  SAFETY FALLBACK
   =========================
   {%- endcomment -%}
 
@@ -51,9 +53,11 @@
 
       <span>/</span>
 
-      <span class="current-page">
+      {% assign collection_url = page.collection_slug | default: page.collection_id %}
+
+      <a href="/{{ collection_url }}/">
         {{ page.collection_name | default: page.collection_id | capitalize }}
-      </span>
+      </a>
 
     {% endif %}
 
