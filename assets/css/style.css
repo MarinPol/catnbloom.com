@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 7 (1)
+RESET Jun 7 (2)
 ========================= */
 
 * {
@@ -453,12 +453,11 @@ COLLECTION GRID
   align-items: start;
 }
 
-/* ✅ CRITICAL FIX: prevents oversized images */
+/* CRITICAL FIX */
 .product-item {
   overflow: hidden;
 }
 
-/* ✅ CRITICAL FIX: consistent square behavior */
 .product-item img {
   width: 100%;
   max-width: 100%;
@@ -466,18 +465,6 @@ COLLECTION GRID
   display: block;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-}
-
-.product-title {
-  font-size: 14px;
-  margin-top: 10px;
-  line-height: 1.4;
-}
-
-.product-sku {
-  margin-top: 4px;
-  font-size: 12px;
-  color: #999;
 }
 
 /* =========================
@@ -562,15 +549,15 @@ SHOWCASE FINAL FIX (SLIDER CORE)
 }
 
 /* =========================
-FOOTER SYSTEM
+FOOTER SYSTEM (UPDATED)
 ========================= */
 
 .site-footer {
   width: 100%;
   margin-top: 60px;
-  padding: 30px 20px;
-  border-top: 1px solid #eee;
-  background: #fff;
+  padding: 40px 20px;
+  border-top: 2px solid #e0e0e0;
+  background: #fafafa;
 }
 
 .footer-container {
@@ -584,8 +571,8 @@ FOOTER SYSTEM
 
 .footer-line {
   font-size: 13px;
-  color: #666;
-  line-height: 1.4;
+  color: #555;
+  line-height: 1.6;
 }
 
 .footer-legal {
@@ -596,4 +583,11 @@ FOOTER SYSTEM
 .footer-tags {
   font-size: 12px;
   color: #888;
+}
+
+/* optional stronger brand line */
+.footer-brand {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
 }
