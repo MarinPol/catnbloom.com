@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 7 (2)
+RESET Jun 8 (1)
 ========================= */
 
 * {
@@ -590,4 +590,19 @@ FOOTER SYSTEM (UPDATED)
   font-size: 14px;
   font-weight: 600;
   color: #333;
+}
+.buy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* FIX: выравнивание Lucide SVG */
+.buy-button svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
+  vertical-align: middle;
 }
