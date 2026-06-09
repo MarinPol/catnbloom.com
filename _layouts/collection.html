@@ -1,135 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio Jun 6 8:24</title>
-  <link rel="stylesheet" href="/assets/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% if page.status == 'hidden' %}
+    <meta name="robots" content="noindex, nofollow">
+    {% endif %}
+
+    <title>{{ page.title }} | CatnBloom Studio</title>
+    <meta name="description" content="{{ page.story | default: page.headline }}">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.story | default: page.headline }}">
+    <meta property="og:image" content="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Lucide Icons (ADDED) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      /* minimal safe enhancement ONLY for icon alignment */
+      .buy-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .buy-button i {
+        width: 18px;
+        height: 18px;
+      }
+    </style>
+
 </head>
 
 <body>
 
-  {% include header.html %}
-  {% include breadcrumbs.html %}
+{% include header.html %}
+{% include breadcrumbs.html %}
 
-  {% assign items = site[page.collection_id] %}
-  {% assign showcase_items = items | slice: 0, 6 %}
-  {% assign grid_items = items | slice: 6, 999 %}
-
-  <div class="container collection-page">
-
-    <!-- LEFT -->
+<div class="container">
     <div class="left-block">
-      {% if page.hero_image %}
         <div class="product-image-container">
-          <img src="{{ page.hero_image }}" alt="{{ page.hero_title }}">
+            <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
+                 alt="{{ page.alt_text | default: page.title }}">
         </div>
-      {% endif %}
+
+        {% if page.detail_images and page.detail_images.size > 0 %}
+        <div class="detail-gallery">
+            {% for img in page.detail_images %}
+            <a href="/assets/images/products/{{ img }}" data-lightbox="product-gallery" class="gallery-item">
+                <img src="/assets/images/products/{{ img }}"
+                      alt="{{ page.title }} detail {{ forloop.index }}"
+                      loading="lazy">
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
 
-    <!-- RIGHT -->
     <div class="right-container">
 
-      <header class="collection-hero">
-        <h1>{{ page.hero_title }}</h1>
+        <h1>{{ page.title }}</h1>
 
-        {% if page.hero_subtitle %}
-        <div class="story-text">
-          {{ page.hero_subtitle }}
+        {% if page.date_added %}
+        <div class="meta-date">Added: {{ page.date_added | date: "%B %d, %Y" }}</div>
+        {% endif %}
+
+        {% if page.status == 'hidden' %}
+        <span class="inactive-badge-compact">Inactive</span>
+        {% endif %}
+
+        {% if page.story %}
+        <div class="story-text">{{ page.story }}</div>
+        {% endif %}
+
+        {% if page.accent_h3_1 %}<h3>{{ page.accent_h3_1 }}</h3>{% endif %}
+        {% if page.accent_h3_2 %}<h3>{{ page.accent_h3_2 }}</h3>{% endif %}
+
+        {% if page.human_proof %}
+        <div class="human-proof-box">{{ page.human_proof }}</div>
+        {% endif %}
+
+        {% if page.author_note %}
+        <div class="author-note-box">{{ page.author_note }}</div>
+        {% endif %}
+
+        {% if page.teepublic_url %}
+        <div class="platform-switcher">
+            <button class="switch-tab active" id="tab-tp"
+                    onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">
+                Apparel
+            </button>
+
+            {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
+            <button class="switch-tab" id="tab-rb"
+                    onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
+                Stickers & Notebooks
+            </button>
+            {% endif %}
         </div>
-        {% endif %}
-      </header>
 
-      <section class="collection-intro">
+        <!-- UPDATED BUTTON WITH ICON -->
+        <a href="{{ page.teepublic_url }}"
+           class="buy-button"
+           id="action-btn"
+           target="_blank">
 
-        {% if page.about_collection %}
-          <h3>About Collection</h3>
-          <p>{{ page.about_collection }}</p>
-        {% endif %}
-
-        {% if page.artistic_direction %}
-          <h3>Artistic Direction</h3>
-          <p>{{ page.artistic_direction }}</p>
-        {% endif %}
-
-        {% if page.design_intent %}
-          <h3>Design Intent</h3>
-          <p>{{ page.design_intent }}</p>
-        {% endif %}
-
-      </section>
-
-    </div>
-  </div>
-
-  <!-- ===================== -->
-  <!-- SHOWCASE SLIDER (FIRST 6) -->
-  <!-- ===================== -->
-
-  <section class="product-showcase">
-
-    <div class="showcase-wrapper">
-
-      <button class="showcase-btn left" onclick="moveShowcase(-1)">‹</button>
-
-      <div class="showcase-viewport">
-        <div class="showcase-track" id="showcaseTrack">
-
-          {% for product in showcase_items %}
-            <div class="showcase-item">
-              <a href="{{ product.url }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }}">
-                <h3>{{ product.title }}</h3>
-              </a>
-            </div>
-          {% endfor %}
-
-        </div>
-      </div>
-
-      <button class="showcase-btn right" onclick="moveShowcase(1)">›</button>
-
-    </div>
-
-  </section>
-
-  <!-- ===================== -->
-  <!-- GRID (REST) -->
-  <!-- ===================== -->
-
-  <section class="product-grid">
-
-    {% for product in grid_items %}
-      <div class="product-item">
-        <a href="{{ product.url }}">
-          <img src="{{ product.image_url }}" alt="{{ product.title }}">
-          <h3>{{ product.title }}</h3>
+            <i data-lucide="shopping-cart"></i>
+            See on TeePublic
         </a>
-      </div>
-    {% endfor %}
+        {% endif %}
 
-  </section>
+        {% if page.extra_links %}
+        <div class="extra-links-section">
+            <h3>More from Studio</h3>
+            <div class="extra-links-list">
+                {% for link in page.extra_links %}
+                    <a href="{{ link.url }}" class="extra-link" target="_blank">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if page.tags %}
+        <div class="tags-container">
+            {% for tag in page.tags %}
+                <span class="product-tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="product-id-spec">
+            {% if page.sku %}
+            <strong>Product ID:</strong> {{ page.sku }}<br>
+            {% endif %}
+            <strong>Last updated:</strong> {{ site.time | date: "%B %d, %Y" }}
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
 
 <script>
-let showcaseIndex = 0;
+function togglePlatform(platform, url) {
+    const btn = document.getElementById('action-btn');
+    if (!btn) return;
 
-function moveShowcase(dir) {
-  const track = document.getElementById("showcaseTrack");
-  const items = document.querySelectorAll(".showcase-item");
+    btn.href = url;
+    btn.textContent = 'See on ' + platform;
 
-  if (!track || items.length === 0) return;
+    const tp = document.getElementById('tab-tp');
+    const rb = document.getElementById('tab-rb');
 
-  const visible = 3;
-  const maxIndex = Math.max(0, items.length - visible);
+    if (tp) tp.classList.remove('active');
+    if (rb) rb.classList.remove('active');
 
-  showcaseIndex = showcaseIndex + dir;
-  if (showcaseIndex < 0) showcaseIndex = 0;
-  if (showcaseIndex > maxIndex) showcaseIndex = maxIndex;
-
-  const itemWidth = items[0].offsetWidth + 18; // gap included
-  track.style.transform = `translateX(-${showcaseIndex * itemWidth}px)`;
+    if (platform === 'TeePublic' && tp) tp.classList.add('active');
+    if (platform === 'Redbubble' && rb) rb.classList.add('active');
 }
 </script>
+
+<script>
+  // activate lucide icons AFTER DOM load
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  });
+</script>
+
 {% include footer.html %}
 </body>
 </html>
