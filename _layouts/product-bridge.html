@@ -13,6 +13,9 @@
     <meta property="og:image" content="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Lucide Icons (ADDED) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
@@ -67,12 +70,24 @@
 
         {% if page.teepublic_url %}
         <div class="platform-switcher">
-            <button class="switch-tab active" id="tab-tp" onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">Apparel</button>
+            <button class="switch-tab active" id="tab-tp"
+                onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">
+                Apparel
+            </button>
+
             {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
-            <button class="switch-tab" id="tab-rb" onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">Stickers & Notebooks</button>
+            <button class="switch-tab" id="tab-rb"
+                onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
+                Stickers & Notebooks
+            </button>
             {% endif %}
         </div>
-        <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">See on TeePublic</a>
+
+        <!-- BUTTON (FIXED WITH ICON) -->
+        <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">
+            <i data-lucide="shopping-cart"></i>
+            <span>See on TeePublic</span>
+        </a>
         {% endif %}
 
         {% if page.extra_links %}
@@ -105,20 +120,30 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
+
 <script>
 function togglePlatform(platform, url) {
     const btn = document.getElementById('action-btn');
     if (!btn) return;
+
     btn.href = url;
-    btn.textContent = 'See on ' + platform;
+
+    // FIX: сохраняем иконку, не уничтожаем DOM
+    btn.innerHTML = '<i data-lucide="shopping-cart"></i><span>See on ' + platform + '</span>';
+
+    lucide.createIcons();
+
     const tp = document.getElementById('tab-tp');
     const rb = document.getElementById('tab-rb');
+
     if (tp) tp.classList.remove('active');
     if (rb) rb.classList.remove('active');
+
     if (platform === 'TeePublic' && tp) tp.classList.add('active');
     if (platform === 'Redbubble' && rb) rb.classList.add('active');
 }
 </script>
+
 {% include footer.html %}
 </body>
 </html>
