@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
 
-    <!-- Lucide Icons (ADDED) -->
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
@@ -44,11 +44,11 @@
 
     <div class="right-container">
         <h1>{{ page.title }}</h1>
-        
+
         {% if page.date_added %}
         <div class="meta-date">Added: {{ page.date_added | date: "%B %d, %Y" }}</div>
         {% endif %}
-        
+
         {% if page.status == 'hidden' %}
         <span class="inactive-badge-compact">Inactive</span>
         {% endif %}
@@ -83,7 +83,7 @@
             {% endif %}
         </div>
 
-        <!-- BUTTON (FIXED WITH ICON) -->
+        <!-- BUTTON -->
         <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">
             <i data-lucide="shopping-cart"></i>
             <span>See on TeePublic</span>
@@ -128,10 +128,12 @@ function togglePlatform(platform, url) {
 
     btn.href = url;
 
-    // FIX: сохраняем иконку, не уничтожаем DOM
+    // сохраняем структуру кнопки (иконка + текст)
     btn.innerHTML = '<i data-lucide="shopping-cart"></i><span>See on ' + platform + '</span>';
 
-    lucide.createIcons();
+    if (window.lucide) {
+        lucide.createIcons();
+    }
 
     const tp = document.getElementById('tab-tp');
     const rb = document.getElementById('tab-rb');
@@ -142,6 +144,13 @@ function togglePlatform(platform, url) {
     if (platform === 'TeePublic' && tp) tp.classList.add('active');
     if (platform === 'Redbubble' && rb) rb.classList.add('active');
 }
+
+/* ✅ CRITICAL FIX: initial hydration */
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+});
 </script>
 
 {% include footer.html %}
