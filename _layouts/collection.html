@@ -3,8 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.hero_title }} | CatnBloom Studio Jun 6 8:24</title>
+  <title>{{ page.hero_title }} | CatnBloom Studio Jun 9 9:20</title>
   <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -43,17 +46,26 @@
       <section class="collection-intro">
 
         {% if page.about_collection %}
-          <h3>About Collection</h3>
+          <h3 class="icon-title">
+            <i data-lucide="paw-print"></i>
+            About Collection
+          </h3>
           <p>{{ page.about_collection }}</p>
         {% endif %}
 
         {% if page.artistic_direction %}
-          <h3>Artistic Direction</h3>
+          <h3 class="icon-title">
+            <i data-lucide="flower"></i>
+            Artistic Direction
+          </h3>
           <p>{{ page.artistic_direction }}</p>
         {% endif %}
 
         {% if page.design_intent %}
-          <h3>Design Intent</h3>
+          <h3 class="icon-title">
+            <i data-lucide="shirt"></i>
+            Design Intent
+          </h3>
           <p>{{ page.design_intent }}</p>
         {% endif %}
 
@@ -130,6 +142,11 @@ function moveShowcase(dir) {
   track.style.transform = `translateX(-${showcaseIndex * itemWidth}px)`;
 }
 </script>
+
+<script>
+  lucide.createIcons();
+</script>
+
 {% include footer.html %}
 </body>
 </html>
