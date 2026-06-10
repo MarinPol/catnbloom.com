@@ -14,9 +14,11 @@ seo_description: "Whimsical cottagecore cat illustrations featuring flowers, sof
 og_image: "/assets/images/collections/cottagecore-og.jpg"
 
 # CONTENT BLOCKS
-about_collection: "Perfect for those who cherish pastel palettes, dreamy garden moods, and everyday magic."
-artistic_direction: "Digitally illustrated scenes focused on soft botanical motifs, calm countryside settings, and feline comfort. The artistic approach prioritizes delicate linework and a harmonious, muted color palette."
-design_intent: "Created as wearable art for a slower, more intentional lifestyle. Each piece is designed to offer a visual escape, prioritizing evergreen charm and peaceful storytelling over fleeting trends."
+about_collection: "A soft collection of cats living among flowers, gardens, and quiet countryside moments."
+
+artistic_direction: "Digitally illustrated compositions with cats resting in floral and countryside settings, drawn with simple lines and soft colors."
+
+design_intent: "Created as wearable art for a slower lifestyle — designs meant for everyday use like clothing, prints, and small accessories."
 
 # BRAND FOOTER
 tagline: "Find your everyday magic with CatnBloom."
