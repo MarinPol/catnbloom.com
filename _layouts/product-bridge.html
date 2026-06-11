@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     {% if page.status == 'hidden' %}
     <meta name="robots" content="noindex, nofollow">
     {% endif %}
+
     <title>{{ page.title }} | CatnBloom Studio</title>
-    <meta name="description" content="{{ page.story | default: page.headline }}">
-    <meta property="og:title" content="{{ page.title }}">
-    <meta property="og:description" content="{{ page.story | default: page.headline }}">
-    <meta property="og:image" content="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}">
+
     <link rel="stylesheet" href="/assets/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
 
 {% include header.html %}
@@ -127,8 +127,6 @@ function togglePlatform(platform, url) {
     if (!btn) return;
 
     btn.href = url;
-
-    // сохраняем структуру кнопки (иконка + текст)
     btn.innerHTML = '<i data-lucide="shopping-cart"></i><span>See on ' + platform + '</span>';
 
     if (window.lucide) {
@@ -145,7 +143,6 @@ function togglePlatform(platform, url) {
     if (platform === 'Redbubble' && rb) rb.classList.add('active');
 }
 
-/* ✅ CRITICAL FIX: initial hydration */
 document.addEventListener("DOMContentLoaded", function () {
     if (window.lucide) {
         lucide.createIcons();
