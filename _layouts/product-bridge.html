@@ -3,6 +3,12 @@
 
 <head>
   {% include head.html %}
+
+  {% if page.status == 'hidden' %}
+  <meta name="robots" content="noindex, nofollow">
+  {% endif %}
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -10,9 +16,11 @@
 {% include header.html %}
 {% include breadcrumbs.html %}
 
-<div class="container">
+<div class="container product-page">
 
+  <!-- LEFT -->
   <div class="left-block">
+
     <div class="product-image-container">
       <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
            alt="{{ page.alt_text | default: page.title }}">
@@ -21,15 +29,20 @@
     {% if page.detail_images and page.detail_images.size > 0 %}
     <div class="detail-gallery">
       {% for img in page.detail_images %}
-      <a href="/assets/images/products/{{ img }}" data-lightbox="product-gallery">
+      <a href="/assets/images/products/{{ img }}"
+         data-lightbox="product-gallery"
+         class="gallery-item">
         <img src="/assets/images/products/{{ img }}"
-             alt="{{ page.title }} detail {{ forloop.index }}">
+             alt="{{ page.title }} detail {{ forloop.index }}"
+             loading="lazy">
       </a>
       {% endfor %}
     </div>
     {% endif %}
+
   </div>
 
+  <!-- RIGHT -->
   <div class="right-container">
 
     <h1>{{ page.title }}</h1>
@@ -62,13 +75,15 @@
     {% if page.teepublic_url %}
     <div class="platform-switcher">
 
-      <button class="switch-tab active" id="tab-tp"
+      <button class="switch-tab active"
+              id="tab-tp"
               onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">
         Apparel
       </button>
 
       {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
-      <button class="switch-tab" id="tab-rb"
+      <button class="switch-tab"
+              id="tab-rb"
               onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
         Stickers & Notebooks
       </button>
@@ -76,15 +91,49 @@
 
     </div>
 
-    <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">
+    <a href="{{ page.teepublic_url }}"
+       class="buy-button"
+       id="action-btn"
+       target="_blank">
       <i data-lucide="shopping-cart"></i>
       <span>See on TeePublic</span>
     </a>
     {% endif %}
 
+    {% if page.extra_links %}
+    <div class="extra-links-section">
+      <h3>More from Studio</h3>
+
+      <div class="extra-links-list">
+        {% for link in page.extra_links %}
+        <a href="{{ link.url }}" class="extra-link" target="_blank">
+          {{ link.title }}
+        </a>
+        {% endfor %}
+      </div>
+
+    </div>
+    {% endif %}
+
+    {% if page.tags %}
+    <div class="tags-container">
+      {% for tag in page.tags %}
+      <span class="product-tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="product-id-spec">
+      {% if page.sku %}
+      <strong>Product ID:</strong> {{ page.sku }}<br>
+      {% endif %}
+      <strong>Last updated:</strong> {{ site.time | date: "%B %d, %Y" }}
+    </div>
+
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
 
 <script>
