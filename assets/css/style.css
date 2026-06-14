@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 13 (2)
+RESET Jun 14 (1)
 ========================= */
 
 * {
@@ -477,3 +477,36 @@ FOOTER
   font-size: 13px;
   color: #555;
 }
+
+/* =========================
+SHARE-BUTTONS
+========================= */
+.share-buttons {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+
+.share-title {
+  font-size: 14px;
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+
+.share-links {
+  display: flex;
+  gap: 10px;
+}
+
+.share-btn {
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  color: white;
+}
+
+.share-btn.telegram { background: #0088cc; }
+.share-btn.twitter { background: #000000; }
+.share-btn.pinterest { background: #e60023; }
