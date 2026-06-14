@@ -22,8 +22,8 @@
    target="_blank"
    href="https://pinterest.com/pin/create/button/
 ?url={{ page.url | absolute_url }}
-&media={{ page.pinterest_image | default: page.image_url | absolute_url }}
-&description={{ page.title | url_encode }}%20—%20{{ page.seo_description | default: page.story | url_encode }}">
+&media={{ page.image_url | absolute_url }}
+&description={{ page.title | url_encode }} — {{ page.seo_description | default: page.story | url_encode }}">
   Pinterest
 </a>
 
