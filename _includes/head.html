@@ -1,1 +1,56 @@
+{% assign seo_title = page.seo_title | default: page.hero_title | default: page.title %}
+{% assign seo_description = page.seo_description | default: page.story | default: page.headline | default: site.description %}
+{% assign seo_image = page.og_image | default: page.image_url | default: page.hero_image | default: site.default_og %}
 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% if page.status == 'hidden' %}
+<meta name="robots" content="noindex, nofollow">
+{% endif %}
+
+<title>{{ seo_title }} | CatnBloom Studio</title>
+
+<meta name="description" content="{{ seo_description | strip_html | strip_newlines | escape }}">
+
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+
+<!-- Open Graph -->
+<meta property="og:title" content="{{ seo_title }}">
+<meta property="og:description" content="{{ seo_description | strip_html | strip_newlines | escape }}">
+<meta property="og:image" content="{{ seo_image }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:site_name" content="CatnBloom Studio">
+<meta property="og:type" content="website">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo_title }}">
+<meta name="twitter:description" content="{{ seo_description | strip_html | strip_newlines | escape }}">
+<meta name="twitter:image" content="{{ seo_image }}">
+
+<!-- Schema Placeholder -->
+
+{% if page.layout == "product-bridge" %}
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Product",
+  "name":"{{ page.title | escape }}",
+  "image":"{{ seo_image }}",
+  "description":"{{ seo_description | strip_html | strip_newlines | escape }}",
+  "sku":"{{ page.sku }}"
+}
+</script>
+{% endif %}
+
+{% if page.layout == "collection" %}
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"CollectionPage",
+  "name":"{{ page.hero_title | default: page.title | escape }}",
+  "description":"{{ seo_description | strip_html | strip_newlines | escape }}"
+}
+</script>
+{% endif %}
