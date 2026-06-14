@@ -74,14 +74,14 @@
           </div>
           {% endfor %}
 
-          {% include share-buttons.html %}
-
         </div>
       </div>
 
       <button class="showcase-btn right" onclick="moveShowcase(1)">›</button>
     </div>
-  </section>
+ </section> <!-- product-showcase -->
+
+{% include share-buttons.html %}
 
   <section class="product-grid">
     {% for product in grid_items %}
