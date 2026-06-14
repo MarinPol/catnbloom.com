@@ -39,6 +39,11 @@
 <meta name="twitter:image"
       content="{{ page.og_image | default: page.image_url | default: page.hero_image | default: '/assets/images/default_og.jpg' }}">
 
+{% if page.status == 'hidden' %}
+<meta name="robots" content="noindex,nofollow">
+{% endif %}
+
+
 <!-- SCHEMA -->
 {% if page.layout == 'product-bridge' %}
 <script type="application/ld+json">
