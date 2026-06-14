@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 9 (1)
+RESET Jun 13 (1)
 ========================= */
 
 * {
@@ -603,4 +603,43 @@ FOOTER
   font-size: 14px;
   font-weight: 600;
   color: #333;
+}
+
+/* =========================
+PRODUCT PAGE HARD FIX
+========================= */
+
+.product-page .left-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Жёстко фиксируем контейнер изображения */
+.product-page .product-image-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* ГАЛЕРЕЯ — критический фикс */
+.product-page .detail-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+/* защита от “исчезновения” */
+.product-page .gallery-item {
+  display: block !important;
+  width: 100% !important;
+}
+
+.product-page .gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
 }
