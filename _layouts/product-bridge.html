@@ -4,6 +4,7 @@
 <head>
   {% include head.html %}
 
+  <!-- Lightbox CSS (обязательно здесь, не внутри include) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
 </head>
 
@@ -18,7 +19,7 @@
   <div class="left-block">
 
     <div class="product-image-container">
-      <img src="https://images.teepublic.com/derived/production/designs/82695171_0/1762043606/i_p:c_ffffff,wmk,s_630,q_90.jpg"
+      <img src="{{ page.image_url | default: page.hero_image }}"
            alt="{{ page.alt_text | default: page.title }}">
     </div>
 
@@ -31,7 +32,8 @@
          class="gallery-item">
 
         <img src="/assets/images/products/{{ img }}"
-             alt="{{ page.title }} detail {{ forloop.index }}">
+             alt="{{ page.title }} detail {{ forloop.index }}"
+             loading="lazy">
       </a>
       {% endfor %}
 
@@ -77,6 +79,7 @@
 
 </div>
 
+<!-- Lightbox JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
 
 <script>
