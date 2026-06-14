@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% include head.html %}
+
   <link rel="stylesheet" href="/assets/css/style.css">
 
   <!-- Lucide Icons -->
@@ -74,14 +73,9 @@
     </div>
   </div>
 
-  <!-- ===================== -->
-  <!-- SHOWCASE SLIDER (FIRST 6) -->
-  <!-- ===================== -->
-
+  <!-- SHOWCASE -->
   <section class="product-showcase">
-
     <div class="showcase-wrapper">
-
       <button class="showcase-btn left" onclick="moveShowcase(-1)">‹</button>
 
       <div class="showcase-viewport">
@@ -100,17 +94,11 @@
       </div>
 
       <button class="showcase-btn right" onclick="moveShowcase(1)">›</button>
-
     </div>
-
   </section>
 
-  <!-- ===================== -->
-  <!-- GRID (REST) -->
-  <!-- ===================== -->
-
+  <!-- GRID -->
   <section class="product-grid">
-
     {% for product in grid_items %}
       <div class="product-item">
         <a href="{{ product.url }}">
@@ -119,7 +107,6 @@
         </a>
       </div>
     {% endfor %}
-
   </section>
 
 <script>
@@ -134,11 +121,11 @@ function moveShowcase(dir) {
   const visible = 3;
   const maxIndex = Math.max(0, items.length - visible);
 
-  showcaseIndex = showcaseIndex + dir;
+  showcaseIndex += dir;
   if (showcaseIndex < 0) showcaseIndex = 0;
   if (showcaseIndex > maxIndex) showcaseIndex = maxIndex;
 
-  const itemWidth = items[0].offsetWidth + 18; // gap included
+  const itemWidth = items[0].offsetWidth + 18;
   track.style.transform = `translateX(-${showcaseIndex * itemWidth}px)`;
 }
 </script>
