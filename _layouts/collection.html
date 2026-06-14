@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   {% include head.html %}
-
-  <link rel="stylesheet" href="/assets/css/style.css">
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -20,7 +16,6 @@
 
   <div class="container collection-page">
 
-    <!-- LEFT -->
     <div class="left-block">
       {% if page.hero_image %}
         <div class="product-image-container">
@@ -29,7 +24,6 @@
       {% endif %}
     </div>
 
-    <!-- RIGHT -->
     <div class="right-container">
 
       <header class="collection-hero">
@@ -45,26 +39,17 @@
       <section class="collection-intro">
 
         {% if page.about_collection %}
-          <h3 class="icon-title">
-            <i data-lucide="paw-print"></i>
-            About Collection
-          </h3>
+          <h3 class="icon-title"><i data-lucide="paw-print"></i>About Collection</h3>
           <p>{{ page.about_collection }}</p>
         {% endif %}
 
         {% if page.artistic_direction %}
-          <h3 class="icon-title">
-            <i data-lucide="flower"></i>
-            Artistic Direction
-          </h3>
+          <h3 class="icon-title"><i data-lucide="flower"></i>Artistic Direction</h3>
           <p>{{ page.artistic_direction }}</p>
         {% endif %}
 
         {% if page.design_intent %}
-          <h3 class="icon-title">
-            <i data-lucide="shirt"></i>
-            Design Intent
-          </h3>
+          <h3 class="icon-title"><i data-lucide="shirt"></i>Design Intent</h3>
           <p>{{ page.design_intent }}</p>
         {% endif %}
 
@@ -73,7 +58,6 @@
     </div>
   </div>
 
-  <!-- SHOWCASE -->
   <section class="product-showcase">
     <div class="showcase-wrapper">
       <button class="showcase-btn left" onclick="moveShowcase(-1)">‹</button>
@@ -82,12 +66,12 @@
         <div class="showcase-track" id="showcaseTrack">
 
           {% for product in showcase_items %}
-            <div class="showcase-item">
-              <a href="{{ product.url }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }}">
-                <h3>{{ product.title }}</h3>
-              </a>
-            </div>
+          <div class="showcase-item">
+            <a href="{{ product.url }}">
+              <img src="{{ product.image_url }}" alt="{{ product.title }}">
+              <h3>{{ product.title }}</h3>
+            </a>
+          </div>
           {% endfor %}
 
         </div>
@@ -97,15 +81,14 @@
     </div>
   </section>
 
-  <!-- GRID -->
   <section class="product-grid">
     {% for product in grid_items %}
-      <div class="product-item">
-        <a href="{{ product.url }}">
-          <img src="{{ product.image_url }}" alt="{{ product.title }}">
-          <h3>{{ product.title }}</h3>
-        </a>
-      </div>
+    <div class="product-item">
+      <a href="{{ product.url }}">
+        <img src="{{ product.image_url }}" alt="{{ product.title }}">
+        <h3>{{ product.title }}</h3>
+      </a>
+    </div>
     {% endfor %}
   </section>
 
@@ -116,14 +99,13 @@ function moveShowcase(dir) {
   const track = document.getElementById("showcaseTrack");
   const items = document.querySelectorAll(".showcase-item");
 
-  if (!track || items.length === 0) return;
+  if (!track || !items.length) return;
 
   const visible = 3;
   const maxIndex = Math.max(0, items.length - visible);
 
   showcaseIndex += dir;
-  if (showcaseIndex < 0) showcaseIndex = 0;
-  if (showcaseIndex > maxIndex) showcaseIndex = maxIndex;
+  showcaseIndex = Math.max(0, Math.min(showcaseIndex, maxIndex));
 
   const itemWidth = items[0].offsetWidth + 18;
   track.style.transform = `translateX(-${showcaseIndex * itemWidth}px)`;
@@ -131,9 +113,10 @@ function moveShowcase(dir) {
 </script>
 
 <script>
-  lucide.createIcons();
+if (window.lucide) lucide.createIcons();
 </script>
 
 {% include footer.html %}
+
 </body>
 </html>
