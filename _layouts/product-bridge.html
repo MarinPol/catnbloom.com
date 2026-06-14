@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  {% include head.html %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Lightbox (ВАЖНО: только здесь) -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
+    {% if page.status == 'hidden' %}
+    <meta name="robots" content="noindex, nofollow">
+    {% endif %}
+
+    <title>{{ page.title }} | CatnBloom Studio</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -13,113 +22,134 @@
 {% include header.html %}
 {% include breadcrumbs.html %}
 
-<div class="container product-page">
+<div class="container">
+    <div class="left-block">
+        <div class="product-image-container">
+            <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
+                 alt="{{ page.alt_text | default: page.title }}">
+        </div>
 
-  <!-- LEFT -->
-  <div class="left-block">
-
-    <div class="product-image-container">
-      <img src="{{ page.image_url }}"
-           alt="{{ page.alt_text | default: page.title }}">
+        {% if page.detail_images and page.detail_images.size > 0 %}
+        <div class="detail-gallery">
+            {% for img in page.detail_images %}
+            <a href="/assets/images/products/{{ img }}" data-lightbox="product-gallery" class="gallery-item">
+                <img src="/assets/images/products/{{ img }}"
+                      alt="{{ page.title }} detail {{ forloop.index }}"
+                      loading="lazy">
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
 
-    <!-- DETAIL GALLERY (СТАБИЛЬНО) -->
-    {% if page.detail_images %}
-    <div class="detail-gallery">
+    <div class="right-container">
+        <h1>{{ page.title }}</h1>
 
-      {% for img in page.detail_images %}
-      <a href="/assets/images/products/{{ img }}"
-         data-lightbox="product-gallery"
-         class="gallery-item">
+        {% if page.date_added %}
+        <div class="meta-date">Added: {{ page.date_added | date: "%B %d, %Y" }}</div>
+        {% endif %}
 
-        <img src="/assets/images/products/{{ img }}"
-             alt="{{ page.title }} detail {{ forloop.index }}"
-             loading="lazy">
-      </a>
-      {% endfor %}
+        {% if page.status == 'hidden' %}
+        <span class="inactive-badge-compact">Inactive</span>
+        {% endif %}
 
+        {% if page.story %}
+        <div class="story-text">{{ page.story }}</div>
+        {% endif %}
+
+        {% if page.accent_h3_1 %}<h3>{{ page.accent_h3_1 }}</h3>{% endif %}
+        {% if page.accent_h3_2 %}<h3>{{ page.accent_h3_2 }}</h3>{% endif %}
+
+        {% if page.human_proof %}
+        <div class="human-proof-box">{{ page.human_proof }}</div>
+        {% endif %}
+
+        {% if page.author_note %}
+        <div class="author-note-box">{{ page.author_note }}</div>
+        {% endif %}
+
+        {% if page.teepublic_url %}
+        <div class="platform-switcher">
+            <button class="switch-tab active" id="tab-tp"
+                onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">
+                Apparel
+            </button>
+
+            {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
+            <button class="switch-tab" id="tab-rb"
+                onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
+                Stickers & Notebooks
+            </button>
+            {% endif %}
+        </div>
+
+        <!-- BUTTON -->
+        <a href="{{ page.teepublic_url }}" class="buy-button" id="action-btn" target="_blank">
+            <i data-lucide="shopping-cart"></i>
+            <span>See on TeePublic</span>
+        </a>
+        {% endif %}
+
+        {% if page.extra_links %}
+        <div class="extra-links-section">
+            <h3>More from Studio</h3>
+            <div class="extra-links-list">
+                {% for link in page.extra_links %}
+                    <a href="{{ link.url }}" class="extra-link" target="_blank">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if page.tags %}
+        <div class="tags-container">
+            {% for tag in page.tags %}
+                <span class="product-tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="product-id-spec">
+            {% if page.sku %}
+            <strong>Product ID:</strong> {{ page.sku }}<br>
+            {% endif %}
+            <strong>Last updated:</strong> {{ site.time | date: "%B %d, %Y" }}
+        </div>
     </div>
-    {% endif %}
-
-  </div>
-
-  <!-- RIGHT -->
-  <div class="right-container">
-
-    <h1>{{ page.title }}</h1>
-
-    {% if page.date_added %}
-    <div class="meta-date">
-      Added: {{ page.date_added | date: "%B %d, %Y" }}
-    </div>
-    {% endif %}
-
-    {% if page.story %}
-    <div class="story-text">{{ page.story }}</div>
-    {% endif %}
-
-    {% if page.accent_h3_1 %}<h3>{{ page.accent_h3_1 }}</h3>{% endif %}
-    {% if page.accent_h3_2 %}<h3>{{ page.accent_h3_2 }}</h3>{% endif %}
-
-    {% if page.human_proof %}
-    <div class="human-proof-box">{{ page.human_proof }}</div>
-    {% endif %}
-
-    {% if page.author_note %}
-    <div class="author-note-box">{{ page.author_note }}</div>
-    {% endif %}
-
-    <!-- BUY BUTTON -->
-    {% if page.teepublic_url %}
-    <a href="{{ page.teepublic_url }}"
-       class="buy-button"
-       target="_blank">
-      <i data-lucide="shopping-cart"></i>
-      <span>See on TeePublic</span>
-    </a>
-    {% endif %}
-
-    <!-- SWITCHER (если есть) -->
-    {% if page.redbubble_url %}
-    <div class="platform-switcher">
-
-      <button class="switch-tab active"
-              onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">
-        Apparel
-      </button>
-
-      <button class="switch-tab"
-              onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
-        Stickers & Notebooks
-      </button>
-
-    </div>
-    {% endif %}
-
-  </div>
-
 </div>
 
-<!-- LIGHTBOX JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
 
 <script>
 function togglePlatform(platform, url) {
-  const btn = document.getElementById('action-btn');
-  if (!btn) return;
+    const btn = document.getElementById('action-btn');
+    if (!btn) return;
 
-  btn.href = url;
-  btn.innerHTML = '<i data-lucide="shopping-cart"></i><span>See on ' + platform + '</span>';
+    btn.href = url;
+    btn.innerHTML = '<i data-lucide="shopping-cart"></i><span>See on ' + platform + '</span>';
 
-  if (window.lucide) lucide.createIcons();
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+
+    const tp = document.getElementById('tab-tp');
+    const rb = document.getElementById('tab-rb');
+
+    if (tp) tp.classList.remove('active');
+    if (rb) rb.classList.remove('active');
+
+    if (platform === 'TeePublic' && tp) tp.classList.add('active');
+    if (platform === 'Redbubble' && rb) rb.classList.add('active');
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  if (window.lucide) lucide.createIcons();
+    if (window.lucide) {
+        lucide.createIcons();
+    }
 });
 </script>
 
 {% include footer.html %}
-
 </body>
 </html>
