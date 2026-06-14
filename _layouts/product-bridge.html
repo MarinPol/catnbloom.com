@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    {% if page.status == 'hidden' %}
-    <meta name="robots" content="noindex, nofollow">
-    {% endif %}
-
     {% include head.html %}
-    
+
     <link rel="stylesheet" href="/assets/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
 
@@ -43,6 +36,7 @@
     </div>
 
     <div class="right-container">
+
         <h1>{{ page.title }}</h1>
 
         {% if page.date_added %}
