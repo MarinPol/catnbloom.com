@@ -1,10 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ===================== -->
-<!-- BASE SEO -->
-<!-- ===================== -->
-
 <title>
   {{ page.seo_title | default: page.hero_title | default: page.title | default: site.title }}
 </title>
@@ -15,10 +11,7 @@
 <link rel="canonical"
       href="{{ page.url | absolute_url }}">
 
-<!-- ===================== -->
 <!-- OPEN GRAPH -->
-<!-- ===================== -->
-
 <meta property="og:title"
       content="{{ page.seo_title | default: page.hero_title | default: page.title }}">
 
@@ -34,25 +27,16 @@
 <meta property="og:site_name" content="CatnBloom Studio">
 <meta property="og:type" content="website">
 
-<!-- ===================== -->
 <!-- TWITTER -->
-<!-- ===================== -->
-
 <meta name="twitter:card" content="summary_large_image">
-
 <meta name="twitter:title"
       content="{{ page.seo_title | default: page.hero_title | default: page.title }}">
-
 <meta name="twitter:description"
       content="{{ page.seo_description | default: page.story | default: page.headline }}">
-
 <meta name="twitter:image"
       content="{{ page.og_image | default: page.image_url | default: page.hero_image | default: '/assets/images/default_og.jpg' }}">
 
-<!-- ===================== -->
-<!-- SCHEMA (BASIC PLACEHOLDER) -->
-<!-- ===================== -->
-
+<!-- SCHEMA -->
 {% if page.layout == 'product-bridge' %}
 <script type="application/ld+json">
 {
@@ -74,10 +58,7 @@
 </script>
 {% endif %}
 
-<!-- ===================== -->
-<!-- STYLES (ONLY ONCE) -->
-<!-- ===================== -->
-
+<!-- CORE STYLES -->
 <link rel="stylesheet" href="/assets/css/style.css">
 
 <!-- ICONS -->
