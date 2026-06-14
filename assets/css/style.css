@@ -495,18 +495,23 @@ SHARE-BUTTONS
 
 .share-links {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .share-btn {
-  display: inline-flex;
   padding: 8px 12px;
   border-radius: 6px;
   font-size: 13px;
   text-decoration: none;
-  color: white;
+  color: #fff;
+  cursor: pointer;
+  border: none;
 }
 
+/* PLATFORM COLORS */
 .share-btn.telegram { background: #0088cc; }
-.share-btn.twitter { background: #000000; }
-.share-btn.pinterest { background: #e60023; }
+.share-btn.x { background: #000000; }
+.share-btn.pinterest { background: #E60023; }
+.share-btn.facebook { background: #1877F2; }
+.share-btn.copy { background: #666666; }
