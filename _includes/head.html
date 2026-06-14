@@ -1,56 +1,118 @@
-{% assign seo_title = page.seo_title | default: page.hero_title | default: page.title %}
-{% assign seo_description = page.seo_description | default: page.story | default: page.headline | default: site.description %}
-{% assign seo_image = page.og_image | default: page.image_url | default: page.hero_image | default: site.default_og %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ===================== -->
+  <!-- BASE SEO -->
+  <!-- ===================== -->
 
-{% if page.status == 'hidden' %}
-<meta name="robots" content="noindex, nofollow">
-{% endif %}
+  <title>
+    {{ page.seo_title
+      | default: page.hero_title
+      | default: page.title
+      | default: site.title }}
+    | CatnBloom Studio
+  </title>
 
-<title>{{ seo_title }} | CatnBloom Studio</title>
+  <meta name="description"
+        content="{% if page.seo_description %}
+                    {{ page.seo_description }}
+                  {% elsif page.story %}
+                    {{ page.story }}
+                  {% elsif page.headline %}
+                    {{ page.headline }}
+                  {% else %}
+                    {{ site.description }}
+                  {% endif %}">
 
-<meta name="description" content="{{ seo_description | strip_html | strip_newlines | escape }}">
+  <link rel="canonical"
+        href="{{ page.url | absolute_url }}">
 
-<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <!-- ===================== -->
+  <!-- OPEN GRAPH -->
+  <!-- ===================== -->
 
-<!-- Open Graph -->
-<meta property="og:title" content="{{ seo_title }}">
-<meta property="og:description" content="{{ seo_description | strip_html | strip_newlines | escape }}">
-<meta property="og:image" content="{{ seo_image }}">
-<meta property="og:url" content="{{ site.url }}{{ page.url }}">
-<meta property="og:site_name" content="CatnBloom Studio">
-<meta property="og:type" content="website">
+  <meta property="og:title"
+        content="{{ page.seo_title | default: page.hero_title | default: page.title }}">
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ seo_title }}">
-<meta name="twitter:description" content="{{ seo_description | strip_html | strip_newlines | escape }}">
-<meta name="twitter:image" content="{{ seo_image }}">
+  <meta property="og:description"
+        content="{% if page.seo_description %}
+                    {{ page.seo_description }}
+                  {% elsif page.story %}
+                    {{ page.story }}
+                  {% else %}
+                    {{ site.description }}
+                  {% endif %}">
 
-<!-- Schema Placeholder -->
+  <meta property="og:image"
+        content="{{ page.og_image
+                  | default: page.image_url
+                  | default: page.hero_image
+                  | default: site.default_og }}">
 
-{% if page.layout == "product-bridge" %}
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Product",
-  "name":"{{ page.title | escape }}",
-  "image":"{{ seo_image }}",
-  "description":"{{ seo_description | strip_html | strip_newlines | escape }}",
-  "sku":"{{ page.sku }}"
-}
-</script>
-{% endif %}
+  <meta property="og:url"
+        content="{{ page.url | absolute_url }}">
 
-{% if page.layout == "collection" %}
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"CollectionPage",
-  "name":"{{ page.hero_title | default: page.title | escape }}",
-  "description":"{{ seo_description | strip_html | strip_newlines | escape }}"
-}
-</script>
-{% endif %}
+  <meta property="og:site_name" content="CatnBloom Studio">
+  <meta property="og:type"
+        content="{% if page.layout == 'product-bridge' %}product{% else %}website{% endif %}">
+
+  <!-- ===================== -->
+  <!-- TWITTER -->
+  <!-- ===================== -->
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title"
+        content="{{ page.seo_title | default: page.title }}">
+  <meta name="twitter:description"
+        content="{% if page.seo_description %}
+                    {{ page.seo_description }}
+                  {% else %}
+                    {{ page.story | default: site.description }}
+                  {% endif %}">
+
+  <meta name="twitter:image"
+        content="{{ page.og_image
+                  | default: page.image_url
+                  | default: page.hero_image
+                  | default: site.default_og }}">
+
+  <!-- ===================== -->
+  <!-- SCHEMA PLACEHOLDER -->
+  <!-- ===================== -->
+
+  {% if page.layout == 'product-bridge' %}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "{{ page.title }}",
+    "description": "{{ page.story | default: page.headline }}",
+    "image": "{{ page.image_url }}",
+    "sku": "{{ page.sku | default: '' }}"
+  }
+  </script>
+
+  {% elsif page.layout == 'collection' %}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "{{ page.hero_title | default: page.title }}",
+    "description": "{{ page.seo_description | default: page.story | default: site.description }}"
+  }
+  </script>
+
+  {% endif %}
+
+  <!-- ===================== -->
+  <!-- STYLES -->
+  <!-- ===================== -->
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!-- ICONS -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
