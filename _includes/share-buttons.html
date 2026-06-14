@@ -3,23 +3,39 @@
 
   <div class="share-links">
 
+    <!-- TELEGRAM -->
     <a class="share-btn telegram"
        target="_blank"
        href="https://t.me/share/url?url={{ page.url | absolute_url }}&text={{ page.title | url_encode }}">
       Telegram
     </a>
 
-    <a class="share-btn twitter"
+    <!-- X -->
+    <a class="share-btn x"
        target="_blank"
        href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url }}&text={{ page.title | url_encode }}">
       X
     </a>
 
+    <!-- PINTEREST -->
     <a class="share-btn pinterest"
        target="_blank"
        href="https://pinterest.com/pin/create/button/?url={{ page.url | absolute_url }}&media={{ page.image_url | absolute_url }}&description={{ page.title | url_encode }}">
       Pinterest
     </a>
+
+    <!-- FACEBOOK -->
+    <a class="share-btn facebook"
+       target="_blank"
+       href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}">
+      Facebook
+    </a>
+
+    <!-- COPY LINK -->
+    <button class="share-btn copy"
+            onclick="navigator.clipboard.writeText('{{ page.url | absolute_url }}')">
+      Copy link
+    </button>
 
   </div>
 </div>
