@@ -1,1 +1,25 @@
+<div class="share-buttons">
+  <p class="share-title">Share this design:</p>
 
+  <div class="share-links">
+
+    <a class="share-btn telegram"
+       target="_blank"
+       href="https://t.me/share/url?url={{ page.url | absolute_url }}&text={{ page.title | url_encode }}">
+      Telegram
+    </a>
+
+    <a class="share-btn twitter"
+       target="_blank"
+       href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url }}&text={{ page.title | url_encode }}">
+      X
+    </a>
+
+    <a class="share-btn pinterest"
+       target="_blank"
+       href="https://pinterest.com/pin/create/button/?url={{ page.url | absolute_url }}&media={{ page.image_url | absolute_url }}&description={{ page.title | url_encode }}">
+      Pinterest
+    </a>
+
+  </div>
+</div>
