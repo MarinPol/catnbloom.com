@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 13 (1)
+RESET Jun 13 (2)
 ========================= */
 
 * {
@@ -246,7 +246,7 @@ MAIN IMAGE
 }
 
 /* =========================
-DETAIL GALLERY
+DETAIL GALLERY (FIXED STABLE VERSION)
 ========================= */
 
 .detail-gallery {
@@ -263,9 +263,10 @@ DETAIL GALLERY
 
 .gallery-item img {
   width: 100%;
+  height: auto;
+  display: block;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  display: block;
   border-radius: 8px;
   border: 1px solid #eee;
 }
@@ -280,40 +281,16 @@ h1 {
   font-weight: 700;
 }
 
-/* HERO SPACING FIX */
-.collection-hero h1 {
-  margin-bottom: 10px;
-}
-
 .story-text {
   color: #444;
   margin-bottom: 26px;
   line-height: 1.5;
 }
-/* END HERO FIX */
 
 h3 {
   font-size: 1.1rem;
   margin: 0;
   color: #a3b18a;
-}
-
-/* =========================
-INACTIVE BADGE
-========================= */
-
-.inactive-badge-compact {
-  display: block;
-  background: #7b2d2d;
-  color: #fff;
-  padding: 4px 8px;
-  font-size: 11px;
-  font-weight: bold;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  width: fit-content;
-  margin: 10px 0;
 }
 
 /* =========================
@@ -329,14 +306,6 @@ AUTHOR NOTE
   font-size: 0.95rem;
 }
 
-.author-note-box p {
-  margin: 0 0 10px 0;
-}
-
-.author-note-box p:last-child {
-  margin-bottom: 0;
-}
-
 /* =========================
 EXTRA LINKS
 ========================= */
@@ -345,21 +314,6 @@ EXTRA LINKS
   margin-top: 24px;
   padding-top: 18px;
   border-top: 1px solid #eee;
-}
-
-.extra-links-section h3 {
-  font-size: 0.95rem;
-  color: #2d2d2d;
-  margin-bottom: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.extra-links-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 .extra-link {
@@ -386,13 +340,6 @@ BUTTON
   gap: 8px;
 }
 
-.buy-button svg {
-  width: 16px;
-  height: 16px;
-  display: block;
-  flex-shrink: 0;
-}
-
 /* =========================
 SWITCHER
 ========================= */
@@ -412,8 +359,6 @@ SWITCHER
   border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
-  color: #2d2d2d;
-  text-align: center;
 }
 
 .switch-tab.active {
@@ -440,26 +385,17 @@ TAGS
 }
 
 /* =========================
-META DATES
+META
 ========================= */
 
 .meta-date {
   font-size: 0.85rem;
   color: #888;
   margin-bottom: 12px;
-  font-style: italic;
-}
-
-.product-id-spec {
-  margin-top: 24px;
-  padding-top: 18px;
-  border-top: 1px solid #eee;
-  font-size: 0.9rem;
-  color: #444;
 }
 
 /* =========================
-COLLECTION GRID
+PRODUCT GRID
 ========================= */
 
 .product-grid {
@@ -469,18 +405,11 @@ COLLECTION GRID
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 24px;
-  align-items: start;
-}
-
-.product-item {
-  overflow: hidden;
 }
 
 .product-item img {
   width: 100%;
-  max-width: 100%;
   height: auto;
-  display: block;
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
@@ -523,46 +452,6 @@ SHOWCASE
   border-radius: 10px;
 }
 
-.showcase-item h3 {
-  font-size: 13px;
-  margin-top: 8px;
-  color: #2d2d2d;
-}
-
-.showcase-btn {
-  background: #fff;
-  border: 1px solid #ddd;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.showcase-btn:hover {
-  background: #f5f5f5;
-}
-
-@media (max-width: 768px) {
-  .showcase-wrapper {
-    display: block;
-  }
-
-  .showcase-track {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    transform: none !important;
-  }
-
-  .showcase-btn {
-    display: none;
-  }
-
-  .showcase-item {
-    flex: unset;
-  }
-}
-
 /* =========================
 FOOTER
 ========================= */
@@ -587,59 +476,4 @@ FOOTER
 .footer-line {
   font-size: 13px;
   color: #555;
-}
-
-.footer-legal {
-  font-size: 12px;
-  color: #999;
-}
-
-.footer-tags {
-  font-size: 12px;
-  color: #888;
-}
-
-.footer-brand {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-}
-
-/* =========================
-PRODUCT PAGE HARD FIX
-========================= */
-
-.product-page .left-block {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Жёстко фиксируем контейнер изображения */
-.product-page .product-image-container {
-  width: 100%;
-  max-width: 100%;
-}
-
-/* ГАЛЕРЕЯ — критический фикс */
-.product-page .detail-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%;
-}
-
-/* защита от “исчезновения” */
-.product-page .gallery-item {
-  display: block !important;
-  width: 100% !important;
-}
-
-.product-page .gallery-item img {
-  width: 100%;
-  height: auto;
-  display: block;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 8px;
 }
