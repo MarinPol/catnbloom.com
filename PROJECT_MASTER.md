@@ -1,8 +1,3 @@
-Ты права, я сократил историю ради лаконичности таблицы, но это было нарушением принципа «полноты данных». В проекте такого уровня каждая строка истории — это критическая точка для понимания того, как мы пришли к текущей архитектуре.
-
-Вот **полная, расширенная версия** `PROJECT_MASTER.md`, включающая все этапы из твоего списка.
-
-```markdown
 # PROJECT_MASTER.md
 
 ## Информация о проекте
@@ -31,18 +26,18 @@
 CatnBloom uses only two page types:
 
 ### 1. SECTION
-- Contains other pages.
-- Examples: Cottagecore Cats, Witchy Cats Plants, Seasonal Sets.
-- Template: Collection Page.
-- Reference Master: `/cottagecore-cats/`
-- Schema: CollectionPage.
+- **Contains other pages.**
+- **Examples:** Cottagecore Cats, Witchy Cats Plants, Seasonal Sets.
+- **Template:** Collection Page.
+- **Reference Master:** `/cottagecore-cats/`
+- **Schema:** CollectionPage.
 
 ### 2. MATERIAL
-- Standalone page (final destination).
-- Examples: C01-001, C01-002, C02-005.
-- Template: Product Page.
-- Reference Master: `/cottagecore-cats/c01-001/`
-- Schema: Product.
+- **Standalone page (final destination).**
+- **Examples:** C01-001, C01-002, C02-005.
+- **Template:** Product Page.
+- **Reference Master:** `/cottagecore-cats/c01-001/`
+- **Schema:** Product.
 
 **Rule:**
 - If page contains materials → **SECTION**.
@@ -60,7 +55,7 @@ CatnBloom uses only two page types:
 | 2026-06-02 | _layouts/collection.html | Защита от пустого массива | Обработка ошибок |
 | 2026-06-02 | _config.yml | Верификация ключей | Подтверждение типов |
 | 2026-06-02 | _layouts/collection.html | Фильтр default: empty | Стабилизация данных |
-| 2026-06-02 | _cottagecore/c01-001.md | Очистка Front Matter | Индексация |
+| 2026-06-02 | _cottagecore/c01-001.md | Очистка Front Matter | Индексация товара |
 | 2026-06-03 | _layouts/collection.html | Стандартизация архитектуры | Устранение нестабильности |
 | 2026-06-03 | _layouts/collection.html | Рефакторинг структуры | Диагностика меню |
 | 2026-06-03 | _includes/header.html | JS parentElement.querySelector | Исправление dropdown |
@@ -91,7 +86,7 @@ CatnBloom uses only two page types:
 | 2026-06-14 | SHARE MODULE | Интеграция ссылок | Социальный охват |
 | 2026-06-14 | SEO Engine | Финализация архитектуры | Интеллектуальный fallback |
 
-## Текутьий этап разработки
+## Текущий этап разработки
 - **Завершено:**
     - Инициализация архитектуры и SEO Engine.
     - Внедрение breadcrumbs и модуля SHARE.
@@ -107,7 +102,3 @@ CatnBloom uses only two page types:
 - Работа ведется строго через GitHub Web Interface.
 - Не менять имена файлов без прямого запроса.
 - Всегда соблюдать структуру протокола v2.0.
-
-```
-
-Теперь история максимально подробна и соответствует твоим записям. **Можем переходить к следующей задаче?**
