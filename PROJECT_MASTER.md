@@ -6,12 +6,12 @@
 - **Технологический стек:** Jekyll, HTML, CSS, Liquid, GitHub Pages.
 
 ## Структура проекта
-- **_cottagecore/:** Содержит Markdown-файлы товаров коллекции Cottagecore.
-- **_includes/:** Компоненты для переиспользования (хедер, хлебные крошки).
-- **_layouts/:** Базовые шаблоны страниц (коллекции, карточки товаров).
-- **_witchy/:** Содержит Markdown-файлы товаров коллекции Witchy.
-- **assets/css/:** Файл `style.css` с глобальными стилями сайта.
-- **assets/images/:**
+- `_cottagecore/`: Содержит Markdown-файлы товаров коллекции Cottagecore.
+- `_includes/`: Компоненты для переиспользования (хедер, хлебные крошки).
+- `_layouts/`: Базовые шаблоны страниц (коллекции, карточки товаров).
+- `_witchy/`: Содержит Markdown-файлы товаров коллекции Witchy.
+- `assets/css/`: Файл `style.css` с глобальными стилями сайта.
+- `assets/images/`:
     - `products/`: Изображения товаров для галерей.
     - `ctbl-icon.png`, `header-bg.jpg`, `header-mobile.jpg`: Графические элементы интерфейса.
 - **Корневые файлы:**
@@ -22,27 +22,42 @@
     - `PROJECT_MASTER.md`: Данный файл управления структурой.
     - `README.md`: Документация репозитория.
 
+## Content Model Lock
+CatnBloom uses only two page types:
+
+### 1. SECTION
+- **Contains other pages.**
+- **Examples:** Cottagecore Cats, Witchy Cats Plants, Seasonal Sets.
+- **Template:** Collection Page.
+- **Reference Master:** `/cottagecore-cats/`
+- **Schema:** CollectionPage.
+
+### 2. MATERIAL
+- **Standalone page (final destination).**
+- **Examples:** C01-001, C01-002, C02-005.
+- **Template:** Product Page.
+- **Reference Master:** `/cottagecore-cats/c01-001/`
+- **Schema:** Product.
+
+**Rule:**
+- If page contains materials → **SECTION**.
+- If page is the final destination → **MATERIAL**.
+- No third page type exists.
+
 ## История изменений
-[Дата] | Файл | Изменение | Зачем
---- | --- | --- | ---
-2026-06-02 | Инициализация | Зафиксирована полная структура согласно image_1f53dc.png | Синхронизация с актуальным состоянием
-2026-06-02 | cottagecore-cats.md | Синхронизация метаданных с шаблоном collection | Обеспечение работы автоматического вывода товаров коллекции
+| Дата | Файл | Изменение | Зачем |
+| :--- | :--- | :--- | :--- |
+| 2026-06-02 | Инициализация | Создан PROJECT_MASTER.md | Фиксация архитектуры |
+| 2026-06-14 | Content Model | Внедрена модель SECTION/MATERIAL | Упорядочивание контента |
 
 ## Текущий этап разработки
 - **Завершено:**
     - Инициализация структуры проекта и `PROJECT_MASTER.md`.
-    - Разработка шаблона `_layouts/collection.html` с поддержкой типов `core` (авто) и `smart_manual` (ручной выбор).
-    - Внедрение логики визуализации неактивных товаров (статус `hidden`).
-    - Исправление конфликтов верстки в хедере коллекции (разделение классов баннера и карточек).
+    - Разработка шаблона `_layouts/collection.html`.
 - **В работе:**
-    - Финализация шаблона `_layouts/collection.html`.
-    - Создание и настройка контента для базовых коллекций: `cottagecore-cats.md` и `witchy-cats-plants.md`.
-    - Интеграция механизма фотогалереи в коллекции по аналогии с продуктовыми страницами.
+    - Финализация структуры контента согласно Content Model.
 - **Запланировано:**
-    - Организация структуры смарт-коллекций и создание первых страниц для них.
-    - Подключение интерактивного кругового сезонного календаря (SVG) с навигацией на смарт-страницы.
-    - Разработка RSS-канала для сайта.
-    - Создание и доводка второстепенных разделов сайта.
+    - Подключение сезонного календаря (SVG).
 
 ## Известные ограничения
 - Работа ведется строго через GitHub Web Interface.
