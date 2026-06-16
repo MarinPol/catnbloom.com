@@ -69,7 +69,7 @@
 
           {% for product in showcase_items %}
           <div class="showcase-item">
-            <a href="{{ product.url }}">
+            <a href="{{ product.url }}" title="{{ product.title }}">
               <img src="{{ product.image_url }}" alt="{{ product.title }}">
             </a>
           </div>
@@ -85,7 +85,7 @@
   <section class="product-grid">
     {% for product in grid_items %}
     <div class="product-item">
-      <a href="{{ product.url }}">
+      <a href="{{ product.url }}" title="{{ product.title }}">
         <img src="{{ product.image_url }}" alt="{{ product.title }}">
       </a>
     </div>
