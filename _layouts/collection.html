@@ -54,7 +54,9 @@
         {% endif %}
 
       </section>
-{% include share-buttons.html %}
+
+      {% include share-buttons.html %}
+
     </div>
   </div>
 
@@ -69,7 +71,6 @@
           <div class="showcase-item">
             <a href="{{ product.url }}">
               <img src="{{ product.image_url }}" alt="{{ product.title }}">
-              <h3>{{ product.title }}</h3>
             </a>
           </div>
           {% endfor %}
@@ -79,15 +80,13 @@
 
       <button class="showcase-btn right" onclick="moveShowcase(1)">›</button>
     </div>
- </section> <!-- product-showcase -->
-
+  </section>
 
   <section class="product-grid">
     {% for product in grid_items %}
     <div class="product-item">
       <a href="{{ product.url }}">
         <img src="{{ product.image_url }}" alt="{{ product.title }}">
-        <h3>{{ product.title }}</h3>
       </a>
     </div>
     {% endfor %}
