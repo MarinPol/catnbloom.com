@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 16 (1)
+RESET Jun 16 (2)
 ========================= */
 
 * {
@@ -39,14 +39,12 @@ HEADER
   }
 }
 
-/* BRAND */
 .brand-area {
   display: flex;
   align-items: flex-start;
   padding-top: 6px;
 }
 
-/* ICON */
 .site-icon {
   height: 42px;
   width: auto;
@@ -246,32 +244,6 @@ MAIN IMAGE
 }
 
 /* =========================
-DETAIL GALLERY (FIXED STABLE VERSION)
-========================= */
-
-.detail-gallery {
-  margin-top: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.gallery-item {
-  width: calc(33.333% - 8px);
-  display: block;
-}
-
-.gallery-item img {
-  width: 100%;
-  height: auto;
-  display: block;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #eee;
-}
-
-/* =========================
 TYPOGRAPHY
 ========================= */
 
@@ -291,107 +263,6 @@ h3 {
   font-size: 1.1rem;
   margin: 0;
   color: #a3b18a;
-}
-
-/* =========================
-AUTHOR NOTE
-========================= */
-
-.author-note-box {
-  margin-top: 18px;
-  padding: 16px;
-  background: #fcfcfc;
-  border-left: 4px solid #a3b18a;
-  color: #333;
-  font-size: 0.95rem;
-}
-
-/* =========================
-EXTRA LINKS
-========================= */
-
-.extra-links-section {
-  margin-top: 24px;
-  padding-top: 18px;
-  border-top: 1px solid #eee;
-}
-
-.extra-link {
-  font-size: 0.95rem;
-  color: #7b2d2d;
-  text-decoration: underline;
-}
-
-/* =========================
-BUTTON
-========================= */
-
-.buy-button {
-  background: #a3b18a;
-  color: #fff;
-  padding: 16px;
-  border-radius: 8px;
-  text-align: center;
-  text-decoration: none;
-  font-weight: bold;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-/* =========================
-SWITCHER
-========================= */
-
-.platform-switcher {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.switch-tab {
-  flex: 1;
-  padding: 12px 14px;
-  border: 1px solid #ddd;
-  background: #f7f7f7;
-  cursor: pointer;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.switch-tab.active {
-  background: #a3b18a;
-  color: #fff;
-  border-color: #a3b18a;
-}
-
-/* =========================
-TAGS
-========================= */
-
-.tags-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.product-tag {
-  background: #f0f0f0;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-}
-
-/* =========================
-META
-========================= */
-
-.meta-date {
-  font-size: 0.85rem;
-  color: #888;
-  margin-bottom: 12px;
 }
 
 /* =========================
@@ -415,7 +286,7 @@ PRODUCT GRID
 }
 
 /* =========================
-SHOWCASE
+SHOWCASE (DESKTOP — unchanged)
 ========================= */
 
 .product-showcase {
@@ -453,28 +324,39 @@ SHOWCASE
 }
 
 /* =========================
-MOBILE FIX (CRITICAL UPDATE)
+🔥 MOBILE FIX (CRITICAL)
 ========================= */
 
 @media (max-width: 768px) {
 
+  /* ВАЖНО:
+     полностью отключаем "слайдер-геометрию"
+     и превращаем в grid-like плитку */
+
   .showcase-wrapper {
-    gap: 12px;
+    display: block; /* убираем flex-слайдер поведение */
   }
 
-  /* KEY FIX:
-     вместо 3 в ряд → 2 в ряд */
-  .showcase-item {
-    flex: 0 0 calc((100% - 18px) / 2);
-  }
-
-  /* убираем ощущение "слишком мелко" */
-  .product-showcase {
-    padding: 0 12px;
+  .showcase-viewport {
+    overflow: visible; /* убираем маску слайдера */
   }
 
   .showcase-track {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+
+    /* отключаем сдвиги слайдера */
+    transform: none !important;
+  }
+
+  .showcase-item {
+    flex: unset;
+    width: 100%;
+  }
+
+  .product-showcase {
+    padding: 0 12px;
   }
 }
 
@@ -536,7 +418,6 @@ SHARE-BUTTONS
   border: none;
 }
 
-/* PLATFORM COLORS */
 .share-btn.telegram { background: #0088cc; }
 .share-btn.x { background: #000000; }
 .share-btn.pinterest { background: #E60023; }
