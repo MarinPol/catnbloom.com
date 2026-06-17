@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 14 (1)
+RESET Jun 16 (1)
 ========================= */
 
 * {
@@ -453,6 +453,32 @@ SHOWCASE
 }
 
 /* =========================
+MOBILE FIX (CRITICAL UPDATE)
+========================= */
+
+@media (max-width: 768px) {
+
+  .showcase-wrapper {
+    gap: 12px;
+  }
+
+  /* KEY FIX:
+     вместо 3 в ряд → 2 в ряд */
+  .showcase-item {
+    flex: 0 0 calc((100% - 18px) / 2);
+  }
+
+  /* убираем ощущение "слишком мелко" */
+  .product-showcase {
+    padding: 0 12px;
+  }
+
+  .showcase-track {
+    gap: 12px;
+  }
+}
+
+/* =========================
 FOOTER
 ========================= */
 
@@ -481,6 +507,7 @@ FOOTER
 /* =========================
 SHARE-BUTTONS
 ========================= */
+
 .share-buttons {
   margin-top: 24px;
   padding-top: 16px;
