@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 16 (2)
+RESET Jun 16 (3)
 ========================= */
 
 * {
@@ -286,7 +286,7 @@ PRODUCT GRID
 }
 
 /* =========================
-SHOWCASE (DESKTOP — unchanged)
+SHOWCASE (DESKTOP - SLIDER KEEPED)
 ========================= */
 
 .product-showcase {
@@ -324,21 +324,23 @@ SHOWCASE (DESKTOP — unchanged)
 }
 
 /* =========================
-🔥 MOBILE FIX (CRITICAL)
+🔥 MOBILE FIX (GRID MODE ONLY)
 ========================= */
 
 @media (max-width: 768px) {
 
-  /* ВАЖНО:
-     полностью отключаем "слайдер-геометрию"
-     и превращаем в grid-like плитку */
+  /* ❌ отключаем стрелки (ВАЖНО) */
+  .showcase-btn {
+    display: none !important;
+  }
 
+  /* ❌ убираем слайдер-поведение */
   .showcase-wrapper {
-    display: block; /* убираем flex-слайдер поведение */
+    display: block;
   }
 
   .showcase-viewport {
-    overflow: visible; /* убираем маску слайдера */
+    overflow: visible;
   }
 
   .showcase-track {
@@ -346,7 +348,6 @@ SHOWCASE (DESKTOP — unchanged)
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
 
-    /* отключаем сдвиги слайдера */
     transform: none !important;
   }
 
