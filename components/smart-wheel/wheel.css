@@ -1,1 +1,145 @@
+body {
+  margin: 0;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+/*
+  ===== Сцена =====
+  bg.png, wheel.svg, marker.png и руки нарисованы на ОДНОМ холсте 2000x2000
+  и используют одни и те же координаты — поэтому все слои просто накладываются
+  друг на друга 1:1, без какого-либо масштабирования или смещения.
+*/
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 1 / 1;
+}
+
+.stage-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* колесо — вращается */
+.wheel-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  /* ВАЖНО: центр вращения */
+  transform-origin: 50% 50%;
+
+  transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#wheel {
+  width: 100%;
+  height: 100%;
+}
+
+/* Невидимый слой для кликов поверх колеса, в тех же координатах 2000x2000 */
+.svg-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none; /* Пропускаем сквозь сам SVG */
+}
+
+/* Сектора ловят клики, но остаются полностью прозрачными */
+.sector {
+  fill: #ffffff;
+  opacity: 0;
+  cursor: pointer;
+  pointer-events: all; /* Включаем кликабельность только для секторов */
+  transition: opacity 0.1s;
+}
+
+/* Для теста: если раскомментировать строку ниже, можно увидеть границы секторов */
+/* .sector { opacity: 0.2 !important; stroke: red; stroke-width: 2px; } */
+
+/* Указатель (статичный, не крутится вместе с колесом) — показывает на 3 часа */
+.wheel-marker {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ===== Лапы ===== */
+.paw {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  user-select: none;
+}
+
+.paw img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Координаты — это прямые проценты от общего холста 2000x2000, без пересчёта */
+.paw-left {
+  left: 10.15%;
+  top: 27%;
+  width: 21.6%;
+  height: 19.65%;
+  transform-origin: 78% 18%; /* точка "запястья" — там лапа уходит за кадр */
+  animation: paw-left-wiggle 2.8s ease-in-out infinite;
+  animation-play-state: paused; /* стоит на паузе — запускается по клику */
+}
+
+.paw-right {
+  right: 10.15%;
+  top: 27%;
+  width: 21.6%;
+  height: 19.65%;
+  transform-origin: 22% 18%;
+  animation: paw-right-wiggle 2.8s ease-in-out infinite;
+  animation-delay: 0.4s;
+  animation-play-state: paused; /* стоит на паузе — запускается по клику */
+}
+
+/* Класс .spinning добавляется на .stage в момент клика и снимается по окончании */
+.stage.spinning .paw-left,
+.stage.spinning .paw-right {
+  animation-play-state: running;
+}
+
+@keyframes paw-left-wiggle {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50%      { transform: rotate(-7deg) translateY(3%); }
+}
+
+@keyframes paw-right-wiggle {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50%      { transform: rotate(7deg) translateY(3%); }
+}
+
+.panel {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+button {
+  padding: 6px 10px;
+}
