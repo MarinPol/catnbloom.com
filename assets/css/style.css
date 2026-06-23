@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 16 (3)
+RESET Jun 22 (1)
 ========================= */
 
 * {
@@ -424,3 +424,41 @@ SHARE-BUTTONS
 .share-btn.pinterest { background: #E60023; }
 .share-btn.facebook { background: #1877F2; }
 .share-btn.copy { background: #666666; }
+
+/* =========================
+DETAIL GALLERY (product page)
+========================= */
+
+.detail-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.gallery-item {
+  display: block;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.gallery-item:hover img {
+  opacity: 0.88;
+}
+
+@media (max-width: 768px) {
+  .detail-gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+}
+
