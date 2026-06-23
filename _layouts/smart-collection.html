@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  {% include head.html %}
+</head>
+
+<body>
+
+{% include header.html %}
+{% include breadcrumbs.html %}
+
+{% assign items = site.smart | where: "month", page.month %}
+
+<div class="container collection-page">
+
+    <div class="left-block">
+
+        {% include smart-wheel.html %}
+
+    </div>
+
+    <div class="right-container">
+
+        <header class="collection-hero">
+
+            <h1>{{ page.hero_title }}</h1>
+
+            {% if page.hero_subtitle %}
+            <div class="story-text">
+                {{ page.hero_subtitle }}
+            </div>
+            {% endif %}
+
+        </header>
+
+        <section class="collection-intro">
+
+            {% if page.about_collection %}
+            <h3 class="icon-title">
+                <i data-lucide="calendar-heart"></i>
+                About Month
+            </h3>
+
+            <p>{{ page.about_collection }}</p>
+            {% endif %}
+
+            {% if page.artistic_direction %}
+            <h3 class="icon-title">
+                <i data-lucide="flower"></i>
+                Artistic Direction
+            </h3>
+
+            <p>{{ page.artistic_direction }}</p>
+            {% endif %}
+
+            {% if page.design_intent %}
+            <h3 class="icon-title">
+                <i data-lucide="sparkles"></i>
+                Collection Story
+            </h3>
+
+            <p>{{ page.design_intent }}</p>
+            {% endif %}
+
+        </section>
+
+        {% include share-buttons.html %}
+
+    </div>
+
+</div>
+
+<section class="product-grid">
+
+{% for product in items %}
+
+<div class="product-item">
+
+    <a href="{{ product.url }}" title="{{ product.title }}">
+
+        <img
+            src="{{ product.image_url }}"
+            alt="{{ product.title }}">
+
+    </a>
+
+</div>
+
+{% endfor %}
+
+</section>
+
+<script>
+if (window.lucide) {
+    lucide.createIcons();
+}
+</script>
+
+{% include footer.html %}
+
+</body>
+</html>
