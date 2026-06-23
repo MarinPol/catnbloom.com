@@ -1,5 +1,5 @@
 /* =========================
-RESET Jun 22 (1)
+RESET Jun 22 (2)
 ========================= */
 
 * {
@@ -244,6 +244,32 @@ MAIN IMAGE
 }
 
 /* =========================
+DETAIL GALLERY
+========================= */
+
+.detail-gallery {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gallery-item {
+  width: calc(33.333% - 8px);
+  display: block;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+/* =========================
 TYPOGRAPHY
 ========================= */
 
@@ -263,6 +289,107 @@ h3 {
   font-size: 1.1rem;
   margin: 0;
   color: #a3b18a;
+}
+
+/* =========================
+AUTHOR NOTE
+========================= */
+
+.author-note-box {
+  margin-top: 18px;
+  padding: 16px;
+  background: #fcfcfc;
+  border-left: 4px solid #a3b18a;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* =========================
+EXTRA LINKS
+========================= */
+
+.extra-links-section {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #eee;
+}
+
+.extra-link {
+  font-size: 0.95rem;
+  color: #7b2d2d;
+  text-decoration: underline;
+}
+
+/* =========================
+BUTTON
+========================= */
+
+.buy-button {
+  background: #a3b18a;
+  color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* =========================
+SWITCHER
+========================= */
+
+.platform-switcher {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.switch-tab {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  background: #f7f7f7;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.switch-tab.active {
+  background: #a3b18a;
+  color: #fff;
+  border-color: #a3b18a;
+}
+
+/* =========================
+TAGS
+========================= */
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.product-tag {
+  background: #f0f0f0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+/* =========================
+META
+========================= */
+
+.meta-date {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 12px;
 }
 
 /* =========================
@@ -286,7 +413,7 @@ PRODUCT GRID
 }
 
 /* =========================
-SHOWCASE (DESKTOP - SLIDER KEEPED)
+SHOWCASE (DESKTOP)
 ========================= */
 
 .product-showcase {
@@ -324,17 +451,15 @@ SHOWCASE (DESKTOP - SLIDER KEEPED)
 }
 
 /* =========================
-🔥 MOBILE FIX (GRID MODE ONLY)
+MOBILE FIX (GRID MODE)
 ========================= */
 
 @media (max-width: 768px) {
 
-  /* ❌ отключаем стрелки (ВАЖНО) */
   .showcase-btn {
     display: none !important;
   }
 
-  /* ❌ убираем слайдер-поведение */
   .showcase-wrapper {
     display: block;
   }
@@ -347,7 +472,6 @@ SHOWCASE (DESKTOP - SLIDER KEEPED)
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-
     transform: none !important;
   }
 
@@ -419,46 +543,9 @@ SHARE-BUTTONS
   border: none;
 }
 
-.share-btn.telegram { background: #0088cc; }
-.share-btn.x { background: #000000; }
+.share-btn.telegram  { background: #0088cc; }
+.share-btn.x         { background: #000000; }
 .share-btn.pinterest { background: #E60023; }
-.share-btn.facebook { background: #1877F2; }
-.share-btn.copy { background: #666666; }
-
-/* =========================
-DETAIL GALLERY (product page)
-========================= */
-
-.detail-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.gallery-item {
-  display: block;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.gallery-item img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 6px;
-  display: block;
-  transition: opacity 0.2s ease;
-}
-
-.gallery-item:hover img {
-  opacity: 0.88;
-}
-
-@media (max-width: 768px) {
-  .detail-gallery {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-}
+.share-btn.facebook  { background: #1877F2; }
+.share-btn.copy      { background: #666666; }
 
