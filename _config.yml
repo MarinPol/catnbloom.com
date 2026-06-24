@@ -10,6 +10,9 @@ collections:
   witchy:
     output: true
     permalink: /witchy-cats-plants/:path/
+  smart:
+    output: true
+    permalink: /smart/:path/
 
 # DEFAULT LAYOUTS (GLOBAL SAFE SCOPING)
 defaults:
@@ -24,6 +27,12 @@ defaults:
       type: witchy
     values:
       layout: product-bridge
+
+  - scope:
+      path: ""
+      type: smart
+    values:
+      layout: smart-collection
 
 # ENGINE SETTINGS
 markdown: kramdown
