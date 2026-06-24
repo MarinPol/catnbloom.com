@@ -1,53 +1,57 @@
-let currentMonth = 0; // Январь — это 0 (на 3 часах)
+// SYSTEM LOG
+// v1.0 — Initial standalone demo version (example.com URLs, window.open)
+// v1.1 — 2026-06-23 — Fixed: real /smart/sc01/–sc12/ URLs, same-tab navigation,
+//                      removed window.open + reload, removed locked reset on navigation.
+
+let currentMonth = 0;
 let locked = false;
 
-// Текущий накопленный угол поворота колеса (не обнуляется, может расти/уменьшаться
-// за пределы 0–360 — это нужно, чтобы колесо всегда крутилось кратчайшим путём,
-// а не "отматывалось" назад на 330° вместо того, чтобы провернуться на 30°).
+// Accumulated rotation angle — never resets, so the wheel always spins the
+// shortest path to the target rather than unwinding a full 330° the wrong way.
 let currentRotation = 0;
 
-// 12 месяцев: угол, на который нужно повернуть КОЛЕСО (по часовой стрелке),
-// чтобы месяц с этим индексом оказался в положении 3 часа.
-//
-// ВАЖНО: на самой картинке wheel.svg месяцы расположены ПРОТИВ часовой стрелки
-// (Jan на 3 часах, Dec чуть ниже него по часовой, Feb чуть выше него против часовой).
-// Поэтому, чтобы подвинуть месяц №i к 3 часам, колесо нужно крутить ПО часовой
-// на 30*i градусов (а не против, как было раньше).
+// 12 sectors: clockwise angle needed to bring month index i to the 3 o'clock marker.
+// January = 0° (already at 3 o'clock on the SVG), each step = 30°.
 const angles = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
 
-// Ссылки на месяцы
+// Month destination URLs — match _smart/ permalink structure
 const monthUrls = [
-  'https://example.com/january', 'https://example.com/february', 'https://example.com/march',
-  'https://example.com/april', 'https://example.com/may', 'https://example.com/june',
-  'https://example.com/july', 'https://example.com/august', 'https://example.com/september',
-  'https://example.com/october', 'https://example.com/november', 'https://example.com/december'
+  '/smart/sc01/',
+  '/smart/sc02/',
+  '/smart/sc03/',
+  '/smart/sc04/',
+  '/smart/sc05/',
+  '/smart/sc06/',
+  '/smart/sc07/',
+  '/smart/sc08/',
+  '/smart/sc09/',
+  '/smart/sc10/',
+  '/smart/sc11/',
+  '/smart/sc12/'
 ];
 
 function go(targetMonthIndex) {
   if (locked) return;
   locked = true;
 
-  const wheel = document.getElementById("wheelWrap");
+  const wheel = document.getElementById('wheelWrap');
+  if (!wheel) return;
 
-  // Целевой угол (0–360), при котором targetMonthIndex окажется на 3 часах.
+  // Shortest-path delta
   const targetAngle = angles[targetMonthIndex];
-
-  // Считаем кратчайшую дельту от текущего накопленного угла до целевого,
-  // чтобы колесо не делало лишний почти-полный оборот.
   let delta = ((targetAngle - currentRotation) % 360 + 360) % 360;
   if (delta > 180) delta -= 360;
 
   currentRotation += delta;
-
   wheel.style.transform = `rotate(${currentRotation}deg)`;
-
   currentMonth = targetMonthIndex;
 
-  // Запускаем анимацию лап — коты начинают крутить колесо вместе с вращением
-  document.querySelector('.stage').classList.add('spinning');
+  // Start paw animation
+  const stage = document.querySelector('.stage');
+  if (stage) stage.classList.add('spinning');
 
-  setTimeout(() => {
-    window.open(monthUrls[targetMonthIndex], '_blank');
-    window.location.reload();
+  // Navigate after animation completes (2.5s matches CSS transition)
+  setTimeout(function () {
+    window.location.href = monthUrls[targetMonthIndex];
   }, 2500);
 }
