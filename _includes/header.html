@@ -11,7 +11,7 @@
     </div>
 
     <button class="menu-toggle" onclick="toggleMenu()">
-      ☰
+      &#9776;
     </button>
 
   </div>
@@ -23,15 +23,15 @@
       <li><a href="/">Home</a></li>
 
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle">Shop Collections ▾</a>
+        <a href="#" class="dropdown-toggle">Shop Collections &#9662;</a>
 
         <div class="dropdown-menu">
           <a href="/cottagecore-cats/">Cottagecore Cats</a>
-          <a href="/witchy-cats-plants/">Witchy Cats Plants</a>
+          <a href="/witchy-cats-plants/">Witchy Cats + Plants</a>
         </div>
       </li>
 
-      <li><a href="/seasons/">Seasonal Sets</a></li>
+      <li><a href="/smart/">Smart Collections</a></li>
       <li><a href="/about/">Our Story</a></li>
       <li><a href="/contact/">Contact</a></li>
 
@@ -58,14 +58,12 @@ document.addEventListener('DOMContentLoaded', function () {
       if (window.innerWidth <= 768) {
         e.preventDefault();
 
-        // ❗ СТАБИЛЬНЫЙ ПОИСК (НЕ DOM-RELATIVE)
         const dropdown = this.closest('.dropdown');
         const menu = dropdown ? dropdown.querySelector('.dropdown-menu') : null;
 
         if (menu) {
           menu.classList.toggle('is-open');
         }
-
       }
 
     });

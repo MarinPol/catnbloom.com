@@ -17,6 +17,38 @@
 
   {%- comment -%}
   =========================
+  SMART HOME (INDEX) LOGIC
+  =========================
+  {%- endcomment -%}
+
+  {% elsif page.layout == "smart-home" %}
+
+    <span>/</span>
+
+    <span class="current-page">
+      {{ page.hero_title | default: "Smart Collections" }}
+    </span>
+
+  {%- comment -%}
+  =========================
+  SMART COLLECTION (MONTHLY) LOGIC
+  =========================
+  {%- endcomment -%}
+
+  {% elsif page.layout == "smart-collection" %}
+
+    <span>/</span>
+
+    <a href="/smart/">Smart Collections</a>
+
+    <span>/</span>
+
+    <span class="current-page">
+      {{ page.hero_title | default: page.title }}
+    </span>
+
+  {%- comment -%}
+  =========================
   PRODUCT PAGE LOGIC (MATERIAL - FIXED SAFE LINK)
   =========================
   {%- endcomment -%}
