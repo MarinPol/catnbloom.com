@@ -25,6 +25,12 @@
 
   <img class="wheel-marker" src="/assets/components/smart-wheel/assets/marker.png" alt="">
 
+  {% if page.wheel_overlay %}
+  <img class="wheel-overlay-item"
+       src="{{ page.wheel_overlay }}"
+       alt="{{ page.hero_title }}">
+  {% endif %}
+
   <div class="paw paw-left">
     <img src="/assets/components/smart-wheel/assets/hand_left.png" alt="">
   </div>
