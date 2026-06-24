@@ -125,3 +125,26 @@
   0%, 100% { transform: rotate(0deg) translateY(0); }
   50%       { transform: rotate(7deg) translateY(3%); }
 }
+
+/* =========================
+   WHEEL OVERLAY ITEM
+   Seasonal decoration — hat, heart, pumpkin etc.
+   Sits above marker (z-index 3), below paws (z-index 4).
+   Position and size are tuned per asset — adjust in sc*.md
+   via inline style if needed, or override here per month.
+   ========================= */
+
+.wheel-overlay-item {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  user-select: none;
+
+  /* Default placement — centre-right of the wheel face,
+     roughly where the marker points (3 o'clock zone).
+     Fine-tune width/top/right in the image itself or add
+     a modifier class per month if positions differ a lot. */
+  width: 22%;
+  top: 30%;
+  right: 8%;
+}
