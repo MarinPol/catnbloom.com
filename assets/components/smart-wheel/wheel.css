@@ -144,7 +144,8 @@
      roughly where the marker points (3 o'clock zone).
      Fine-tune width/top/right in the image itself or add
      a modifier class per month if positions differ a lot. */
-  width: 22%;
-  top: 30%;
-  right: 8%;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
