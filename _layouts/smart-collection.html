@@ -3,101 +3,162 @@
 
 <head>
   {% include head.html %}
+  <link rel="stylesheet" href="/assets/components/smart-wheel/wheel.css">
 </head>
 
 <body>
 
-{% include header.html %}
-{% include breadcrumbs.html %}
+  {% include header.html %}
+  {% include breadcrumbs.html %}
 
-{% assign items = site.smart | where: "month", page.month %}
+  {% comment %}
+  =====================================================
+  SMART PRODUCT LOOKUP
+  Pulls products by SKU from both core collections.
+  Author specifies SKUs in page.products YAML array.
+  =====================================================
+  {% endcomment %}
 
-<div class="container collection-page">
+  {% assign all_products = site.cottagecore | concat: site.witchy %}
+  {% assign smart_items = "" | split: "" %}
+  {% for pid in page.products %}
+    {% assign found = all_products | where: "sku", pid | first %}
+    {% if found %}
+      {% assign smart_items = smart_items | push: found %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign showcase_items = smart_items | slice: 0, 6 %}
+  {% assign grid_items = smart_items | slice: 6, 999 %}
+
+  <div class="container collection-page">
 
     <div class="left-block">
-
-        {% include smart-wheel.html %}
-
+      {% include smart-wheel.html %}
     </div>
 
     <div class="right-container">
 
-        <header class="collection-hero">
+      <header class="collection-hero">
+        <h1>{{ page.hero_title }}</h1>
 
-            <h1>{{ page.hero_title }}</h1>
+        {% if page.hero_subtitle %}
+        <div class="story-text">
+          {{ page.hero_subtitle }}
+        </div>
+        {% endif %}
+      </header>
 
-            {% if page.hero_subtitle %}
-            <div class="story-text">
-                {{ page.hero_subtitle }}
-            </div>
-            {% endif %}
+      <section class="collection-intro">
 
-        </header>
+        {% if page.about_collection %}
+          <h3 class="icon-title"><i data-lucide="calendar-heart"></i>About This Month</h3>
+          <p>{{ page.about_collection }}</p>
+        {% endif %}
 
-        <section class="collection-intro">
+        {% if page.artistic_direction %}
+          <h3 class="icon-title"><i data-lucide="flower"></i>Artistic Direction</h3>
+          <p>{{ page.artistic_direction }}</p>
+        {% endif %}
 
-            {% if page.about_collection %}
-            <h3 class="icon-title">
-                <i data-lucide="calendar-heart"></i>
-                About Month
-            </h3>
+        {% if page.design_intent %}
+          <h3 class="icon-title"><i data-lucide="sparkles"></i>Collection Story</h3>
+          <p>{{ page.design_intent }}</p>
+        {% endif %}
 
-            <p>{{ page.about_collection }}</p>
-            {% endif %}
+      </section>
 
-            {% if page.artistic_direction %}
-            <h3 class="icon-title">
-                <i data-lucide="flower"></i>
-                Artistic Direction
-            </h3>
-
-            <p>{{ page.artistic_direction }}</p>
-            {% endif %}
-
-            {% if page.design_intent %}
-            <h3 class="icon-title">
-                <i data-lucide="sparkles"></i>
-                Collection Story
-            </h3>
-
-            <p>{{ page.design_intent }}</p>
-            {% endif %}
-
-        </section>
-
-        {% include share-buttons.html %}
+      {% include share-buttons.html %}
 
     </div>
 
-</div>
+  </div>
 
-<section class="product-grid">
+  {% if showcase_items.size > 0 %}
+  <section class="product-showcase">
+    <div class="showcase-wrapper">
+      <button class="showcase-btn left" onclick="moveShowcase(-1)">&#8249;</button>
 
-{% for product in items %}
+      <div class="showcase-viewport">
+        <div class="showcase-track" id="showcaseTrack">
 
-<div class="product-item">
+          {% for product in showcase_items %}
+          <div class="showcase-item">
+            <a href="{{ product.url }}" title="{{ product.title }}">
+              <img src="{{ product.image_url }}" alt="{{ product.title }}">
+            </a>
+          </div>
+          {% endfor %}
 
-    <a href="{{ product.url }}" title="{{ product.title }}">
+        </div>
+      </div>
 
-        <img
-            src="{{ product.image_url }}"
-            alt="{{ product.title }}">
+      <button class="showcase-btn right" onclick="moveShowcase(1)">&#8250;</button>
+    </div>
+  </section>
+  {% endif %}
 
-    </a>
+  {% if grid_items.size > 0 %}
+  <section class="product-grid">
+    {% for product in grid_items %}
+    <div class="product-item">
+      <a href="{{ product.url }}" title="{{ product.title }}">
+        <img src="{{ product.image_url }}" alt="{{ product.title }}">
+      </a>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
 
-</div>
+  <script>
+  let showcaseIndex = 0;
 
-{% endfor %}
+  function moveShowcase(dir) {
+    const track = document.getElementById("showcaseTrack");
+    const items = document.querySelectorAll(".showcase-item");
+    if (!track || !items.length) return;
+    const visible = 3;
+    const maxIndex = Math.max(0, items.length - visible);
+    showcaseIndex += dir;
+    showcaseIndex = Math.max(0, Math.min(showcaseIndex, maxIndex));
+    const itemWidth = items[0].offsetWidth + 18;
+    track.style.transform = `translateX(-${showcaseIndex * itemWidth}px)`;
+  }
+  </script>
 
-</section>
+  <script src="/assets/components/smart-wheel/wheel.js"></script>
 
-<script>
-if (window.lucide) {
-    lucide.createIcons();
-}
-</script>
+  <script>
+  // Pre-rotate wheel to current month position (silent, no animation, no navigation)
+  (function () {
+    var m = {{ page.month | default: -1 }};
+    if (m < 0) return;
 
-{% include footer.html %}
+    var wheelWrap = document.getElementById('wheelWrap');
+    if (!wheelWrap) return;
+
+    var targetRotation = m * 30;
+
+    // Apply without transition
+    wheelWrap.style.transition = 'none';
+    wheelWrap.style.transform = 'rotate(' + targetRotation + 'deg)';
+
+    // Restore transition and sync wheel.js internal state
+    setTimeout(function () {
+      wheelWrap.style.transition = '';
+      if (typeof currentRotation !== 'undefined') {
+        currentRotation = targetRotation;
+        currentMonth = m;
+      }
+    }, 100);
+  })();
+  </script>
+
+  <script>
+  if (window.lucide) lucide.createIcons();
+  </script>
+
+  {% include footer.html %}
 
 </body>
 </html>

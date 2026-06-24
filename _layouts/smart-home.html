@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include head.html %}
+  <link rel="stylesheet" href="/assets/components/smart-wheel/wheel.css">
+</head>
+
+<body>
+
+  {% include header.html %}
+  {% include breadcrumbs.html %}
+
+  {% assign smart_months = site.smart | sort: "month" %}
+
+  <div class="container collection-page">
+
+    <div class="left-block">
+      {% include smart-wheel.html %}
+    </div>
+
+    <div class="right-container">
+
+      <header class="collection-hero">
+        <h1>{{ page.hero_title }}</h1>
+
+        {% if page.hero_subtitle %}
+        <div class="story-text">
+          {{ page.hero_subtitle }}
+        </div>
+        {% endif %}
+      </header>
+
+      <section class="collection-intro">
+
+        {% if page.about_collection %}
+          <h3 class="icon-title"><i data-lucide="calendar-heart"></i>About Smart Collections</h3>
+          <p>{{ page.about_collection }}</p>
+        {% endif %}
+
+      </section>
+
+      <section class="smart-months-grid">
+
+        {% for month_page in smart_months %}
+        <a href="{{ month_page.url }}" class="smart-month-card">
+          <span class="smart-month-label">{{ month_page.hero_title }}</span>
+          <span class="smart-month-sub">{{ month_page.hero_subtitle }}</span>
+        </a>
+        {% endfor %}
+
+      </section>
+
+      {% include share-buttons.html %}
+
+    </div>
+  </div>
+
+  <script src="/assets/components/smart-wheel/wheel.js"></script>
+
+  <script>
+  if (window.lucide) lucide.createIcons();
+  </script>
+
+  {% include footer.html %}
+
+</body>
+</html>
