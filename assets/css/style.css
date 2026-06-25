@@ -332,12 +332,12 @@ BUTTON
   text-align: center;
   text-decoration: none;
   font-weight: bold;
-  display: inline-flex;
+  display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
-
 /* =========================
 SWITCHER
 ========================= */
