@@ -61,7 +61,7 @@
       <p>{{ page.what_we_make }}</p>
     </section>
 
-    <!-- DESIGNER — brief, secondary -->
+    <!-- THE ARTIST -->
     <section class="about-section">
       <h3 class="icon-title"><i data-lucide="user-round"></i>The Artist</h3>
       <p>{{ page.bio }}</p>
@@ -73,41 +73,84 @@
 
       <div class="about-faq">
         {% for item in page.faq %}
+
         <div class="faq-item">
           <div class="faq-question">{{ item.q }}</div>
           <div class="faq-answer">{{ item.a }}</div>
         </div>
+
+        {% unless forloop.last %}
+        <hr class="faq-divider">
+        {% endunless %}
+
         {% endfor %}
       </div>
     </section>
 
-    <!-- FIND US -->
+    <!-- FIND OUR ART — кнопки как на продуктовой странице -->
     <section class="about-section">
       <h3 class="icon-title"><i data-lucide="store"></i>Find Our Art</h3>
 
-      <div class="extra-links-list">
-        <a href="https://www.teepublic.com/user/catnbloom"
-           class="extra-link" target="_blank">
-          TeePublic — Apparel & Accessories
-        </a>
-        <a href="https://www.redbubble.com/people/catnbloom"
-           class="extra-link" target="_blank">
-          Redbubble — Stickers & Notebooks
-        </a>
+      <div class="platform-switcher">
+        <button class="switch-tab active" id="tab-tp"
+                onclick="switchStore('teepublic')">
+          Apparel
+        </button>
+        <button class="switch-tab" id="tab-rb"
+                onclick="switchStore('redbubble')">
+          Stickers & Notebooks
+        </button>
+      </div>
+
+      <a href="https://www.teepublic.com/user/catnbloom"
+         class="buy-button"
+         id="store-btn"
+         target="_blank">
+        <i data-lucide="shopping-cart"></i>
+        <span>Browse on TeePublic</span>
+      </a>
+
+      <div class="extra-links-list" style="margin-top: 14px;">
         <a href="https://www.instagram.com/catnbloom/"
            class="extra-link" target="_blank">
           Instagram @catnbloom
         </a>
       </div>
+
     </section>
 
     {% include share-buttons.html %}
 
   </div>
-
 </div>
 
 <script>
+var stores = {
+  teepublic: {
+    url: 'https://www.teepublic.com/user/catnbloom',
+    label: 'Browse on TeePublic'
+  },
+  redbubble: {
+    url: 'https://www.redbubble.com/people/catnbloom',
+    label: 'Browse on Redbubble'
+  }
+};
+
+function switchStore(key) {
+  var btn = document.getElementById('store-btn');
+  var tp  = document.getElementById('tab-tp');
+  var rb  = document.getElementById('tab-rb');
+  if (!btn) return;
+
+  btn.href = stores[key].url;
+  btn.innerHTML = '<i data-lucide="shopping-cart"></i><span>' + stores[key].label + '</span>';
+
+  tp.classList.toggle('active', key === 'teepublic');
+  rb.classList.toggle('active', key === 'redbubble');
+
+  if (window.lucide) lucide.createIcons();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   if (window.lucide) lucide.createIcons();
 });
