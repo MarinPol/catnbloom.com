@@ -11,7 +11,7 @@ detail_images:
   - "about-gallery-2.jpg"
   - "about-gallery-3.jpg"
 
-studio_story: "CatnBloom Studio launched in November 2024 with one simple idea: create illustrations that feel personal, expressive, and genuinely enjoyable to wear. Every design begins as a digital illustration and goes through careful refinement before becoming part of a finished collection.
+studio_story: "CatnBloom Studio launched in November 2025 with one simple idea: create illustrations that feel personal, expressive, and genuinely enjoyable to wear. Every design begins as a digital illustration and goes through careful refinement before becoming part of a finished collection.
 
 Cats and plants sit at the heart of the studio. Some designs lean soft, floral, and nostalgic. Others explore darker, mystical themes inspired by folklore, herbal traditions, and seasonal symbolism. Together, they form a growing collection of illustrated artwork created for people who love nature, creativity, and a little everyday magic."
 
