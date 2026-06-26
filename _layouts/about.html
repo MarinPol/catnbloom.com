@@ -3,6 +3,7 @@
 
 <head>
   {% include head.html %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -20,22 +21,52 @@
            alt="CatnBloom Studio">
     </div>
 
-    <!-- STATS -->
+    <!-- GALLERY -->
+    {% if page.detail_images and page.detail_images.size > 0 %}
+    <div class="detail-gallery">
+      {% for img in page.detail_images %}
+      <a href="/assets/images/{{ img }}"
+         data-lightbox="about-gallery"
+         class="gallery-item">
+        <img src="/assets/images/{{ img }}"
+             alt="CatnBloom Studio {{ forloop.index }}"
+             loading="lazy">
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- STATS 3x2 -->
     <div class="about-stats">
 
       <div class="about-stat">
-        <span class="about-stat-number">2</span>
-        <span class="about-stat-label">collections</span>
+        <span class="about-stat-number">100%</span>
+        <span class="about-stat-label">digital art</span>
       </div>
 
       <div class="about-stat">
-        <span class="about-stat-number">30+</span>
-        <span class="about-stat-label">years in design</span>
+        <span class="about-stat-number">cats &</span>
+        <span class="about-stat-label">plants</span>
       </div>
 
       <div class="about-stat">
-        <span class="about-stat-number">2024</span>
-        <span class="about-stat-label">studio founded</span>
+        <span class="about-stat-number">cottage</span>
+        <span class="about-stat-label">& witchy</span>
+      </div>
+
+      <div class="about-stat">
+        <span class="about-stat-number">POD</span>
+        <span class="about-stat-label">since 2020</span>
+      </div>
+
+      <div class="about-stat">
+        <span class="about-stat-number">tarot &</span>
+        <span class="about-stat-label">botanicals</span>
+      </div>
+
+      <div class="about-stat">
+        <span class="about-stat-number">2025</span>
+        <span class="about-stat-label">rebranded</span>
       </div>
 
     </div>
@@ -73,21 +104,18 @@
 
       <div class="about-faq">
         {% for item in page.faq %}
-
         <div class="faq-item">
           <div class="faq-question">{{ item.q }}</div>
           <div class="faq-answer">{{ item.a }}</div>
         </div>
-
         {% unless forloop.last %}
         <hr class="faq-divider">
         {% endunless %}
-
         {% endfor %}
       </div>
     </section>
 
-    <!-- FIND OUR ART — кнопки как на продуктовой странице -->
+    <!-- FIND OUR ART -->
     <section class="about-section">
       <h3 class="icon-title"><i data-lucide="store"></i>Find Our Art</h3>
 
@@ -105,7 +133,8 @@
       <a href="https://www.teepublic.com/user/catnbloom"
          class="buy-button"
          id="store-btn"
-         target="_blank">
+         target="_blank"
+         style="margin-top: 12px;">
         <i data-lucide="shopping-cart"></i>
         <span>Browse on TeePublic</span>
       </a>
@@ -123,6 +152,9 @@
 
   </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
 
 <script>
 var stores = {
