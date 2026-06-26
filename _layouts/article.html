@@ -82,8 +82,16 @@
     <div class="story-text">{{ page.excerpt }}</div>
     {% endif %}
 
+    <!-- FONT SIZE SWITCHER -->
+    <div class="font-size-switcher">
+      <span class="font-size-label">Text size:</span>
+      <button class="font-size-btn" onclick="setFontSize('small')" id="fs-small" title="Small">A</button>
+      <button class="font-size-btn active" onclick="setFontSize('normal')" id="fs-normal" title="Normal">A</button>
+      <button class="font-size-btn" onclick="setFontSize('large')" id="fs-large" title="Large">A</button>
+    </div>
+
     <!-- ARTICLE BODY — full Markdown content -->
-    <div class="article-body">
+    <div class="article-body" id="articleBody">
       {{ content }}
     </div>
 
@@ -106,7 +114,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
 
 <script>
+// Font size switcher — persists across pages via localStorage
+var fontSizes = {
+  small:  '0.88rem',
+  normal: '1rem',
+  large:  '1.18rem'
+};
+
+function setFontSize(size) {
+  var body = document.getElementById('articleBody');
+  if (body) body.style.fontSize = fontSizes[size];
+
+  // Update active button
+  ['small', 'normal', 'large'].forEach(function(s) {
+    var btn = document.getElementById('fs-' + s);
+    if (btn) btn.classList.toggle('active', s === size);
+  });
+
+  // Remember choice
+  try { localStorage.setItem('catnbloom-fontsize', size); } catch(e) {}
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  // Restore saved choice
+  var saved = 'normal';
+  try { saved = localStorage.getItem('catnbloom-fontsize') || 'normal'; } catch(e) {}
+  setFontSize(saved);
+
   if (window.lucide) lucide.createIcons();
 });
 </script>
