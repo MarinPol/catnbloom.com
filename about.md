@@ -2,29 +2,44 @@
 layout: about
 permalink: /about/
 title: "About CatnBloom Studio"
-tagline: "Wearable art for cat lovers, plant lovers, and everyone who feels both at once."
+tagline: "Wearable art inspired by cats, botanicals, and the worlds that grow between them."
 
 photo: "/assets/images/about-designer.jpg"
 
-bio: "The artist behind CatnBloom has been working in graphic and media design since the 1990s. Print-on-demand became part of the practice during the pandemic — and cats and botanicals were a natural subject from the very beginning."
+detail_images:
+  - "about-gallery-1.jpg"
+  - "about-gallery-2.jpg"
+  - "about-gallery-3.jpg"
 
-studio_story: "CatnBloom Studio launched in November 2024 with one clear idea: illustrations that feel like something you actually want to wear. Soft and whimsical, a little wild, always botanical. Every design is hand-crafted digitally and goes through careful colour refinement before it becomes a product."
+studio_story: "CatnBloom Studio launched in November 2024 with one simple idea: create illustrations that feel personal, expressive, and genuinely enjoyable to wear. Every design begins as a digital illustration and goes through careful refinement before becoming part of a finished collection.
 
-what_we_make: "Two main collections — Cottagecore Cats (floral, pastoral, gentle) and Witchy Cats + Plants (darker, mystical, herb-forward) — available as apparel, accessories, stickers, and notebooks through TeePublic and Redbubble. New designs arrive regularly. Seasonal selections are curated monthly in Smart Collections."
+Cats and plants sit at the heart of the studio. Some designs lean soft, floral, and nostalgic. Others explore darker, mystical themes inspired by folklore, herbal traditions, and seasonal symbolism. Together, they form a growing collection of illustrated artwork created for people who love nature, creativity, and a little everyday magic."
+
+what_we_make: "CatnBloom currently features two main collections.
+
+Cottagecore Cats explores floral arrangements, gardens, countryside moods, and gentle seasonal themes.
+
+Witchy Cats + Plants focuses on herbs, moonlit atmospheres, folklore-inspired symbolism, tarot influences, and darker botanical aesthetics.
+
+Designs are available on apparel, accessories, stickers, notebooks, and other print-on-demand products through TeePublic and Redbubble. New artwork is added regularly throughout the year. Seasonal and themed selections are organized into monthly Smart Collections, making it easier to discover designs that fit a particular mood, season, or aesthetic."
+
+bio: "The artist behind CatnBloom has worked in graphic design, visual media, and digital illustration since the 1990s. Drawing, design, storytelling, and visual experimentation have remained constant throughout that journey. CatnBloom brings together long-standing interests in cats, botanical subjects, folklore, decorative art, and contemporary digital illustration.
+
+Every design published through the studio is created, refined, and prepared by a human designer with more than three decades of creative experience."
 
 faq:
   - q: "Where can I buy CatnBloom products?"
-    a: "All products are available on TeePublic and Redbubble. Every product page has direct links."
+    a: "All products are available through TeePublic and Redbubble. Every product page on this site includes direct links to the corresponding marketplace listings."
 
   - q: "What products are available?"
-    a: "T-shirts, sweatshirts, hoodies, tote bags, mugs, stickers, notebooks and more — depending on the platform."
+    a: "Available products depend on the platform but commonly include T-shirts, hoodies, sweatshirts, tote bags, mugs, stickers, notebooks, and other print-on-demand items."
 
   - q: "How often do new designs come out?"
-    a: "New designs are added regularly. Follow us on Instagram or check back here to see what is new."
+    a: "New artwork is added regularly throughout the year. The easiest way to follow new releases is through Instagram or the monthly Smart Collections featured on the site."
 
   - q: "Can I request a custom design?"
-    a: "Custom commissions are not open right now. But if you have a strong idea, feel free to reach out — every message gets read."
+    a: "Custom commissions are not currently available. However, thoughtful ideas and suggestions are always welcome, and every message is read."
 
   - q: "Are your designs AI-generated?"
-    a: "No. Every CatnBloom illustration is hand-crafted digitally by a human designer with over 30 years of experience."
+    a: "No. Every CatnBloom illustration is created by a human designer and refined manually from concept to finished artwork. Digital tools are part of the production process, but the creative work — artistic decisions, illustration, composition, and final design development — remain entirely human-driven."
 ---
