@@ -87,6 +87,34 @@
 
   {%- comment -%}
   =========================
+  STUDIO NOTES INDEX LOGIC
+  =========================
+  {%- endcomment -%}
+
+  {% elsif page.layout == "studio-notes" %}
+
+    <span>/</span>
+
+    <span class="current-page">Studio Notes</span>
+
+  {%- comment -%}
+  =========================
+  ARTICLE LOGIC
+  =========================
+  {%- endcomment -%}
+
+  {% elsif page.layout == "article" %}
+
+    <span>/</span>
+
+    <a href="/studio-notes/">Studio Notes</a>
+
+    <span>/</span>
+
+    <span class="current-page">{{ page.title }}</span>
+
+  {%- comment -%}
+  =========================
   SAFETY FALLBACK
   =========================
   {%- endcomment -%}
