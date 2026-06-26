@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include head.html %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+{% include header.html %}
+{% include breadcrumbs.html %}
+
+<div class="container product-page">
+
+  <!-- LEFT BLOCK -->
+  <div class="left-block">
+
+    <!-- HERO IMAGE -->
+    <div class="product-image-container">
+      <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
+           alt="{{ page.title }}">
+    </div>
+
+    <!-- READ ALSO -->
+    {% if page.related_articles and page.related_articles.size > 0 %}
+    <div class="article-read-also">
+
+      <h3 class="icon-title"><i data-lucide="book-open"></i>Read Also</h3>
+
+      {% assign all_notes = site.studio_notes %}
+      {% for slug in page.related_articles %}
+        {% assign related = all_notes | where: "slug", slug | first %}
+        {% if related %}
+        <a href="{{ related.url }}" class="read-also-item">
+          {% if related.image_url %}
+          <img src="{{ related.image_url }}" alt="{{ related.title }}">
+          {% endif %}
+          <span>{{ related.title }}</span>
+        </a>
+        {% endif %}
+      {% endfor %}
+
+    </div>
+    {% endif %}
+
+    <!-- ADDITIONAL IMAGES -->
+    {% if page.detail_images and page.detail_images.size > 0 %}
+    <div class="article-images">
+
+      {% for img in page.detail_images %}
+      <a href="/assets/images/articles/{{ img }}"
+         data-lightbox="article-gallery"
+         class="article-image-item">
+        <img src="/assets/images/articles/{{ img }}"
+             alt="{{ page.title }} {{ forloop.index }}"
+             loading="lazy">
+      </a>
+      {% endfor %}
+
+    </div>
+    {% endif %}
+
+  </div>
+
+  <!-- RIGHT BLOCK -->
+  <div class="right-container">
+
+    <!-- CATEGORY + DATE -->
+    <div class="article-meta-top">
+      {% if page.category %}
+      <span class="article-category">{{ page.category }}</span>
+      {% endif %}
+      {% if page.date %}
+      <span class="meta-date">{{ page.date | date: "%B %d, %Y" }}</span>
+      {% endif %}
+    </div>
+
+    <h1>{{ page.title }}</h1>
+
+    {% if page.excerpt %}
+    <div class="story-text">{{ page.excerpt }}</div>
+    {% endif %}
+
+    <!-- ARTICLE BODY — full Markdown content -->
+    <div class="article-body">
+      {{ content }}
+    </div>
+
+    <!-- TAGS -->
+    {% if page.tags %}
+    <div class="tags-container">
+      {% for tag in page.tags %}
+      <span class="product-tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% include share-buttons.html %}
+
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.lucide) lucide.createIcons();
+});
+</script>
+
+{% include footer.html %}
+
+</body>
+</html>

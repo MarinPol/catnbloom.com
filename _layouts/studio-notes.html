@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include head.html %}
+</head>
+
+<body>
+
+  {% include header.html %}
+  {% include breadcrumbs.html %}
+
+  {% assign all_articles = site.studio_notes | sort: "date" | reverse %}
+
+  <div class="container collection-page">
+
+    <div class="left-block">
+      {% if page.hero_image %}
+      <div class="product-image-container">
+        <img src="{{ page.hero_image }}" alt="{{ page.hero_title }}">
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="right-container">
+
+      <header class="collection-hero">
+        <h1>{{ page.hero_title }}</h1>
+
+        {% if page.hero_subtitle %}
+        <div class="story-text">{{ page.hero_subtitle }}</div>
+        {% endif %}
+      </header>
+
+      <section class="collection-intro">
+
+        {% if page.about_section %}
+          <h3 class="icon-title"><i data-lucide="newspaper"></i>About This Section</h3>
+          <p>{{ page.about_section }}</p>
+        {% endif %}
+
+      </section>
+
+      {% include share-buttons.html %}
+
+    </div>
+  </div>
+
+  <!-- ARTICLE GRID -->
+  {% if all_articles.size > 0 %}
+  <section class="article-grid">
+
+    {% for article in all_articles %}
+    <a href="{{ article.url }}" class="article-card">
+
+      {% if article.image_url %}
+      <div class="article-card-image">
+        <img src="{{ article.image_url }}" alt="{{ article.title }}">
+      </div>
+      {% endif %}
+
+      <div class="article-card-body">
+
+        {% if article.category %}
+        <span class="article-category">{{ article.category }}</span>
+        {% endif %}
+
+        <h2 class="article-card-title">{{ article.title }}</h2>
+
+        {% if article.excerpt %}
+        <p class="article-card-excerpt">{{ article.excerpt }}</p>
+        {% endif %}
+
+        <div class="article-card-meta">
+          {{ article.date | date: "%B %d, %Y" }}
+        </div>
+
+      </div>
+
+    </a>
+    {% endfor %}
+
+  </section>
+  {% endif %}
+
+  <script>
+  if (window.lucide) lucide.createIcons();
+  </script>
+
+  {% include footer.html %}
+
+</body>
+</html>
