@@ -13,6 +13,9 @@ collections:
   smart:
     output: true
     permalink: /smart/:path/
+  studio_notes:
+    output: true
+    permalink: /studio-notes/:path/
 
 # DEFAULT LAYOUTS (GLOBAL SAFE SCOPING)
 defaults:
@@ -33,6 +36,12 @@ defaults:
       type: smart
     values:
       layout: smart-collection
+
+  - scope:
+      path: ""
+      type: studio_notes
+    values:
+      layout: article
 
 # ENGINE SETTINGS
 markdown: kramdown
