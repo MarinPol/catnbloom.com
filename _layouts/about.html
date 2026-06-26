@@ -3,7 +3,6 @@
 
 <head>
   {% include head.html %}
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -36,37 +35,37 @@
     </div>
     {% endif %}
 
-    <!-- STATS 3x2 -->
-    <div class="about-stats">
+    <!-- STATS 3x2 — shuffled on each page load -->
+    <div class="about-stats" id="aboutStats">
 
       <div class="about-stat">
-        <span class="about-stat-number">100%</span>
-        <span class="about-stat-label">digital art</span>
+        <span class="about-stat-number">Cats & Plants</span>
+        <span class="about-stat-label">in every design</span>
       </div>
 
       <div class="about-stat">
-        <span class="about-stat-number">cats &</span>
-        <span class="about-stat-label">plants</span>
+        <span class="about-stat-number">Cottagecore & Botanicals</span>
+        <span class="about-stat-label">original collections</span>
       </div>
 
       <div class="about-stat">
-        <span class="about-stat-number">cottage</span>
-        <span class="about-stat-label">& witchy</span>
+        <span class="about-stat-number">Tarot & Witchy</span>
+        <span class="about-stat-label">illustrated worlds</span>
       </div>
 
       <div class="about-stat">
-        <span class="about-stat-number">POD</span>
+        <span class="about-stat-number">Creative Practice</span>
         <span class="about-stat-label">since 2020</span>
       </div>
 
       <div class="about-stat">
-        <span class="about-stat-number">tarot &</span>
-        <span class="about-stat-label">botanicals</span>
+        <span class="about-stat-number">Made for Wear</span>
+        <span class="about-stat-label">printed on demand</span>
       </div>
 
       <div class="about-stat">
-        <span class="about-stat-number">2025</span>
-        <span class="about-stat-label">rebranded</span>
+        <span class="about-stat-number">Human-Created</span>
+        <span class="about-stat-label">original artwork</span>
       </div>
 
     </div>
@@ -153,10 +152,20 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
-
 <script>
+// Shuffle stat cards on every page load
+(function () {
+  var grid = document.getElementById('aboutStats');
+  if (!grid) return;
+  var cards = Array.from(grid.children);
+  for (var i = cards.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    grid.appendChild(cards[j]);
+    cards.splice(j, 1);
+  }
+})();
+
+// Store switcher
 var stores = {
   teepublic: {
     url: 'https://www.teepublic.com/user/catnbloom',
@@ -173,13 +182,10 @@ function switchStore(key) {
   var tp  = document.getElementById('tab-tp');
   var rb  = document.getElementById('tab-rb');
   if (!btn) return;
-
   btn.href = stores[key].url;
   btn.innerHTML = '<i data-lucide="shopping-cart"></i><span>' + stores[key].label + '</span>';
-
   tp.classList.toggle('active', key === 'teepublic');
   rb.classList.toggle('active', key === 'redbubble');
-
   if (window.lucide) lucide.createIcons();
 }
 
