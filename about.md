@@ -4,12 +4,12 @@ permalink: /about/
 title: "About CatnBloom Studio"
 tagline: "Wearable art inspired by cats, botanicals, and the worlds that grow between them."
 
-photo: "/assets/images/about-designer.jpg"
+photo: "/assets/images/about-designer.webp"
 
 detail_images:
   - "about-gallery-1.jpg"
-  - "about-gallery-2.jpg"
-  - "about-gallery-3.jpg"
+  - "about-gallery-1.jpg"
+  - "about-gallery-1.jpg"
 
 studio_story: "CatnBloom Studio launched in November 2025 with one simple idea: create illustrations that feel personal, expressive, and genuinely enjoyable to wear. Every design begins as a digital illustration and goes through careful refinement before becoming part of a finished collection.
 
