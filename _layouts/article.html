@@ -3,7 +3,10 @@
 
 <head>
   {% include head.html %}
+
+  {% if page.detail_images and page.detail_images.size > 0 %}
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
+  {% endif %}
 </head>
 
 <body>
@@ -21,30 +24,37 @@
            alt="{{ page.title }}">
     </div>
 
+    <!-- READ ALSO — plain navigation links, no lightbox -->
     {% if page.related_articles and page.related_articles.size > 0 %}
+    {% assign all_notes = site.studio_notes %}
+    {% assign has_related = false %}
+    {% for slug in page.related_articles %}
+      {% assign related = all_notes | where: "slug", slug | first %}
+      {% if related %}{% assign has_related = true %}{% endif %}
+    {% endfor %}
+
+    {% if has_related %}
     <div class="article-read-also">
+      <div class="read-also-heading">
+        <i data-lucide="book-open"></i>
+        <span>Read Also</span>
+      </div>
 
-      <h3 class="icon-title"><i data-lucide="book-open"></i>Read Also</h3>
-
-      {% assign all_notes = site.studio_notes %}
       {% for slug in page.related_articles %}
         {% assign related = all_notes | where: "slug", slug | first %}
         {% if related %}
         <a href="{{ related.url }}" class="read-also-item">
-          {% if related.image_url %}
-          <img src="{{ related.image_url }}" alt="{{ related.title }}">
-          {% endif %}
-          <span>{{ related.title }}</span>
+          {{ related.title }}
         </a>
         {% endif %}
       {% endfor %}
-
     </div>
     {% endif %}
+    {% endif %}
 
+    <!-- ADDITIONAL IMAGES — lightbox only here -->
     {% if page.detail_images and page.detail_images.size > 0 %}
     <div class="article-images">
-
       {% for img in page.detail_images %}
       <a href="/assets/images/articles/{{ img }}"
          data-lightbox="article-gallery"
@@ -54,7 +64,6 @@
              loading="lazy">
       </a>
       {% endfor %}
-
     </div>
     {% endif %}
 
@@ -100,15 +109,15 @@
     {% endif %}
 
     {% include author-note.html %}
-
     {% include share-buttons.html %}
 
   </div>
-
 </div>
 
+{% if page.detail_images and page.detail_images.size > 0 %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
+{% endif %}
 
 <script>
 var fontSizes = {
