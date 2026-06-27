@@ -16,19 +16,25 @@
       content="{{ page.seo_title | default: page.hero_title | default: page.title }}">
 
 <meta property="og:description"
-      content="{{ page.seo_description | default: page.hero_subtitle | default: page.story | default: page.headline | default: site.description }}">
+      content="{{ page.seo_description | default: page.hero_subtitle | default: page.excerpt | default: page.story | default: page.headline | default: site.description }}">
 
 <meta property="og:image"
-      content="{{ page.og_image | default: page.image_url | default: page.hero_image | default: '/assets/images/default_og.jpg' }}">
+      content="{{ page.og_image | default: page.image_url | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
 
 <meta property="og:url"
       content="{{ page.url | absolute_url }}">
 
 <meta property="og:site_name" content="CatnBloom Studio">
+
+{% if page.layout == 'article' %}
+<meta property="og:type" content="article">
+{% elsif page.layout == 'product-bridge' %}
+<meta property="og:type" content="product">
+{% else %}
 <meta property="og:type" content="website">
+{% endif %}
 
 <meta name="pinterest-rich-pin" content="true">
-
 
 <!-- TWITTER -->
 <meta name="twitter:card" content="summary_large_image">
@@ -37,17 +43,20 @@
       content="{{ page.seo_title | default: page.hero_title | default: page.title }}">
 
 <meta name="twitter:description"
-      content="{{ page.seo_description | default: page.hero_subtitle | default: page.story | default: page.headline | default: site.description }}">
+      content="{{ page.seo_description | default: page.hero_subtitle | default: page.excerpt | default: page.story | default: page.headline | default: site.description }}">
 
 <meta name="twitter:image"
-      content="{{ page.og_image | default: page.image_url | default: page.hero_image | default: '/assets/images/default_og.jpg' }}">
+      content="{{ page.og_image | default: page.image_url | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
 
 {% if page.status == 'hidden' %}
 <meta name="robots" content="noindex,nofollow">
 {% endif %}
 
 
-<!-- SCHEMA -->
+<!-- =========================
+     SCHEMA.ORG JSON-LD
+     ========================= -->
+
 {% if page.layout == 'product-bridge' %}
 <script type="application/ld+json">
 {
@@ -55,19 +64,173 @@
   "@type": "Product",
   "name": "{{ page.title }}",
   "description": "{{ page.story | default: page.headline }}",
-  "image": "{{ page.image_url }}"
+  "image": "{{ page.image_url | absolute_url }}",
+  "sku": "{{ page.sku }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "CatnBloom Studio"
+  },
+  "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/InStock",
+    "url": "{{ page.teepublic_url | default: page.url | absolute_url }}",
+    "priceCurrency": "USD",
+    "seller": {
+      "@type": "Organization",
+      "name": "CatnBloom Studio"
+    }
+  },
+  "dateModified": "{{ site.time | date: '%Y-%m-%d' }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.url | absolute_url }}"
+  }
 }
 </script>
-{% elsif page.layout == 'collection' %}
+
+{% elsif page.layout == 'collection' or page.layout == 'smart-home' or page.layout == 'smart-collection' %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "name": "{{ page.hero_title | default: page.title }}",
-  "description": "{{ page.hero_subtitle | default: page.story | default: page.headline }}"
+  "description": "{{ page.hero_subtitle | default: page.about_collection | default: page.description | default: site.description }}",
+  "url": "{{ page.url | absolute_url }}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "CatnBloom Studio",
+    "url": "{{ site.url }}"
+  }
 }
 </script>
+
+{% elsif page.layout == 'article' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ page.title }}",
+  "description": "{{ page.excerpt | default: page.seo_description }}",
+  "image": "{{ page.image_url | default: '/assets/images/default_og.jpg' | absolute_url }}",
+  "datePublished": "{{ page.date | date: '%Y-%m-%d' }}",
+  "dateModified": "{{ page.date_modified | default: page.date | date: '%Y-%m-%d' }}",
+  "author": {
+    "@type": "Organization",
+    "name": "CatnBloom Studio",
+    "url": "{{ site.url }}/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CatnBloom Studio",
+    "url": "{{ site.url }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ site.url }}/assets/images/ctbl-icon.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.url | absolute_url }}"
+  }
+}
+</script>
+
+{% elsif page.layout == 'about' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "{{ page.title }}",
+  "description": "{{ page.tagline | default: site.description }}",
+  "url": "{{ page.url | absolute_url }}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "CatnBloom Studio",
+    "url": "{{ site.url }}"
+  }
+}
+</script>
+
+{% elsif page.layout == 'studio-notes' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "{{ page.hero_title | default: 'Studio Notes' }}",
+  "description": "{{ page.about_section | default: site.description }}",
+  "url": "{{ page.url | absolute_url }}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "CatnBloom Studio",
+    "url": "{{ site.url }}"
+  }
+}
+</script>
+
 {% endif %}
+
+<!-- BREADCRUMB SCHEMA — universal -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ site.url }}/"
+    }
+    {% if page.layout == 'product-bridge' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ page.collection_name | default: page.collection_id }}",
+      "item": "{{ site.url }}/{{ page.collection_slug | default: page.collection_id }}/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ page.title }}",
+      "item": "{{ page.url | absolute_url }}"
+    }
+    {% elsif page.layout == 'article' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Studio Notes",
+      "item": "{{ site.url }}/studio-notes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ page.title }}",
+      "item": "{{ page.url | absolute_url }}"
+    }
+    {% elsif page.layout == 'smart-collection' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Smart Collections",
+      "item": "{{ site.url }}/smart/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ page.hero_title | default: page.title }}",
+      "item": "{{ page.url | absolute_url }}"
+    }
+    {% elsif page.layout != 'default' %}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ page.hero_title | default: page.title }}",
+      "item": "{{ page.url | absolute_url }}"
+    }
+    {% endif %}
+  ]
+}
+</script>
 
 <!-- CORE STYLES -->
 <link rel="stylesheet" href="/assets/css/style.css">
