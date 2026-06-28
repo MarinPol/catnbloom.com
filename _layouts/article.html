@@ -56,6 +56,7 @@
     {% if page.detail_images and page.detail_images.size > 0 %}
     <div class="detail-gallery">
       {% for img in page.detail_images %}
+      {% if img and img != "" %}
       <a href="/assets/images/articles/{{ img }}"
          data-lightbox="article-gallery"
          class="gallery-item">
@@ -63,6 +64,7 @@
              alt="{{ page.title }} {{ forloop.index }}"
              loading="lazy">
       </a>
+      {% endif %}
       {% endfor %}
     </div>
     {% endif %}
