@@ -56,7 +56,7 @@
     {% if page.detail_images and page.detail_images.size > 0 %}
     <div class="detail-gallery">
       {% for img in page.detail_images %}
-      {% if img and img != "" %}
+      {% assign img_clean = img | strip %}{% if img_clean != "" %}
       <a href="/assets/images/articles/{{ img }}"
          data-lightbox="article-gallery"
          class="gallery-item">
