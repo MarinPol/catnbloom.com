@@ -392,7 +392,7 @@ META
 .meta-date {
   font-size: 0.85rem;
   color: #888;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 /* =========================
@@ -636,6 +636,12 @@ ABOUT PAGE
 
 .about-section {
   margin-top: 24px;
+}
+
+.about-section p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #444;
 }
 
 .about-section p {
