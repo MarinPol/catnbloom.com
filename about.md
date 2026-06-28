@@ -8,7 +8,7 @@ photo: "/assets/images/about-designer.webp"
 
 detail_images:
   - "about-designer.webp"
-  - "about-designer.webpg"
+  - ""
   - "about-designer.webp"
 
 studio_story: "CatnBloom Studio launched in November 2025 with one simple idea: create illustrations that feel personal, expressive, and genuinely enjoyable to wear. Every design begins as a digital illustration and goes through careful refinement before becoming part of a finished collection.
