@@ -28,6 +28,7 @@
     {% if page.detail_images and page.detail_images.size > 0 %}
     <div class="detail-gallery">
       {% for img in page.detail_images %}
+      {% if img and img != "" %}
       <a href="/assets/images/{{ img }}"
          data-lightbox="about-gallery"
          class="gallery-item">
@@ -35,6 +36,7 @@
              alt="CatnBloom Studio {{ forloop.index }}"
              loading="lazy">
       </a>
+      {% endif %}
       {% endfor %}
     </div>
     {% endif %}
