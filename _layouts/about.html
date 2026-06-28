@@ -3,6 +3,9 @@
 
 <head>
   {% include head.html %}
+  {% if page.detail_images and page.detail_images.size > 0 %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
+  {% endif %}
 </head>
 
 <body>
@@ -15,12 +18,13 @@
   <!-- LEFT BLOCK -->
   <div class="left-block">
 
+    {% if page.photo %}
     <div class="product-image-container">
-      <img src="{{ page.photo | default: '/assets/images/about-designer.jpg' }}"
-           alt="CatnBloom Studio">
+      <img src="{{ page.photo }}" alt="CatnBloom Studio">
     </div>
+    {% endif %}
 
-    <!-- GALLERY -->
+    <!-- GALLERY — same pattern as product-bridge -->
     {% if page.detail_images and page.detail_images.size > 0 %}
     <div class="detail-gallery">
       {% for img in page.detail_images %}
@@ -79,25 +83,21 @@
 
     <div class="story-text">{{ page.tagline }}</div>
 
-    <!-- STUDIO -->
     <section class="about-section">
       <h3 class="icon-title"><i data-lucide="flower-2"></i>The Studio</h3>
       <p>{{ page.studio_story }}</p>
     </section>
 
-    <!-- WHAT WE MAKE -->
     <section class="about-section">
       <h3 class="icon-title"><i data-lucide="palette"></i>What We Make</h3>
       <p>{{ page.what_we_make }}</p>
     </section>
 
-    <!-- THE ARTIST -->
     <section class="about-section">
       <h3 class="icon-title"><i data-lucide="user-round"></i>The Artist</h3>
       <p>{{ page.bio }}</p>
     </section>
 
-    <!-- FAQ -->
     <section class="about-section">
       <h3 class="icon-title"><i data-lucide="circle-help"></i>FAQ</h3>
 
@@ -114,7 +114,6 @@
       </div>
     </section>
 
-    <!-- FIND OUR ART -->
     <section class="about-section">
       <h3 class="icon-title"><i data-lucide="store"></i>Find Our Art</h3>
 
@@ -152,8 +151,12 @@
   </div>
 </div>
 
+{% if page.detail_images and page.detail_images.size > 0 %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
+{% endif %}
+
 <script>
-// Shuffle stat cards on every page load
 (function () {
   var grid = document.getElementById('aboutStats');
   if (!grid) return;
@@ -165,16 +168,9 @@
   }
 })();
 
-// Store switcher
 var stores = {
-  teepublic: {
-    url: 'https://www.teepublic.com/user/catnbloom',
-    label: 'Browse on TeePublic'
-  },
-  redbubble: {
-    url: 'https://www.redbubble.com/people/catnbloom',
-    label: 'Browse on Redbubble'
-  }
+  teepublic: { url: 'https://www.teepublic.com/user/catnbloom', label: 'Browse on TeePublic' },
+  redbubble: { url: 'https://www.redbubble.com/people/catnbloom', label: 'Browse on Redbubble' }
 };
 
 function switchStore(key) {

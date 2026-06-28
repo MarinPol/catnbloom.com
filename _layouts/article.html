@@ -3,7 +3,6 @@
 
 <head>
   {% include head.html %}
-
   {% if page.detail_images and page.detail_images.size > 0 %}
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
   {% endif %}
@@ -19,12 +18,14 @@
   <!-- LEFT BLOCK -->
   <div class="left-block">
 
+    <!-- MAIN IMAGE — only if provided -->
+    {% if page.image_url %}
     <div class="product-image-container">
-      <img src="{{ page.image_url | default: '/assets/images/placeholder.jpg' }}"
-           alt="{{ page.title }}">
+      <img src="{{ page.image_url }}" alt="{{ page.title }}">
     </div>
+    {% endif %}
 
-    <!-- READ ALSO — plain navigation links, no lightbox -->
+    <!-- READ ALSO — plain navigation, no lightbox -->
     {% if page.related_articles and page.related_articles.size > 0 %}
     {% assign all_notes = site.studio_notes %}
     {% assign has_related = false %}
@@ -39,7 +40,6 @@
         <i data-lucide="book-open"></i>
         <span>Read Also</span>
       </div>
-
       {% for slug in page.related_articles %}
         {% assign related = all_notes | where: "slug", slug | first %}
         {% if related %}
@@ -52,13 +52,13 @@
     {% endif %}
     {% endif %}
 
-    <!-- ADDITIONAL IMAGES — lightbox only here -->
+    <!-- GALLERY — same pattern as product-bridge -->
     {% if page.detail_images and page.detail_images.size > 0 %}
-    <div class="article-images">
+    <div class="detail-gallery">
       {% for img in page.detail_images %}
       <a href="/assets/images/articles/{{ img }}"
          data-lightbox="article-gallery"
-         class="article-image-item">
+         class="gallery-item">
         <img src="/assets/images/articles/{{ img }}"
              alt="{{ page.title }} {{ forloop.index }}"
              loading="lazy">
