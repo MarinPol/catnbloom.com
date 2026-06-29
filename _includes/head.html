@@ -19,7 +19,7 @@
       content="{{ page.seo_description | default: page.hero_subtitle | default: page.excerpt | default: page.story | default: page.headline | default: site.description }}">
 
 <meta property="og:image"
-      content="{{ page.og_image | default: page.image_url | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
+      content="{{ page.og_image | default: page.image_url | default: page.photo | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
 
 <meta property="og:url"
       content="{{ page.url | absolute_url }}">
@@ -46,7 +46,7 @@
       content="{{ page.seo_description | default: page.hero_subtitle | default: page.excerpt | default: page.story | default: page.headline | default: site.description }}">
 
 <meta name="twitter:image"
-      content="{{ page.og_image | default: page.image_url | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
+      content="{{ page.og_image | default: page.image_url | default: page.photo | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
 
 {% if page.status == 'hidden' %}
 <meta name="robots" content="noindex,nofollow">
