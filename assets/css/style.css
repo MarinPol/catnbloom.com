@@ -951,3 +951,99 @@ ICON TITLE — aligned
   height: 24px;
   flex-shrink: 0;
 }
+
+
+/* =========================
+CONTACT PAGE
+========================= */
+
+.contact-info-block {
+  margin-top: 24px;
+}
+
+.contact-info-text {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
+
+.contact-link {
+  color: #7a9e6e;
+  text-decoration: underline;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+.contact-field input,
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #2d2d2d;
+  background: #fafafa;
+  transition: border-color 0.2s;
+}
+
+.contact-field input:focus,
+.contact-field select:focus,
+.contact-field textarea:focus {
+  outline: none;
+  border-color: #a3b18a;
+  background: #fff;
+}
+
+.contact-field textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.contact-submit {
+  margin-top: 6px;
+}
+
+.contact-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+  background: #f0f4ec;
+  border-left: 4px solid #a3b18a;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.contact-success svg {
+  width: 24px;
+  height: 24px;
+  color: #7a9e6e;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.contact-success p {
+  font-size: 1rem;
+  color: #2d2d2d;
+  line-height: 1.6;
+  margin: 0;
+}
