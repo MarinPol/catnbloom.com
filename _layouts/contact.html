@@ -83,10 +83,13 @@
 
     <form
       id="contact-form"
-      action="https://formspree.io/f/maqgdrod"
+      action="https://api.web3forms.com/submit"
       method="POST"
       class="contact-form"
       onsubmit="handleSubmit(event)">
+
+      <!-- Web3Forms access key -->
+      <input type="hidden" name="access_key" value="f9e29840-e9d0-44c7-a501-80909063fe24">
 
       <!-- Honeypot — invisible to humans, traps bots -->
       <input type="text" name="_gotcha" style="display:none">
