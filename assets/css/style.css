@@ -975,31 +975,33 @@ CONTACT PAGE
 
 .contact-social-links {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-top: 12px;
 }
 
 .contact-social-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 8px;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 20px;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: #fff;
   transition: opacity 0.2s;
+  white-space: nowrap;
 }
 
 .contact-social-btn:hover {
-  opacity: 0.88;
+  opacity: 0.85;
 }
 
 .contact-social-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
 }
 
