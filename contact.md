@@ -4,5 +4,5 @@ permalink: /contact/
 title: "Get in Touch"
 tagline: "Questions, ideas, feedback or just want to say hello — we would love to hear from you."
 og_image: "/assets/images/default_og.jpg"
-google_maps_url: "https://maps.google.com"
+google_maps_url: "https://maps.app.goo.gl/Y72pzcrMYhJNi9LH9"
 ---
