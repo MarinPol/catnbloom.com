@@ -613,24 +613,25 @@ ABOUT PAGE
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 6px;
-  border: 1px solid #eaeaea;
+  padding: 14px 8px;
+  border: 1.5px solid #c8d9b8;
   border-radius: 8px;
-  background: #fafafa;
+  background: #fff;
   text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 
 .about-stat-number {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #7a9e6e;
+  color: #4a7c4e;
   line-height: 1.3;
 }
 
 .about-stat-label {
-  font-size: 0.72rem;
-  color: #888;
-  margin-top: 4px;
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 5px;
   line-height: 1.3;
 }
 
@@ -1110,4 +1111,31 @@ CONTACT PAGE
   color: #2d2d2d;
   line-height: 1.6;
   margin: 0;
+}
+
+
+/* =========================
+CONTACT INFO CARDS
+========================= */
+
+.contact-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.contact-info-card {
+  background: #f7f7f2;
+  border-radius: 8px;
+  padding: 16px 18px;
+  border-left: 3px solid #a3b18a;
+}
+
+.contact-info-card .icon-title {
+  margin-bottom: 8px;
+}
+
+.contact-info-card .contact-social-links {
+  margin-top: 10px;
 }
