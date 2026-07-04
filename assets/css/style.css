@@ -1139,3 +1139,80 @@ CONTACT INFO CARDS
 .contact-info-card .contact-social-links {
   margin-top: 10px;
 }
+
+
+/* =========================
+FOOTER NEWSLETTER
+========================= */
+
+.footer-newsletter {
+  background: #f0f4ec;
+  border-top: 2px solid #c8d9b8;
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.footer-newsletter-inner {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.footer-newsletter-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  margin: 0 0 6px;
+}
+
+.footer-newsletter-sub {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0 0 16px;
+}
+
+.footer-newsletter-form {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.footer-newsletter-input {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+  padding: 10px 14px;
+  border: 1px solid #c8d9b8;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #2d2d2d;
+  background: #fff;
+}
+
+.footer-newsletter-input:focus {
+  outline: none;
+  border-color: #a3b18a;
+}
+
+.footer-newsletter-btn {
+  padding: 10px 22px;
+  background: #a3b18a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.footer-newsletter-btn:hover {
+  background: #8a9e72;
+}
+
+.footer-newsletter-legal {
+  font-size: 0.75rem;
+  color: #999;
+  margin: 10px 0 0;
+}
