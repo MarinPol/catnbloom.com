@@ -149,7 +149,7 @@
             <strong>Product ID:</strong> {{ page.sku }}<br>
             {% endif %}
 
-            <strong>Last updated:</strong> {{ site.time | date: "%B %d, %Y" }}
+            <strong>Last updated:</strong> {{ page.updated_at | default: page.date_added | date: "%B %d, %Y" }}
 
         </div>
 
