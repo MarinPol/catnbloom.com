@@ -4,7 +4,7 @@ layout: null
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>CatnBloom — New Arrivals </title>
+  <title>CatnBloom — New Arrivals</title>
   <link>{{ site.url }}</link>
   <description>New designs, collections and studio notes from CatnBloom.</description>
   <atom:link href="{{ site.url }}/feed.xml" rel="self" type="application/rss+xml"/>
@@ -14,10 +14,9 @@ layout: null
   {% comment %}— PRODUCTS: cottagecore + witchy —{% endcomment %}
   {% assign all_products = site.cottagecore | concat: site.witchy %}
   {% for item in all_products %}
-    {% if item.send_to_newsletter %}
-      {% assign item_date = item.updated_at | default: item.date_added %}
-      {% assign item_sec = item_date | date: "%s" | plus: 0 %}
-      {% if item_sec >= cutoff %}
+    {% assign item_date = item.updated_at | default: item.date_added %}
+    {% assign item_sec = item_date | date: "%s" | plus: 0 %}
+    {% if item_sec >= cutoff %}
   <item>
     <title>{{ item.title | xml_escape }}</title>
     <link>{{ site.url }}{{ item.url }}</link>
@@ -29,16 +28,14 @@ layout: null
       <p><a href="{{ site.url }}{{ item.url }}">View design →</a></p>
     ]]></description>
   </item>
-      {% endif %}
     {% endif %}
   {% endfor %}
 
   {% comment %}— SMART COLLECTIONS —{% endcomment %}
   {% for item in site.smart %}
-    {% if item.send_to_newsletter %}
-      {% assign item_date = item.updated_at | default: item.date %}
-      {% assign item_sec = item_date | date: "%s" | plus: 0 %}
-      {% if item_sec >= cutoff %}
+    {% assign item_date = item.updated_at | default: item.date %}
+    {% assign item_sec = item_date | date: "%s" | plus: 0 %}
+    {% if item_sec >= cutoff %}
   <item>
     <title>{{ item.hero_title | xml_escape }} — Smart Collection</title>
     <link>{{ site.url }}{{ item.url }}</link>
@@ -50,16 +47,14 @@ layout: null
       <p><a href="{{ site.url }}{{ item.url }}">Explore this month →</a></p>
     ]]></description>
   </item>
-      {% endif %}
     {% endif %}
   {% endfor %}
 
   {% comment %}— STUDIO NOTES (articles) —{% endcomment %}
   {% for item in site.studio_notes %}
-    {% if item.send_to_newsletter %}
-      {% assign item_date = item.updated_at | default: item.date %}
-      {% assign item_sec = item_date | date: "%s" | plus: 0 %}
-      {% if item_sec >= cutoff %}
+    {% assign item_date = item.updated_at | default: item.date %}
+    {% assign item_sec = item_date | date: "%s" | plus: 0 %}
+    {% if item_sec >= cutoff %}
   <item>
     <title>{{ item.title | xml_escape }}</title>
     <link>{{ site.url }}{{ item.url }}</link>
@@ -71,7 +66,6 @@ layout: null
       <p><a href="{{ site.url }}{{ item.url }}">Read →</a></p>
     ]]></description>
   </item>
-      {% endif %}
     {% endif %}
   {% endfor %}
 
