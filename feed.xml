@@ -1,0 +1,79 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>CatnBloom — New Arrivals</title>
+  <link>{{ site.url }}</link>
+  <description>New designs, collections and studio notes from CatnBloom.</description>
+  <atom:link href="{{ site.url }}/feed.xml" rel="self" type="application/rss+xml"/>
+
+  {% assign cutoff = 'now' | date: "%s" | minus: 604800 %}
+
+  {% comment %}— PRODUCTS: cottagecore + witchy —{% endcomment %}
+  {% assign all_products = site.cottagecore | concat: site.witchy %}
+  {% for item in all_products %}
+    {% if item.send_to_newsletter == true %}
+      {% assign item_date = item.updated_at | default: item.date_added %}
+      {% assign item_sec = item_date | date: "%s" | plus: 0 %}
+      {% if item_sec >= cutoff %}
+  <item>
+    <title>{{ item.title | xml_escape }}</title>
+    <link>{{ site.url }}{{ item.url }}</link>
+    <guid isPermaLink="true">{{ site.url }}{{ item.url }}</guid>
+    <pubDate>{{ item_date | date_to_rfc822 }}</pubDate>
+    <description><![CDATA[
+      {% if item.image_url %}<img src="{{ item.image_url }}" alt="{{ item.title }}"><br>{% endif %}
+      <p>{{ item.story | default: item.headline }}</p>
+      <p><a href="{{ site.url }}{{ item.url }}">View design →</a></p>
+    ]]></description>
+  </item>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% comment %}— SMART COLLECTIONS —{% endcomment %}
+  {% for item in site.smart %}
+    {% if item.send_to_newsletter == true %}
+      {% assign item_date = item.updated_at | default: item.date %}
+      {% assign item_sec = item_date | date: "%s" | plus: 0 %}
+      {% if item_sec >= cutoff %}
+  <item>
+    <title>{{ item.hero_title | xml_escape }} — Smart Collection</title>
+    <link>{{ site.url }}{{ item.url }}</link>
+    <guid isPermaLink="true">{{ site.url }}{{ item.url }}</guid>
+    <pubDate>{{ item_date | date_to_rfc822 }}</pubDate>
+    <description><![CDATA[
+      {% if item.og_image %}<img src="{{ site.url }}{{ item.og_image }}" alt="{{ item.hero_title }}"><br>{% endif %}
+      <p>{{ item.about_collection }}</p>
+      <p><a href="{{ site.url }}{{ item.url }}">Explore this month →</a></p>
+    ]]></description>
+  </item>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% comment %}— STUDIO NOTES (articles) —{% endcomment %}
+  {% for item in site.studio_notes %}
+    {% if item.send_to_newsletter == true %}
+      {% assign item_date = item.updated_at | default: item.date %}
+      {% assign item_sec = item_date | date: "%s" | plus: 0 %}
+      {% if item_sec >= cutoff %}
+  <item>
+    <title>{{ item.title | xml_escape }}</title>
+    <link>{{ site.url }}{{ item.url }}</link>
+    <guid isPermaLink="true">{{ site.url }}{{ item.url }}</guid>
+    <pubDate>{{ item_date | date_to_rfc822 }}</pubDate>
+    <description><![CDATA[
+      {% if item.image_url %}<img src="{{ site.url }}{{ item.image_url }}" alt="{{ item.title }}"><br>{% endif %}
+      <p>{{ item.excerpt }}</p>
+      <p><a href="{{ site.url }}{{ item.url }}">Read →</a></p>
+    ]]></description>
+  </item>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+</channel>
+</rss>
