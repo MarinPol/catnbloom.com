@@ -14,9 +14,10 @@ layout: null
   {% comment %}— PRODUCTS: cottagecore + witchy —{% endcomment %}
   {% assign all_products = site.cottagecore | concat: site.witchy %}
   {% for item in all_products %}
-    {% assign item_date = item.updated_at | default: item.date_added %}
-    {% assign item_sec = item_date | date: "%s" | plus: 0 %}
-    {% if item_sec >= cutoff %}
+    {% if item.send_to_newsletter %}
+      {% assign item_date = item.updated_at | default: item.date_added %}
+      {% assign item_sec = item_date | date: "%s" | plus: 0 %}
+      {% if item_sec >= cutoff %}
   <item>
     <title>{{ item.title | xml_escape }}</title>
     <link>{{ site.url }}{{ item.url }}</link>
@@ -28,14 +29,17 @@ layout: null
       <p><a href="{{ site.url }}{{ item.url }}">View design →</a></p>
     ]]></description>
   </item>
+      {% endif %}
     {% endif %}
   {% endfor %}
 
   {% comment %}— SMART COLLECTIONS —{% endcomment %}
   {% for item in site.smart %}
-    {% assign item_date = item.updated_at | default: item.date %}
-    {% assign item_sec = item_date | date: "%s" | plus: 0 %}
-    {% if item_sec >= cutoff %}
+    {% if item.send_to_newsletter %}
+      {% assign item_date = item.updated_at %}
+      {% if item_date %}
+        {% assign item_sec = item_date | date: "%s" | plus: 0 %}
+        {% if item_sec >= cutoff %}
   <item>
     <title>{{ item.hero_title | xml_escape }} — Smart Collection</title>
     <link>{{ site.url }}{{ item.url }}</link>
@@ -47,14 +51,17 @@ layout: null
       <p><a href="{{ site.url }}{{ item.url }}">Explore this month →</a></p>
     ]]></description>
   </item>
+        {% endif %}
+      {% endif %}
     {% endif %}
   {% endfor %}
 
   {% comment %}— STUDIO NOTES (articles) —{% endcomment %}
   {% for item in site.studio_notes %}
-    {% assign item_date = item.updated_at | default: item.date %}
-    {% assign item_sec = item_date | date: "%s" | plus: 0 %}
-    {% if item_sec >= cutoff %}
+    {% if item.send_to_newsletter %}
+      {% assign item_date = item.updated_at | default: item.date %}
+      {% assign item_sec = item_date | date: "%s" | plus: 0 %}
+      {% if item_sec >= cutoff %}
   <item>
     <title>{{ item.title | xml_escape }}</title>
     <link>{{ site.url }}{{ item.url }}</link>
@@ -66,6 +73,7 @@ layout: null
       <p><a href="{{ site.url }}{{ item.url }}">Read →</a></p>
     ]]></description>
   </item>
+      {% endif %}
     {% endif %}
   {% endfor %}
 
