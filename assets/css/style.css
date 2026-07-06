@@ -1216,3 +1216,59 @@ FOOTER NEWSLETTER
   color: #999;
   margin: 10px 0 0;
 }
+
+
+/* =========================
+MAILERLITE FORM OVERRIDE
+Встраивается в .footer-newsletter
+========================= */
+
+.footer-newsletter .ml-form-embedContainer {
+  margin: 0 auto !important;
+}
+
+.footer-newsletter .ml-form-embedWrapper {
+  background-color: transparent !important;
+  border: none !important;
+  max-width: 400px !important;
+  margin: 0 auto !important;
+}
+
+.footer-newsletter .ml-form-embedBody {
+  padding: 0 !important;
+}
+
+.footer-newsletter .ml-form-embedContent {
+  display: none !important;
+}
+
+.footer-newsletter .ml-form-fieldRow input {
+  border-radius: 6px !important;
+  border-color: #c8d9b8 !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 0.95rem !important;
+  padding: 10px 14px !important;
+}
+
+.footer-newsletter .ml-form-fieldRow input:focus {
+  border-color: #a3b18a !important;
+  outline: none !important;
+}
+
+.footer-newsletter .ml-form-embedSubmit button {
+  background-color: #a3b18a !important;
+  border-radius: 6px !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  padding: 10px !important;
+}
+
+.footer-newsletter .ml-form-embedSubmit button:hover {
+  background-color: #8a9e72 !important;
+}
+
+.footer-newsletter .ml-form-successContent h4 {
+  font-size: 1rem !important;
+  color: #2d2d2d !important;
+}
