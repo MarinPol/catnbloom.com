@@ -24,7 +24,7 @@ layout: null
     <guid isPermaLink="true">{{ site.url }}{{ item.url }}</guid>
     <pubDate>{{ item_date | date_to_rfc822 }}</pubDate>
     <description><![CDATA[
-      {% if item.image_url %}<img src="{{ item.image_url }}" alt="{{ item.title }}" style="max-width: 100%; height: auto; display: block; margin: 10px auto;"><br>{% endif %}
+      {% if item.image_url %}<img src="{{ item.image_url }}" alt="{{ item.title }}" width="600" style="max-width: 100%; height: auto; display: block; margin: 10px auto;"><br>{% endif %}
       <p>{{ item.story | default: item.headline }}</p>
       <p><a href="{{ site.url }}{{ item.url }}">View design →</a></p>
     ]]></description>
@@ -46,7 +46,7 @@ layout: null
     <guid isPermaLink="true">{{ site.url }}{{ item.url }}</guid>
     <pubDate>{{ item_date | date_to_rfc822 }}</pubDate>
     <description><![CDATA[
-      {% if item.og_image %}<img src="{{ site.url }}{{ item.og_image }}" alt="{{ item.hero_title }}" style="max-width: 100%; height: auto; display: block; margin: 10px auto;"><br>{% endif %}
+      {% if item.og_image %}<img src="{{ site.url }}{{ item.og_image }}" alt="{{ item.hero_title }}" width="600" style="max-width: 100%; height: auto; display: block; margin: 10px auto;"><br>{% endif %}
       <p>{{ item.about_collection }}</p>
       <p><a href="{{ site.url }}{{ item.url }}">Explore this month →</a></p>
     ]]></description>
@@ -68,7 +68,7 @@ layout: null
     <guid isPermaLink="true">{{ site.url }}{{ item.url }}</guid>
     <pubDate>{{ item_date | date_to_rfc822 }}</pubDate>
     <description><![CDATA[
-      {% if item.image_url %}<img src="{{ site.url }}{{ item.image_url }}" alt="{{ item.title }}" style="max-width: 100%; height: auto; display: block; margin: 10px auto;"><br>{% endif %}
+      {% if item.image_url %}<img src="{{ item.image_url }}" alt="{{ item.title }}" width="600" style="max-width: 100%; height: auto; display: block; margin: 10px auto;"><br>{% endif %}
       <p>{{ item.excerpt }}</p>
       <p><a href="{{ site.url }}{{ item.url }}">Read →</a></p>
     ]]></description>
