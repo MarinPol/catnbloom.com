@@ -503,15 +503,79 @@ FOOTER
 .footer-container {
   max-width: 1050px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-align: center;
 }
 
-.footer-line {
+/* ---- Верхний ярус: 3 колонки ---- */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 32px;
+  text-align: left;
+}
+
+.footer-col-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2d2d2d;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Колонка 1 — брендинг */
+.footer-copyright {
   font-size: 13px;
   color: #555;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.footer-brand-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-brand-list li {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Колонка 2 — категории (список тегов вместо строки с точками) */
+.footer-tags-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-tags-list li {
+  font-size: 13px;
+  color: #555;
+}
+
+/* Колонка 3 — подписка */
+.footer-col-newsletter {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* ---- Нижний ярус: отделён линией ---- */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  flex-wrap: wrap;
 }
 
 /* =========================
@@ -1145,76 +1209,32 @@ CONTACT INFO CARDS
 FOOTER NEWSLETTER
 ========================= */
 
-.footer-newsletter {
-  background: #f0f4ec;
-  border-top: 2px solid #c8d9b8;
-  padding: 32px 20px;
-  text-align: center;
-}
-
+/* Блок подписки теперь живёт внутри 3-й колонки .footer-top,
+   поэтому фон/border-top секции убраны — колонка наследует фон .site-footer */
 .footer-newsletter-inner {
-  max-width: 520px;
-  margin: 0 auto;
+  max-width: 360px;
+  text-align: left;
 }
 
 .footer-newsletter-title {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #2d2d2d;
   margin: 0 0 6px;
 }
 
 .footer-newsletter-sub {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #555;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
 }
 
-.footer-newsletter-form {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.footer-newsletter-input {
-  flex: 1;
-  min-width: 200px;
-  max-width: 300px;
-  padding: 10px 14px;
-  border: 1px solid #c8d9b8;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  font-family: inherit;
-  color: #2d2d2d;
-  background: #fff;
-}
-
-.footer-newsletter-input:focus {
-  outline: none;
-  border-color: #a3b18a;
-}
-
-.footer-newsletter-btn {
-  padding: 10px 22px;
-  background: #a3b18a;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.footer-newsletter-btn:hover {
-  background: #8a9e72;
-}
-
+/* Дисклеймер вынесен в нижний ярус, сделан контрастнее (было #999) */
 .footer-newsletter-legal {
   font-size: 0.75rem;
-  color: #999;
-  margin: 10px 0 0;
+  color: #6b6b6b;
+  margin: 0;
+  max-width: 480px;
 }
 
 
@@ -1223,74 +1243,99 @@ MAILERLITE FORM OVERRIDE
 Встраивается в .footer-newsletter
 ========================= */
 
-.footer-newsletter .ml-form-embedContainer {
-  margin: 0 auto !important;
+.footer-newsletter-inner .ml-form-embedContainer {
+  margin: 0 !important;
 }
 
-.footer-newsletter .ml-form-embedWrapper {
+.footer-newsletter-inner .ml-form-embedWrapper {
   background-color: transparent !important;
   border: none !important;
-  max-width: 400px !important;
-  margin: 0 auto !important;
+  max-width: 360px !important;
+  margin: 0 !important;
 }
 
-.footer-newsletter .ml-form-embedBody {
+.footer-newsletter-inner .ml-form-embedBody {
   padding: 0 !important;
 }
 
-.footer-newsletter .ml-form-embedContent {
+.footer-newsletter-inner .ml-form-embedContent {
   display: none !important;
 }
 
-.footer-newsletter .ml-form-fieldRow input {
+/* Инпут и кнопка Subscribe в одну строку (desktop) */
+.footer-newsletter-inner form {
+  display: flex !important;
+  gap: 8px !important;
+  align-items: flex-start !important;
+}
+
+.footer-newsletter-inner .ml-form-embedFields {
+  flex: 1 !important;
+}
+
+.footer-newsletter-inner .ml-form-fieldRow {
+  margin-bottom: 0 !important;
+}
+
+.footer-newsletter-inner .ml-form-fieldRow input {
   border-radius: 6px !important;
   border-color: #c8d9b8 !important;
   font-family: Arial, sans-serif !important;
   font-size: 0.95rem !important;
   padding: 10px 14px !important;
+  width: 100% !important;
 }
 
-.footer-newsletter .ml-form-fieldRow input:focus {
+.footer-newsletter-inner .ml-form-fieldRow input:focus {
   border-color: #a3b18a !important;
   outline: none !important;
 }
 
-.footer-newsletter .ml-form-embedSubmit button {
+.footer-newsletter-inner .ml-form-embedSubmit {
+  flex-shrink: 0 !important;
+}
+
+.footer-newsletter-inner .ml-form-embedSubmit button {
   background-color: #a3b18a !important;
   border-radius: 6px !important;
   font-family: Arial, sans-serif !important;
   font-size: 0.95rem !important;
   font-weight: 700 !important;
-  padding: 10px !important;
+  padding: 10px 18px !important;
+  white-space: nowrap !important;
 }
 
 .footer-newsletter .ml-form-embedSubmit button:hover {
   background-color: #8a9e72 !important;
 }
 
-.footer-newsletter .ml-form-successContent h4 {
+.footer-newsletter-inner .ml-form-successContent h4 {
   font-size: 1rem !important;
   color: #2d2d2d !important;
 }
 
-/* FOOTER SOCIAL + RSS ROW */
+/* FOOTER SOCIAL + RSS ROW (нижний ярус, справа) */
 .footer-social-row {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 18px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(0,0,0,0.08);
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border-top: none;
 }
 
+/* Иконки чёрные (в цвет кнопки Subscribe), увеличенная кликабельная зона */
 .footer-social-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6b6b6b;
-  opacity: 0.65;
-  transition: opacity 0.2s ease, color 0.2s ease;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 50%;
+  color: #2d2d2d;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, background 0.2s ease;
 }
 
 .footer-social-icon svg {
@@ -1300,5 +1345,42 @@ MAILERLITE FORM OVERRIDE
 
 .footer-social-icon:hover {
   opacity: 1;
-  color: #3f5b3f; /* TODO: подставить основной акцентный зелёный сайта, если отличается */
+  background: rgba(0,0,0,0.06);
+}
+
+/* ---- FOOTER: mobile ---- */
+@media (max-width: 768px) {
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  /* Блок подписки переносится на самый верх мобильного футера */
+  .footer-col-newsletter {
+    order: -1;
+  }
+
+  .footer-newsletter-inner {
+    max-width: none;
+  }
+
+  /* Инпут и кнопка снова друг под другом на всю ширину */
+  .footer-newsletter-inner form {
+    flex-direction: column !important;
+  }
+
+  .footer-newsletter-inner .ml-form-embedSubmit button {
+    width: 100% !important;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .footer-social-row {
+    align-self: flex-start;
+  }
 }
