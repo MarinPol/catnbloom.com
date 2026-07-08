@@ -26,8 +26,10 @@
         <a href="#" class="dropdown-toggle">Shop Collections &#9662;</a>
 
         <div class="dropdown-menu">
-          <a href="/cottagecore-cats/">Cottagecore Cats</a>
-          <a href="/witchy-cats-plants/">Witchy Cats + Plants</a>
+          {% assign sorted_collections = site.pages | where: "layout", "collection" | sort: "title" %}
+          {% for col in sorted_collections %}
+            <a href="{{ col.url }}">{{ col.hero_title | default: col.title }}</a>
+          {% endfor %}
         </div>
       </li>
 
