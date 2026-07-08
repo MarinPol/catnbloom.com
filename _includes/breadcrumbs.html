@@ -127,6 +127,24 @@
 
   {%- comment -%}
   =========================
+  ALBUM LOGIC
+  =========================
+  {%- endcomment -%}
+
+  {% elsif page.layout == "album" %}
+
+    <span>/</span>
+
+    <a href="/albums/">Albums</a>
+
+    <span>/</span>
+
+    <span class="current-page">
+      {{ page.hero_title | default: page.title }}
+    </span>
+
+  {%- comment -%}
+  =========================
   SAFETY FALLBACK
   =========================
   {%- endcomment -%}
