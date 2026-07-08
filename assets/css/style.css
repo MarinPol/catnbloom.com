@@ -1421,3 +1421,27 @@ MAILERLITE FORM OVERRIDE
     align-self: flex-start;
   }
 }
+
+/* ---- ALBUM PAGE — минимальная витрина по SKU ---- */
+.album-hero {
+  text-align: center;
+  padding: 20px 0 10px;
+}
+
+.album-hero h1 {
+  margin: 0;
+}
+
+.album-hidden {
+  display: none;
+}
+
+.album-load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 40px;
+}
+
+.album-load-more {
+  max-width: 220px;
+}
