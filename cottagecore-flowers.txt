@@ -1,5 +1,5 @@
 ---
-layout: collection
+layout: collectionZapas
 permalink: /cottagecore-flowers/
 type: core
 collection_id: cottagecoreflowers
