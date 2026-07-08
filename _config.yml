@@ -16,6 +16,9 @@ collections:
   studio_notes:
     output: true
     permalink: /studio-notes/:path/
+  albums:
+    output: true
+    permalink: /albums/:path/
 
 # DEFAULT LAYOUTS (GLOBAL SAFE SCOPING)
 defaults:
@@ -42,6 +45,12 @@ defaults:
       type: studio_notes
     values:
       layout: article
+
+  - scope:
+      path: ""
+      type: albums
+    values:
+      layout: album
 
 # PLUGINS
 plugins:
