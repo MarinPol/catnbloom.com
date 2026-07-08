@@ -37,7 +37,10 @@
         <a href="#" class="dropdown-toggle">Albums &#9662;</a>
 
         <div class="dropdown-menu">
-          <a href="/albums/monochrome/">Monochrome</a>
+          {% assign sorted_albums = site.albums | sort: "title" %}
+          {% for album in sorted_albums %}
+            <a href="{{ album.url }}">{{ album.hero_title | default: album.title }}</a>
+          {% endfor %}
         </div>
       </li>
 
