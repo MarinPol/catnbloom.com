@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include head.html %}
+</head>
+
+<body>
+
+  {% include header.html %}
+  {% include breadcrumbs.html %}
+
+  {% comment %}
+  =====================================================
+  ALBUM PRODUCT LOOKUP
+  Pulls products by SKU from both core collections.
+  Author specifies SKUs in page.products YAML array.
+  =====================================================
+  {% endcomment %}
+
+  {% assign all_products = site.cottagecore | concat: site.witchy %}
+  {% assign album_items = "" | split: "" %}
+  {% for pid in page.products %}
+    {% assign found = all_products | where: "sku", pid | first %}
+    {% if found %}
+      {% assign album_items = album_items | push: found %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign visible_items = album_items | slice: 0, 12 %}
+  {% assign hidden_items = album_items | slice: 12, 999 %}
+
+  <div class="container">
+
+    <header class="album-hero">
+      <h1>{{ page.hero_title | default: page.title }}</h1>
+    </header>
+
+  </div>
+
+  {% if album_items.size > 0 %}
+  <section class="product-grid" id="albumGrid">
+
+    {% for product in visible_items %}
+    <div class="product-item">
+      <a href="{{ product.url }}" title="{{ product.title }}">
+        <img src="{{ product.image_url }}" alt="{{ product.title }}">
+      </a>
+    </div>
+    {% endfor %}
+
+    {% for product in hidden_items %}
+    <div class="product-item album-hidden">
+      <a href="{{ product.url }}" title="{{ product.title }}">
+        <img src="{{ product.image_url }}" alt="{{ product.title }}">
+      </a>
+    </div>
+    {% endfor %}
+
+  </section>
+  {% endif %}
+
+  {% if hidden_items.size > 0 %}
+  <div class="album-load-more-wrap">
+    <button class="buy-button album-load-more" id="albumLoadMore" onclick="albumLoadMore()">
+      Load More
+    </button>
+  </div>
+  {% endif %}
+
+  <script>
+  function albumLoadMore() {
+    const hidden = document.querySelectorAll('#albumGrid .album-hidden');
+    hidden.forEach(function (item) {
+      item.classList.remove('album-hidden');
+    });
+
+    const btnWrap = document.getElementById('albumLoadMore');
+    if (btnWrap) btnWrap.closest('.album-load-more-wrap').remove();
+  }
+  </script>
+
+  <script>
+  if (window.lucide) lucide.createIcons();
+  </script>
+
+  {% include footer.html %}
+
+</body>
+</html>
