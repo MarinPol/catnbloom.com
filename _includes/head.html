@@ -21,8 +21,13 @@
 <meta property="og:description"
       content="{{ page.seo_description | default: page.hero_subtitle | default: page.excerpt | default: page.story | default: page.headline | default: site.description }}">
 
+{% assign auto_og = page.og_image %}
+{% if page.collection == "albums" and auto_og == nil %}
+  {% assign auto_og = "/assets/images/albums/" | append: page.slug | append: "-og.webp" %}
+{% endif %}
+
 <meta property="og:image"
-      content="{{ page.og_image | default: page.image_url | default: page.photo | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
+      content="{{ auto_og | default: page.image_url | default: page.photo | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
 
 <meta property="og:url"
       content="{{ page.url | absolute_url }}">
@@ -49,7 +54,7 @@
       content="{{ page.seo_description | default: page.hero_subtitle | default: page.excerpt | default: page.story | default: page.headline | default: site.description }}">
 
 <meta name="twitter:image"
-      content="{{ page.og_image | default: page.image_url | default: page.photo | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
+      content="{{ auto_og | default: page.image_url | default: page.photo | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
 
 {% if page.status == 'hidden' %}
 <meta name="robots" content="noindex,nofollow">
