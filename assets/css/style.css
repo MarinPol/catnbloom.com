@@ -1465,10 +1465,12 @@ HOME PAGE
   margin: 0;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap');
+
 /* ---- Top grid: intro (frame+text) | collection cards ---- */
 .home-top-grid {
   display: grid;
-  grid-template-columns: 2.2fr 1fr;
+  grid-template-columns: 1.9fr 1.15fr;
   gap: 40px;
   align-items: start;
 }
@@ -1509,14 +1511,14 @@ HOME PAGE
 }
 
 .home-intro-text::first-letter {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-style: italic;
-  font-size: 3.2rem;
-  font-weight: 700;
-  color: #2d2d2d;
+  font-family: 'Caveat', 'Segoe Script', 'Bradley Hand', cursive;
+  font-style: normal;
+  font-size: 4rem;
+  font-weight: 500;
+  color: #8a6a4a;
   float: left;
-  line-height: 0.75;
-  padding: 6px 8px 0 0;
+  line-height: 0.65;
+  padding: 4px 8px 0 0;
 }
 
 /* ---- Sidebar: stacked collection cards ---- */
@@ -1545,14 +1547,14 @@ HOME PAGE
 
 .home-collection-card-title {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .home-collection-card-sub {
-  font-size: 0.8rem;
-  opacity: 0.85;
-  line-height: 1.35;
-  max-width: 150px;
+  font-size: 0.92rem;
+  opacity: 0.92;
+  line-height: 1.45;
+  max-width: 175px;
 }
 
 .home-collection-card-image {
@@ -1596,11 +1598,14 @@ HOME PAGE
   background: #f6e9f0;
   margin: 30px 0;
   padding: 20px 26px;
+  min-height: 76px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .home-quote-banner p {
@@ -1608,6 +1613,7 @@ HOME PAGE
   font-size: 1.15rem;
   font-weight: 600;
   color: #2d2d2d;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .home-read-more {
@@ -1616,6 +1622,7 @@ HOME PAGE
   color: #2d2d2d;
   text-decoration: none;
   white-space: nowrap;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .home-read-more:hover {
@@ -1667,18 +1674,25 @@ HOME PAGE
 }
 
 .home-closing-banner {
-  background: #4a7c4e;
-  color: #fff;
+  background: #e9f1e6;
+  color: #33502f;
   text-align: center;
-  padding: 40px 20px;
+  padding: 20px 26px;
+  min-height: 76px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .home-closing-banner p {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: 0.02em;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 @media (max-width: 768px) {
