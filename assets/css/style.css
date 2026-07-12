@@ -1689,6 +1689,7 @@ HOME PAGE
 
 .home-closing-banner p {
   margin: 0;
+  max-width: 1050px;
   font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: 0.02em;
