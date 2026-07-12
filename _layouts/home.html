@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include head.html %}
+</head>
+
+<body>
+
+  {% include header.html %}
+
+  <!-- ========== HERO ========== -->
+  <section class="home-hero">
+    <div class="container home-hero-inner">
+      <h1>{{ page.hero_title }}</h1>
+      {% if page.hero_subtitle %}
+        <p class="home-hero-subtitle">{{ page.hero_subtitle }}</p>
+      {% endif %}
+      <div class="home-hero-buttons">
+        <a href="/cottagecore-cats/" class="buy-button">Explore Collections</a>
+        <a href="/about/" class="buy-button home-hero-btn-secondary">Our Story</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container home-page">
+
+    <!-- ========== STUDIO INTRO ========== -->
+    {% if page.studio_intro %}
+    <section class="home-section home-intro">
+      <p>{{ page.studio_intro }}</p>
+      <a href="/about/" class="home-read-more">Read Our Story →</a>
+    </section>
+    {% endif %}
+
+    <!-- ========== SHOP COLLECTIONS ========== -->
+    <section class="home-section">
+      <h3 class="icon-title"><i data-lucide="shirt"></i>Shop Collections</h3>
+
+      <div class="smart-months-grid">
+        {% assign sorted_collections = site.pages | where: "layout", "collection" | sort: "title" %}
+        {% for col in sorted_collections %}
+          <a href="{{ col.url }}" class="smart-month-card">
+            <span class="smart-month-label">{{ col.hero_title | default: col.title }}</span>
+            {% if col.hero_subtitle %}
+              <span class="smart-month-sub">{{ col.hero_subtitle }}</span>
+            {% endif %}
+          </a>
+        {% endfor %}
+
+        <a href="/smart/" class="smart-month-card">
+          <span class="smart-month-label">Smart Collections</span>
+          <span class="smart-month-sub">Designs curated month by month.</span>
+        </a>
+
+        {% for album in site.albums %}
+          <a href="{{ album.url }}" class="smart-month-card">
+            <span class="smart-month-label">{{ album.hero_title | default: album.title }}</span>
+            {% if album.hero_subtitle %}
+              <span class="smart-month-sub">{{ album.hero_subtitle }}</span>
+            {% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- ========== LATEST DESIGNS ========== -->
+    {% assign latest_products = site.cottagecore | concat: site.witchy | sort: "date_added" | reverse %}
+    {% assign latest_products = latest_products | slice: 0, 10 %}
+
+    {% if latest_products.size > 0 %}
+    <section class="home-section">
+      <h3 class="icon-title"><i data-lucide="paw-print"></i>Latest Designs</h3>
+
+      <div class="showcase-wrapper">
+        <button class="showcase-btn left" onclick="moveHomeShowcase(-1)">‹</button>
+
+        <div class="showcase-viewport">
+          <div class="showcase-track" id="homeShowcaseTrack">
+            {% for product in latest_products %}
+            <div class="showcase-item">
+              <a href="{{ product.url }}" title="{{ product.title }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }}">
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <button class="showcase-btn right" onclick="moveHomeShowcase(1)">›</button>
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- ========== STUDIO NOTES ========== -->
+    {% assign latest_notes = site.studio_notes | sort: "date" | reverse | slice: 0, 3 %}
+    {% if latest_notes.size > 0 %}
+    <section class="home-section">
+      <h3 class="icon-title"><i data-lucide="flower"></i>Latest from the Studio</h3>
+
+      <div class="article-grid">
+        {% for note in latest_notes %}
+        <a href="{{ note.url }}" class="article-card">
+          {% if note.hero_image %}
+          <div class="article-card-image">
+            <img src="{{ note.hero_image }}" alt="{{ note.title }}">
+          </div>
+          {% endif %}
+          <div class="article-card-body">
+            {% if note.category %}
+              <span class="article-category">{{ note.category }}</span>
+            {% endif %}
+            <span class="article-card-title">{{ note.title }}</span>
+            {% if note.excerpt %}
+              <p class="article-card-excerpt">{{ note.excerpt }}</p>
+            {% endif %}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- ========== MEET THE ARTIST ========== -->
+    {% if page.meet_artist_text %}
+    <section class="home-section home-meet-artist">
+      <h3 class="icon-title"><i data-lucide="paw-print"></i>Meet the Artist</h3>
+      <p>{{ page.meet_artist_text }}</p>
+      <a href="/about/" class="home-read-more">Read more →</a>
+    </section>
+    {% endif %}
+
+    <!-- ========== TRUST BLOCK ========== -->
+    <section class="home-section">
+      <div class="about-stats home-trust-stats">
+        <div class="about-stat">
+          <span class="about-stat-number">Cats & Flowers</span>
+          <span class="about-stat-label">In every design</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-number">Human-Made</span>
+          <span class="about-stat-label">No AI-generated artwork</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-number">Independent Studio</span>
+          <span class="about-stat-label">Since November 2025</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ========== CURTAIN REVEAL ========== -->
+  <section class="curtain-reveal" id="curtainReveal">
+    <div class="curtain-reveal-inner">
+      <img class="curtain-scene" src="/assets/images/home/catnbloom-banner.webp" alt="CatnBloom Studio">
+
+      <div class="curtain-panel curtain-left" style="background-image: url('/assets/images/home/curtain_between.webp');"></div>
+      <div class="curtain-panel curtain-right" style="background-image: url('/assets/images/home/curtain_between.webp');"></div>
+
+      <div class="curtain-cta">
+        <h2>Wearable Art for Cat &amp; Plant Lovers</h2>
+        <a href="/cottagecore-cats/" class="buy-button">Explore Collections</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CLOSING BANNER ========== -->
+  <section class="home-closing-banner">
+    <div class="container">
+      <p>See you in the next collection.</p>
+    </div>
+  </section>
+
+<script>
+let homeShowcaseIndex = 0;
+
+function moveHomeShowcase(dir) {
+  const track = document.getElementById("homeShowcaseTrack");
+  const items = track ? track.querySelectorAll(".showcase-item") : [];
+
+  if (!track || !items.length) return;
+
+  const visible = 3;
+  const maxIndex = Math.max(0, items.length - visible);
+
+  homeShowcaseIndex += dir;
+  homeShowcaseIndex = Math.max(0, Math.min(homeShowcaseIndex, maxIndex));
+
+  const itemWidth = items[0].offsetWidth + 18;
+  track.style.transform = `translateX(-${homeShowcaseIndex * itemWidth}px)`;
+}
+</script>
+
+<script>
+(function () {
+  var curtain = document.getElementById("curtainReveal");
+  if (!curtain || !("IntersectionObserver" in window)) return;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        curtain.classList.add("is-open");
+        observer.unobserve(curtain);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  observer.observe(curtain);
+})();
+</script>
+
+<script>
+if (window.lucide) lucide.createIcons();
+</script>
+
+  {% include footer.html %}
+
+</body>
+</html>
