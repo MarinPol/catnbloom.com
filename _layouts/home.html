@@ -27,10 +27,10 @@
       <div class="home-sidebar-area">
         {% assign sorted_collections = site.pages | where: "layout", "collection" | sort: "title" %}
         {% for col in sorted_collections %}
-          {% if col.title contains "Cottagecore" %}
+          {% if col.url contains "cottagecore" %}
             {% assign card_color = "brown" %}
             {% assign card_thumb = "/assets/images/home/col-01-prw.webp" %}
-          {% elsif col.title contains "Witchy" %}
+          {% elsif col.url contains "witchy" %}
             {% assign card_color = "purple" %}
             {% assign card_thumb = "/assets/images/home/col-02-prw.webp" %}
           {% else %}
