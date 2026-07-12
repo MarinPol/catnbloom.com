@@ -1450,6 +1450,276 @@ MAILERLITE FORM OVERRIDE
 
 
 
+/* =========================
+HOME PAGE
+========================= */
+
+.home-page {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  display: block;
+}
+
+.home-section {
+  margin: 0;
+}
+
+/* ---- Top grid: intro (frame+text) | collection cards ---- */
+.home-top-grid {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.home-intro-area {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* ---- Name frame: title-phame.webp laurel border as background ---- */
+.home-name-frame {
+  position: relative;
+  flex: 0 0 240px;
+  aspect-ratio: 568 / 424;
+  background: url('/assets/images/home/title-phame.webp') center/contain no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-name-frame > span {
+  padding: 24px 34px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #6b1f3a;
+  line-height: 1.25;
+}
+
+.home-intro-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #444;
+  margin: 0;
+  flex: 1;
+}
+
+.home-intro-text::first-letter {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  float: left;
+  line-height: 0.75;
+  padding: 6px 8px 0 0;
+}
+
+/* ---- Sidebar: stacked collection cards ---- */
+.home-sidebar-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.home-collection-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 18px;
+  border-radius: 4px;
+  text-decoration: none;
+  min-height: 88px;
+}
+
+.home-collection-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.home-collection-card-title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.home-collection-card-sub {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  line-height: 1.35;
+  max-width: 150px;
+}
+
+.home-collection-card-image {
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.home-collection-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.home-card-brown {
+  background: #AF9A95;
+  color: #fff;
+}
+
+.home-card-purple {
+  background: #3E1E46;
+  color: #fff;
+}
+
+.home-card-green {
+  background: #809E86;
+  color: #fff;
+}
+
+.home-card-brown .home-collection-card-title,
+.home-card-purple .home-collection-card-title,
+.home-card-green .home-collection-card-title {
+  color: #fff;
+}
+
+/* ---- Quote banner ---- */
+.home-quote-banner {
+  background: #f6e9f0;
+  margin: 30px 0;
+  padding: 20px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.home-quote-banner p {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+.home-read-more {
+  display: inline-block;
+  font-weight: 600;
+  color: #2d2d2d;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.home-read-more:hover {
+  text-decoration: underline;
+}
+
+/* ---- Latest Designs + Latest from the Studio ---- */
+.home-split-row {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
+  gap: 40px;
+  align-items: start;
+  margin: 40px 0;
+}
+
+.home-showcase .showcase-item {
+  flex: 0 0 calc((100% - 36px) / 3);
+}
+
+.home-notes-area .article-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 18px;
+  text-decoration: none;
+}
+
+.home-divider {
+  border: none;
+  border-top: 1px solid #e5e5e5;
+  margin: 40px 0;
+}
+
+.home-meet-artist p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #444;
+  max-width: 720px;
+}
+
+.home-meet-artist {
+  margin-bottom: 44px;
+}
+
+.home-trust-stats {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.home-closing-banner {
+  background: #4a7c4e;
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 20px;
+}
+
+.home-closing-banner p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .home-page {
+    padding: 20px 12px;
+  }
+
+  .home-top-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .home-intro-area {
+    flex-direction: column;
+  }
+
+  .home-name-frame {
+    flex: none;
+    width: 100%;
+    min-height: 120px;
+  }
+
+  .home-quote-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home-split-row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .home-showcase .showcase-item {
+    flex: 0 0 calc((100% - 12px) / 2);
+  }
+
+  .home-trust-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 /* =========================
 CURTAIN REVEAL (Home)
@@ -1478,6 +1748,22 @@ CURTAIN REVEAL (Home)
   display: block;
 }
 
+/* Gentle "beckoning" sway on the whole scene, started via JS a moment
+   after the curtain has finished opening. No separate hands/hangers
+   layer exists yet (flat raster banner) — this is the agreed
+   whole-scene fallback until a transparent PNG layer is provided. */
+.curtain-scene-wiggle {
+  animation: curtain-scene-sway 4.5s ease-in-out infinite;
+}
+
+@keyframes curtain-scene-sway {
+  0%   { transform: translateX(0) rotate(0deg); }
+  25%  { transform: translateX(3px) rotate(0.15deg); }
+  50%  { transform: translateX(0) rotate(0deg); }
+  75%  { transform: translateX(-3px) rotate(-0.15deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
 .curtain-panel {
   position: absolute;
   top: 0;
@@ -1485,7 +1771,7 @@ CURTAIN REVEAL (Home)
   height: 100%;
   background-repeat: no-repeat;
   background-size: 200% 100%;
-  transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: transform 2.2s cubic-bezier(0.65, 0, 0.35, 1);
   will-change: transform;
 }
 
@@ -1507,16 +1793,16 @@ CURTAIN REVEAL (Home)
   transform: translateX(100%);
 }
 
+/* CTA: contrast pink button, anchored toward the lower part of the
+   scene (per structure diagram) so it clears the "Cat n Bloom" wordmark
+   and sits closer to the hanging t-shirts. */
 .curtain-cta {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  text-align: center;
-  gap: 16px;
-  padding: 20px;
+  padding-bottom: 8%;
   opacity: 0;
   transition: opacity 1s ease 0.9s;
   pointer-events: none;
@@ -1527,17 +1813,15 @@ CURTAIN REVEAL (Home)
   pointer-events: auto;
 }
 
-.curtain-cta h2 {
+.curtain-cta-button {
+  width: auto;
+  padding: 12px 26px;
+  background: #d81b60;
   color: #fff;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
-  font-size: 1.6rem;
-  margin: 0;
-  max-width: 520px;
 }
 
-.curtain-cta .buy-button {
-  width: auto;
-  padding: 10px 24px;
+.curtain-cta-button:hover {
+  background: #b5164f;
 }
 
 @media (max-width: 768px) {
@@ -1549,8 +1833,8 @@ CURTAIN REVEAL (Home)
     object-position: center;
   }
 
-  .curtain-cta h2 {
-    font-size: 1.2rem;
+  .curtain-cta {
+    padding-bottom: 10%;
   }
 }
 
