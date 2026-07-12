@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap');
+
 /* =========================
 RESET Jun 24 (1)
 ========================= */
@@ -1465,8 +1467,6 @@ HOME PAGE
   margin: 0;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap');
-
 /* ---- Top grid: intro (frame+text) | collection cards ---- */
 .home-top-grid {
   display: grid;
@@ -1515,7 +1515,7 @@ HOME PAGE
   font-style: normal;
   font-size: 4rem;
   font-weight: 500;
-  color: #8a6a4a;
+  color: #6b1f3a;
   float: left;
   line-height: 0.65;
   padding: 4px 8px 0 0;
