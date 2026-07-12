@@ -1445,3 +1445,112 @@ MAILERLITE FORM OVERRIDE
 .album-load-more {
   max-width: 220px;
 }
+
+
+
+
+
+
+/* =========================
+CURTAIN REVEAL (Home)
+========================= */
+
+.curtain-reveal {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.curtain-reveal-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2560 / 519;
+  overflow: hidden;
+  background: #fff;
+}
+
+.curtain-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.curtain-panel {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
+}
+
+.curtain-left {
+  left: 0;
+  background-position: left top;
+}
+
+.curtain-right {
+  right: 0;
+  background-position: right top;
+}
+
+.curtain-reveal.is-open .curtain-left {
+  transform: translateX(-100%);
+}
+
+.curtain-reveal.is-open .curtain-right {
+  transform: translateX(100%);
+}
+
+.curtain-cta {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 1s ease 0.9s;
+  pointer-events: none;
+}
+
+.curtain-reveal.is-open .curtain-cta {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.curtain-cta h2 {
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  font-size: 1.6rem;
+  margin: 0;
+  max-width: 520px;
+}
+
+.curtain-cta .buy-button {
+  width: auto;
+  padding: 10px 24px;
+}
+
+@media (max-width: 768px) {
+  .curtain-reveal-inner {
+    aspect-ratio: 4 / 5;
+  }
+
+  .curtain-scene {
+    object-position: center;
+  }
+
+  .curtain-cta h2 {
+    font-size: 1.2rem;
+  }
+}
+
