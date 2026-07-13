@@ -1629,17 +1629,18 @@ HOME PAGE
   text-decoration: underline;
 }
 
-/* ---- Latest Designs + Latest from the Studio ---- */
+/* ---- Latest Designs (full width) ---- */
+.home-designs-full {
+  margin: 40px 0;
+}
+
+/* ---- Meet the Artist + Latest from the Studio ---- */
 .home-split-row {
   display: grid;
   grid-template-columns: 2.2fr 1fr;
   gap: 40px;
   align-items: start;
   margin: 40px 0;
-}
-
-.home-showcase .showcase-item {
-  flex: 0 0 calc((100% - 36px) / 3);
 }
 
 .home-notes-area .article-card {
@@ -1662,11 +1663,11 @@ HOME PAGE
   font-size: 1rem;
   line-height: 1.7;
   color: #444;
-  max-width: 720px;
+  max-width: 620px;
 }
 
 .home-meet-artist {
-  margin-bottom: 44px;
+  margin-bottom: 0;
 }
 
 .home-trust-stats {
@@ -1724,10 +1725,6 @@ HOME PAGE
   .home-split-row {
     grid-template-columns: 1fr;
     gap: 28px;
-  }
-
-  .home-showcase .showcase-item {
-    flex: 0 0 calc((100% - 12px) / 2);
   }
 
   .home-trust-stats {
