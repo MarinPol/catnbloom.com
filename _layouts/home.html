@@ -11,7 +11,7 @@
 
   <div class="home-page">
 
-    <!-- ========== INTRO ROW: frame + text | collection cards =========== -->
+    <!-- ========== INTRO ROW: frame + text | collection cards ========== -->
     <div class="home-top-grid">
 
       <div class="home-intro-area">
@@ -73,33 +73,44 @@
     </div>
     {% endif %}
 
-    <!-- ========== LATEST DESIGNS + STUDIO NOTES ========== -->
+    <!-- ========== LATEST DESIGNS (full width) ========== -->
+    {% assign latest_products = site.cottagecore | concat: site.witchy | sort: "date_added" | reverse %}
+    {% assign latest_products = latest_products | slice: 0, 10 %}
+
+    {% if latest_products.size > 0 %}
+    <section class="home-section home-designs-area home-designs-full">
+      <h3 class="icon-title"><i data-lucide="paw-print"></i>Latest Designs</h3>
+
+      <div class="showcase-wrapper home-showcase">
+        <button class="showcase-btn left" onclick="moveHomeShowcase(-1)">‹</button>
+
+        <div class="showcase-viewport">
+          <div class="showcase-track" id="homeShowcaseTrack">
+            {% for product in latest_products %}
+            <div class="showcase-item">
+              <a href="{{ product.url }}" title="{{ product.title }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }}">
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <button class="showcase-btn right" onclick="moveHomeShowcase(1)">›</button>
+      </div>
+    </section>
+    {% endif %}
+
+    <hr class="home-divider">
+
+    <!-- ========== MEET THE ARTIST + LATEST FROM THE STUDIO ========== -->
     <div class="home-split-row">
 
-      {% assign latest_products = site.cottagecore | concat: site.witchy | sort: "date_added" | reverse %}
-      {% assign latest_products = latest_products | slice: 0, 10 %}
-
-      {% if latest_products.size > 0 %}
-      <section class="home-section home-designs-area">
-        <h3 class="icon-title"><i data-lucide="paw-print"></i>Latest Designs</h3>
-
-        <div class="showcase-wrapper home-showcase">
-          <button class="showcase-btn left" onclick="moveHomeShowcase(-1)">‹</button>
-
-          <div class="showcase-viewport">
-            <div class="showcase-track" id="homeShowcaseTrack">
-              {% for product in latest_products %}
-              <div class="showcase-item">
-                <a href="{{ product.url }}" title="{{ product.title }}">
-                  <img src="{{ product.image_url }}" alt="{{ product.title }}">
-                </a>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-
-          <button class="showcase-btn right" onclick="moveHomeShowcase(1)">›</button>
-        </div>
+      {% if page.meet_artist_text %}
+      <section class="home-section home-meet-artist">
+        <h3 class="icon-title"><i data-lucide="paw-print"></i>Meet the Artist</h3>
+        <p>{{ page.meet_artist_text }}</p>
+        <a href="/about/" class="home-read-more">Read more →</a>
       </section>
       {% endif %}
 
@@ -123,17 +134,6 @@
       {% endif %}
 
     </div>
-
-    <hr class="home-divider">
-
-    <!-- ========== MEET THE ARTIST ========== -->
-    {% if page.meet_artist_text %}
-    <section class="home-section home-meet-artist">
-      <h3 class="icon-title"><i data-lucide="paw-print"></i>Meet the Artist</h3>
-      <p>{{ page.meet_artist_text }}</p>
-      <a href="/about/" class="home-read-more">Read more →</a>
-    </section>
-    {% endif %}
 
     <!-- ========== TRUST BLOCK ========== -->
     <section class="home-section">
