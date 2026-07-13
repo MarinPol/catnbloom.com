@@ -52,7 +52,7 @@
           </a>
         {% endfor %}
 
-        <a href="/smart/" class="home-collection-card home-card-green">
+        <a href="/smart/" id="smartCollectionsLink" class="home-collection-card home-card-green">
           <div class="home-collection-card-text">
             <span class="home-collection-card-title">Smart Collections</span>
             <span class="home-collection-card-sub">Designs curated month by month.</span>
@@ -221,6 +221,18 @@ function moveHomeShowcase(dir) {
 
 <script>
 if (window.lucide) lucide.createIcons();
+</script>
+
+<script>
+(function () {
+  var link = document.getElementById("smartCollectionsLink");
+  if (!link) return;
+
+  var monthNumber = new Date().getMonth() + 1; // 1-12, browser's local date
+  var monthPadded = String(monthNumber).padStart(2, "0");
+
+  link.setAttribute("href", "/smart/sc" + monthPadded + "/");
+})();
 </script>
 
   {% include footer.html %}
