@@ -1756,6 +1756,19 @@ CURTAIN REVEAL (Home)
    background and the logo can be scaled down on mobile without touching
    the rest of the artwork.
    Stacking order (back → front): characters → arms → logo → curtain panels → CTA */
+/* Warm backdrop tone sitting behind everything else on the stage.
+   banner-frame1.webp is a soft gradient glow, not curtain fabric —
+   it belongs here, not on the sliding panels. */
+.curtain-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
 .curtain-layer {
   position: absolute;
   inset: 0;
@@ -1793,6 +1806,24 @@ CURTAIN REVEAL (Home)
   100% { transform: translate(0, 0) rotate(0deg); }
 }
 
+/* Subtle continuous life on the character cast once they're revealed —
+   much gentler than the arms sway so it reads as "alive", not busy. */
+.curtain-characters-idle {
+  animation: curtain-characters-bob 5.2s ease-in-out infinite;
+}
+
+@keyframes curtain-characters-bob {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+/* Curtain panels: each shows one half of banner-curtain.webp — a
+   full-width image where the left curtain is drawn on the left half
+   and the right curtain on the right half, transparent in between.
+   background-size 200% + matching position keeps each panel's fabric
+   edge meeting in the middle when closed, then the panel itself
+   translates out on open. */
 .curtain-panel {
   position: absolute;
   top: 0;
