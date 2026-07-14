@@ -158,10 +158,12 @@
   <!-- ========== CURTAIN REVEAL ========== -->
   <section class="curtain-reveal" id="curtainReveal">
     <div class="curtain-reveal-inner">
-      <img class="curtain-scene" id="curtainScene" src="/assets/images/home/catnbloom-banner.webp" alt="CatnBloom Studio">
+      <img class="curtain-layer curtain-characters" src="/assets/images/home/banner-characters.webp" alt="CatnBloom Studio">
+      <img class="curtain-layer curtain-arms" id="curtainArms" src="/assets/images/home/banner-arms.webp" alt="">
+      <img class="curtain-layer curtain-logo" src="/assets/images/home/banner-logo.webp" alt="Cat n Bloom">
 
-      <div class="curtain-panel curtain-left" style="background-image: url('/assets/images/home/curtain_between.webp');"></div>
-      <div class="curtain-panel curtain-right" style="background-image: url('/assets/images/home/curtain_between.webp');"></div>
+      <div class="curtain-panel curtain-left" style="background-image: url('/assets/images/home/banner-frame1.webp');"></div>
+      <div class="curtain-panel curtain-right" style="background-image: url('/assets/images/home/banner-frame1.webp');"></div>
 
       <div class="curtain-cta">
         <a href="/cottagecore-cats/" class="buy-button curtain-cta-button">Explore Collections</a>
@@ -197,7 +199,7 @@ function moveHomeShowcase(dir) {
 <script>
 (function () {
   var curtain = document.getElementById("curtainReveal");
-  var scene = document.getElementById("curtainScene");
+  var arms = document.getElementById("curtainArms");
   if (!curtain || !("IntersectionObserver" in window)) return;
 
   var observer = new IntersectionObserver(function (entries) {
@@ -207,9 +209,10 @@ function moveHomeShowcase(dir) {
         observer.unobserve(curtain);
 
         // Panels take 2.2s to slide, CTA fades in with 0.9s delay + 1s.
-        // Start the gentle "beckoning" sway once the curtain has fully opened.
+        // Start the gentle "beckoning" sway on just the hands/hangers
+        // layer once the curtain has fully opened.
         window.setTimeout(function () {
-          if (scene) scene.classList.add("curtain-scene-wiggle");
+          if (arms) arms.classList.add("curtain-arms-wiggle");
         }, 2300);
       }
     });
