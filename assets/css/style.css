@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap');
 
 /* =========================
-RESET Jul 13
+RESET Jun 24 (1)
 ========================= */
 
 * {
@@ -1782,17 +1782,19 @@ CURTAIN REVEAL (Home)
 
 /* banner-curtain.webp: the tied-back curtain drapes framing each side of
    the stage. This layer is STATIC — it never moves and never disappears.
-   It sits behind the arms/characters so the hands with hangers always
-   have curtain fabric behind them, instead of floating on bare background. */
-.curtain-frame {
+   It sits ABOVE the arms/characters (not behind them) so the fabric edge
+   physically overlaps the hands/hangers at the sides — that's what reads
+   as "the cat is hiding behind the curtain, hand poking out", instead of
+   a bare arm floating on top of the drape with the fabric doing nothing. */
+.curtain-characters {
   z-index: 1;
 }
 
-.curtain-characters {
+.curtain-arms {
   z-index: 2;
 }
 
-.curtain-arms {
+.curtain-frame {
   z-index: 3;
 }
 
@@ -1803,29 +1805,32 @@ CURTAIN REVEAL (Home)
 /* Independent "beckoning" sway on just the hands/hangers layer, started
    via JS a moment after the curtain has finished opening. Replaces the
    old whole-scene wiggle now that a dedicated transparent PNG layer
-   (banner-arms.webp) exists. */
+   (banner-arms.webp) exists. Amplitude raised so the motion actually
+   reads at banner scale instead of disappearing into the artwork. */
 .curtain-arms-wiggle {
-  animation: curtain-arms-sway 3.6s ease-in-out infinite;
+  animation: curtain-arms-sway 3.2s ease-in-out infinite;
 }
 
 @keyframes curtain-arms-sway {
   0%   { transform: translate(0, 0) rotate(0deg); }
-  25%  { transform: translate(4px, -3px) rotate(1deg); }
+  25%  { transform: translate(7px, -5px) rotate(2deg); }
   50%  { transform: translate(0, 0) rotate(0deg); }
-  75%  { transform: translate(-4px, 3px) rotate(-1deg); }
+  75%  { transform: translate(-7px, 5px) rotate(-2deg); }
   100% { transform: translate(0, 0) rotate(0deg); }
 }
 
-/* Subtle continuous life on the character cast once they're revealed —
-   much gentler than the arms sway so it reads as "alive", not busy. */
+/* Continuous life on the character cast once they're revealed. Amplitude
+   raised from the original ±2px (invisible at this scale) to a bob +
+   tiny rotation so the whole cast visibly breathes instead of sitting
+   static under the moving arms layer. */
 .curtain-characters-idle {
-  animation: curtain-characters-bob 5.2s ease-in-out infinite;
+  animation: curtain-characters-bob 4.6s ease-in-out infinite;
 }
 
 @keyframes curtain-characters-bob {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-2px); }
-  100% { transform: translateY(0); }
+  0%   { transform: translateY(0) rotate(0deg); }
+  50%  { transform: translateY(-5px) rotate(0.4deg); }
+  100% { transform: translateY(0) rotate(0deg); }
 }
 
 /* Curtain panels: each shows one half of curtain_between.webp — a
