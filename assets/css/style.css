@@ -1755,7 +1755,9 @@ CURTAIN REVEAL (Home)
    flat raster banner, so the hands/hangers can sway independently of the
    background and the logo can be scaled down on mobile without touching
    the rest of the artwork.
-   Stacking order (back → front): characters → arms → logo → curtain panels → CTA */
+   Stacking order (back → front):
+   backdrop → curtain-frame (static, always visible) → characters → arms
+   → logo → curtain panels (sliding, cover/reveal the stage) → CTA */
 /* Warm backdrop tone sitting behind everything else on the stage.
    banner-frame1.webp is a soft gradient glow, not curtain fabric —
    it belongs here, not on the sliding panels. */
@@ -1778,16 +1780,24 @@ CURTAIN REVEAL (Home)
   display: block;
 }
 
-.curtain-characters {
+/* banner-curtain.webp: the tied-back curtain drapes framing each side of
+   the stage. This layer is STATIC — it never moves and never disappears.
+   It sits behind the arms/characters so the hands with hangers always
+   have curtain fabric behind them, instead of floating on bare background. */
+.curtain-frame {
   z-index: 1;
 }
 
-.curtain-arms {
+.curtain-characters {
   z-index: 2;
 }
 
-.curtain-logo {
+.curtain-arms {
   z-index: 3;
+}
+
+.curtain-logo {
+  z-index: 4;
 }
 
 /* Independent "beckoning" sway on just the hands/hangers layer, started
@@ -1818,12 +1828,15 @@ CURTAIN REVEAL (Home)
   100% { transform: translateY(0); }
 }
 
-/* Curtain panels: each shows one half of banner-curtain.webp — a
+/* Curtain panels: each shows one half of curtain_between.webp — a
    full-width image where the left curtain is drawn on the left half
    and the right curtain on the right half, transparent in between.
-   background-size 200% + matching position keeps each panel's fabric
-   edge meeting in the middle when closed, then the panel itself
-   translates out on open. */
+   This is the CLOSED-state curtain: when closed the two panels meet
+   in the center and cover the entire stage (frame/characters/arms/logo
+   underneath). background-size 200% + matching position keeps each
+   panel's fabric edge meeting in the middle when closed, then the
+   panel itself translates out on open, revealing the static
+   banner-curtain.webp frame that stays put at the sides. */
 .curtain-panel {
   position: absolute;
   top: 0;
@@ -1833,7 +1846,7 @@ CURTAIN REVEAL (Home)
   background-size: 200% 100%;
   transition: transform 2.2s cubic-bezier(0.65, 0, 0.35, 1);
   will-change: transform;
-  z-index: 4;
+  z-index: 5;
 }
 
 .curtain-left {
@@ -1860,7 +1873,7 @@ CURTAIN REVEAL (Home)
 .curtain-cta {
   position: absolute;
   inset: 0;
-  z-index: 5;
+  z-index: 6;
   display: flex;
   align-items: flex-end;
   justify-content: center;
