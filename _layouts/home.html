@@ -158,12 +158,13 @@
   <!-- ========== CURTAIN REVEAL ========== -->
   <section class="curtain-reveal" id="curtainReveal">
     <div class="curtain-reveal-inner">
-      <img class="curtain-layer curtain-characters" src="/assets/images/home/banner-characters.webp" alt="CatnBloom Studio">
+      <div class="curtain-layer curtain-backdrop" style="background-image: url('/assets/images/home/banner-frame1.webp');"></div>
+      <img class="curtain-layer curtain-characters" id="curtainCharacters" src="/assets/images/home/banner-characters.webp" alt="CatnBloom Studio">
       <img class="curtain-layer curtain-arms" id="curtainArms" src="/assets/images/home/banner-arms.webp" alt="">
       <img class="curtain-layer curtain-logo" src="/assets/images/home/banner-logo.webp" alt="Cat n Bloom">
 
-      <div class="curtain-panel curtain-left" style="background-image: url('/assets/images/home/banner-frame1.webp');"></div>
-      <div class="curtain-panel curtain-right" style="background-image: url('/assets/images/home/banner-frame1.webp');"></div>
+      <div class="curtain-panel curtain-left" style="background-image: url('/assets/images/home/banner-curtain.webp');"></div>
+      <div class="curtain-panel curtain-right" style="background-image: url('/assets/images/home/banner-curtain.webp');"></div>
 
       <div class="curtain-cta">
         <a href="/cottagecore-cats/" class="buy-button curtain-cta-button">Explore Collections</a>
@@ -200,6 +201,7 @@ function moveHomeShowcase(dir) {
 (function () {
   var curtain = document.getElementById("curtainReveal");
   var arms = document.getElementById("curtainArms");
+  var characters = document.getElementById("curtainCharacters");
   if (!curtain || !("IntersectionObserver" in window)) return;
 
   var observer = new IntersectionObserver(function (entries) {
@@ -213,6 +215,7 @@ function moveHomeShowcase(dir) {
         // layer once the curtain has fully opened.
         window.setTimeout(function () {
           if (arms) arms.classList.add("curtain-arms-wiggle");
+          if (characters) characters.classList.add("curtain-characters-idle");
         }, 2300);
       }
     });
