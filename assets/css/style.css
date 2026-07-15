@@ -1682,6 +1682,22 @@ HOME PAGE
   grid-template-columns: repeat(5, 1fr);
 }
 
+/* ---- Studio Desk Photo Strip (realism break) ---- */
+.home-photo-strip {
+  width: 100%;
+  margin: 40px 0;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.home-photo-strip img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
 .home-closing-banner {
   background: #e9f1e6;
   color: #33502f;
@@ -1737,6 +1753,10 @@ HOME PAGE
 
   .home-trust-stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-photo-strip img {
+    height: 140px;
   }
 }
 
