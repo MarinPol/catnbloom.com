@@ -1679,7 +1679,7 @@ HOME PAGE
 }
 
 .home-trust-stats {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .home-closing-banner {
@@ -1736,7 +1736,7 @@ HOME PAGE
   }
 
   .home-trust-stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
