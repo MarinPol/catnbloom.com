@@ -1634,6 +1634,14 @@ HOME PAGE
   margin: 40px 0;
 }
 
+.home-section-lead {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: #555;
+  max-width: 700px;
+  margin: 0 0 18px;
+}
+
 /* ---- Meet the Artist + Latest from the Studio ---- */
 .home-split-row {
   display: grid;
