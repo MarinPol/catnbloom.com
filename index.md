@@ -8,7 +8,7 @@ hero_subtitle: "Wearable botanical art for people who love cats, flowers and qui
 
 studio_intro: "CatnBloom is an independent studio creating illustrated designs for apparel, stationery and everyday gifts through print-on-demand. Every design brings cats and flowers together, from soft cottagecore countryside scenes to witchy tarot-inspired botanical art. Whatever the mood, every design begins with cats and flowers — the inspiration behind the name CatnBloom."
 
-meet_artist_text: "CatnBloom is guided by an independent artist whose work is shaped by years of illustration, ongoing experimentation and a circle of creative conversations. Every design is carefully refined by hand until the story, composition and characters feel complete."
+meet_artist_text: "CatnBloom is guided by an independent designer whose work draws on years of experience in graphic, print and digital design, ongoing experimentation and a circle of creative conversations. Every design is carefully refined by hand until the story, composition and characters come together naturally."
 
 seo_description: "CatnBloom Studio — illustrated cat and flower designs on apparel, stationery and gifts. Cottagecore and witchy tarot-inspired wearable art, print-on-demand."
 og_image: "/assets/images/cottagecore-hero.jpg"
