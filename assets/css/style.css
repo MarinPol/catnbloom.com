@@ -646,7 +646,7 @@ FOOTER
 }
 
 .footer-col-title {
-  font-size: 13px;
+  font-size: var(--font-footer-newsletter-title);
   font-weight: 700;
   color: var(--text-primary);
   margin: 0 0 10px;
@@ -656,7 +656,7 @@ FOOTER
 
 /* Колонка 1 — брендинг */
 .footer-copyright {
-  font-size: 13px;
+  font-size: var(--font-body);
   color: var(--text-secondary);
   margin: 0 0 12px;
   font-weight: 600;
@@ -672,9 +672,9 @@ FOOTER
 }
 
 .footer-brand-list li {
-  font-size: 13px;
+  font-size: var(--font-body);
   color: var(--text-secondary);
-  line-height: 1.4;
+  line-height: var(--line-body);
 }
 
 /* Колонка 2 — категории (список тегов вместо строки с точками) */
@@ -688,7 +688,7 @@ FOOTER
 }
 
 .footer-tags-list li {
-  font-size: 13px;
+  font-size: var(--font-body);
   color: var(--text-secondary);
 }
 
@@ -778,11 +778,11 @@ SMART MONTHS GRID
 
 .smart-month-label {
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--font-body);
 }
 
 .smart-month-sub {
-  font-size: 0.78rem;
+  font-size: var(--font-caption);
   color: var(--text-muted);
   margin-top: 4px;
   line-height: 1.4;
@@ -841,12 +841,6 @@ ABOUT PAGE
   color: var(--text-secondary);
 }
 
-.about-section p {
-  font-size: var(--font-body-lg);
-  line-height: var(--line-body-lg);
-  color: var(--text-secondary);
-}
-
 .about-faq {
   display: flex;
   flex-direction: column;
@@ -860,15 +854,15 @@ ABOUT PAGE
 
 .faq-question {
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--font-body);
   color: var(--text-primary);
   margin-bottom: 6px;
 }
 
 .faq-answer {
-  font-size: 0.9rem;
+  font-size: var(--font-body);
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: var(--line-body);
 }
 
 .faq-divider {
