@@ -144,7 +144,7 @@ Schema: Product / Article.
 | 2026-07-01 | assets/css/style.css | Добавлены стили .footer-newsletter | Зелёный фон, форма подписки, адаптив |
 | 2026-07-01 | _layouts/product-bridge.html | Last updated: site.time → page.updated_at | default: page.date_added | Дата обновления берётся из файла товара, не из момента деплоя |
 | 2026-07-01 | _cottagecore/c01-001.md | Добавлены поля updated_at и send_to_newsletter | Образец для всех товарных md-файлов |
-| 2026-07-01 | feed.xml | BUGFIX: == true → {% if item.send_to_newsletter %} | Liquid не поддерживает сравнение булевых через == true, статьи не попадали в ленту |
+| 2026-07-01 | feed.xml | BUGFIX: == true → {% raw %}{% if item.send_to_newsletter %}{% endraw %} | Liquid не поддерживает сравнение булевых через == true, статьи не попадали в ленту |
 | 2026-07-04 | _smart/sc01.md + smart.md | Добавлено og_image: /assets/images/smart/smcol-og.webp | OG-картинка для шаринга Smart Collections |
 | 2026-07-04 | _includes/head.html | Добавлен page.photo в цепочку OG image fallback | About страница теперь корректно передаёт фото при шаринге |
 | 2026-07-06 | feed.xml | Добавлен инлайн-стиль (max-width:100%; height:auto; display:block; margin:10px auto) во все 3 img-тега (products, smart, studio_notes) | Исправление разрыва верстки RSS-ридеров из-за оригинального размера картинок разных секций |
