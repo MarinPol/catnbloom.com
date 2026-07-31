@@ -16,6 +16,8 @@ sitemap: false
     th.sortable::after { content: " ⇅"; color: #999; font-weight: normal; }
     th.sort-asc::after { content: " ↑"; color: #333; font-weight: normal; }
     th.sort-desc::after { content: " ↓"; color: #333; font-weight: normal; }
+    #inventoryBody td a { color: #4a6b3a; text-decoration: none; font-weight: 600; }
+    #inventoryBody td a:hover { text-decoration: underline; }
     .status-hidden { color: #7b2d2d; font-weight: bold; }
     .status-active { color: #a3b18a; font-weight: bold; }
     .load-more { margin-top: 20px; padding: 10px 20px; cursor: pointer; }
@@ -47,7 +49,7 @@ sitemap: false
             data-sku="{{ item.sku | downcase }}"
             data-title="{{ item.title | downcase }}"
             data-status="{{ item.status }}">
-          <td>{{ item.sku }}</td>
+          <td><a href="/{{ item.collection_slug }}/{{ item.sku | downcase }}/" target="_blank" rel="noopener">{{ item.sku }}</a></td>
           <td>{{ item.title }}</td>
           <td>{{ item.collection_name }}</td>
           <td>
