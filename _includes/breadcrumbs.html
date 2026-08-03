@@ -158,6 +158,18 @@
 
   {%- comment -%}
   =========================
+  LEGAL PAGE LOGIC (Privacy / Terms / Copyright)
+  =========================
+  {%- endcomment -%}
+
+  {% elsif page.layout == "legal" %}
+
+    <span>/</span>
+
+    <span class="current-page">{{ page.title }}</span>
+
+  {%- comment -%}
+  =========================
   SAFETY FALLBACK
   =========================
   {%- endcomment -%}
