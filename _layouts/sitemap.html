@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include head.html %}
+</head>
+
+<body>
+
+  {% include header.html %}
+  {% include breadcrumbs.html %}
+
+  <div class="container sitemap-page">
+
+    <div class="sitemap-content">
+
+      <header class="collection-hero">
+        <h1>{{ page.hero_title | default: page.title }}</h1>
+
+        {% if page.hero_subtitle %}
+        <div class="story-text">{{ page.hero_subtitle }}</div>
+        {% endif %}
+      </header>
+
+      {% if page.about_section %}
+      <section class="collection-intro">
+        <p>{{ page.about_section }}</p>
+      </section>
+      {% endif %}
+
+      <!-- ===== SECTION: SHOP COLLECTIONS ===== -->
+      {% assign sorted_collections = site.pages | where: "layout", "collection" | sort: "title" %}
+      {% if sorted_collections.size > 0 %}
+      <section class="sitemap-section">
+        <h3 class="icon-title"><i data-lucide="layout-grid"></i>Shop Collections</h3>
+
+        {% for col in sorted_collections %}
+          <div class="sitemap-subgroup">
+            <a href="{{ col.url }}" class="sitemap-subgroup-title">{{ col.hero_title | default: col.title }}</a>
+
+            {% if col.collection_id == "cottagecore" %}
+              {% assign items = site.cottagecore | sort: "sku" %}
+            {% elsif col.collection_id == "witchy" %}
+              {% assign items = site.witchy | sort: "sku" %}
+            {% else %}
+              {% assign items = empty %}
+            {% endif %}
+
+            {% if items.size > 0 %}
+            <ul class="sitemap-list">
+              {% for item in items %}
+              <li><a href="{{ item.url }}">{{ item.title | default: item.sku }}</a></li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </section>
+      {% endif %}
+
+      <!-- ===== SECTION: SMART COLLECTIONS ===== -->
+      {% assign smart_months = site.smart | sort: "permalink" %}
+      {% if smart_months.size > 0 %}
+      <section class="sitemap-section">
+        <h3 class="icon-title"><i data-lucide="rotate-3d"></i>Smart Collections</h3>
+
+        <a href="/smart/" class="sitemap-subgroup-title">Smart Collections — Home</a>
+
+        <ul class="sitemap-list sitemap-list-inline">
+          {% for month in smart_months %}
+          <li><a href="{{ month.url }}">{{ month.hero_title | default: month.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      <!-- ===== SECTION: ALBUMS ===== -->
+      {% assign sorted_albums = site.albums | sort: "title" %}
+      {% if sorted_albums.size > 0 %}
+      <section class="sitemap-section">
+        <h3 class="icon-title"><i data-lucide="library-big"></i>Albums</h3>
+
+        <ul class="sitemap-list sitemap-list-inline">
+          {% for album in sorted_albums %}
+          <li><a href="{{ album.url }}">{{ album.hero_title | default: album.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      <!-- ===== SECTION: STUDIO NOTES ===== -->
+      {% assign all_articles = site.studio_notes | sort: "date" | reverse %}
+      {% if all_articles.size > 0 %}
+      <section class="sitemap-section">
+        <h3 class="icon-title"><i data-lucide="newspaper"></i>Studio Notes</h3>
+
+        <a href="/studio-notes/" class="sitemap-subgroup-title">Studio Notes — Index</a>
+
+        <ul class="sitemap-list">
+          {% for article in all_articles %}
+          <li><a href="{{ article.url }}">{{ article.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      <!-- ===== SECTION: STUDIO PAGES ===== -->
+      <section class="sitemap-section">
+        <h3 class="icon-title"><i data-lucide="info"></i>Studio</h3>
+
+        <ul class="sitemap-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">Our Story</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+  if (window.lucide) lucide.createIcons();
+  </script>
+
+  {% include footer.html %}
+
+</body>
+</html>
