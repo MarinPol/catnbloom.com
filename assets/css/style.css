@@ -2177,3 +2177,59 @@ SITEMAP PAGE
     gap: var(--space-4, 32px);
   }
 }
+
+
+/* =========================
+LEGAL PAGE
+========================= */
+
+.legal-page {
+  display: block;
+}
+
+.legal-content {
+  width: 100%;
+  max-width: var(--content-width, 720px);
+  margin: 0 auto;
+}
+
+.legal-content h1 {
+  margin-bottom: var(--space-3, 24px);
+}
+
+.legal-content > p:first-of-type strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.legal-content hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: var(--space-4, 32px) 0;
+}
+
+@media (max-width: 768px) {
+  .legal-content {
+    padding: 0 var(--space-2, 16px);
+  }
+}
+
+.footer-legal-links {
+  margin-top: var(--space-1, 8px);
+  font-size: var(--font-caption, 0.85rem);
+  color: var(--text-secondary);
+}
+
+.footer-legal-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.footer-legal-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-legal-links span {
+  margin: 0 var(--space-1, 8px);
+  opacity: 0.5;
+}
