@@ -1366,12 +1366,12 @@ FOOTER NEWSLETTER
   line-height: 1.4;
 }
 
-/* Дисклеймер вынесен в нижний ярус, сделан контрастнее (было #999) */
+/* Дисклеймер физически внутри колонки Newsletter, сразу под формой подписки */
 .footer-newsletter-legal {
   font-size: 0.75rem;
   color: #6b6b6b;
-  margin: 0;
-  max-width: 480px;
+  margin: 10px 0 0;
+  max-width: 360px;
 }
 
 
@@ -1455,11 +1455,13 @@ MAILERLITE FORM OVERRIDE
   color: var(--text-primary) !important;
 }
 
-/* Нижний ярус: соцсети слева, юридический текст справа под формой */
+/* Нижний ярус: соцсети слева, юридические ссылки (Privacy/Terms/Copyright) справа */
 .footer-bottom {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 /* FOOTER SOCIAL + RSS ROW (нижний ярус, слева) */
@@ -1495,13 +1497,6 @@ MAILERLITE FORM OVERRIDE
 .footer-social-icon:hover {
   opacity: 1;
   background: rgba(0,0,0,0.08);
-}
-
-/* Юридический текст выровнен под формой подписки (правая колонка) */
-.footer-newsletter-legal {
-  max-width: 360px;
-  text-align: left;
-  margin-left: auto;
 }
 
 /* ---- FOOTER: mobile ---- */
@@ -1541,7 +1536,6 @@ MAILERLITE FORM OVERRIDE
   }
 
   .footer-newsletter-legal {
-    margin-left: 0;
     max-width: none;
   }
 
@@ -1552,6 +1546,10 @@ MAILERLITE FORM OVERRIDE
   }
 
   .footer-social-row {
+    align-self: flex-start;
+  }
+
+  .footer-legal-links {
     align-self: flex-start;
   }
 }
@@ -2215,7 +2213,7 @@ LEGAL PAGE
 }
 
 .footer-legal-links {
-  margin-top: var(--space-1, 8px);
+  margin: 0;
   font-size: var(--font-caption, 0.85rem);
   color: var(--text-secondary);
 }
