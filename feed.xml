@@ -14,7 +14,7 @@ layout: null
   {% comment %}— PRODUCTS: cottagecore + witchy —{% endcomment %}
   {% assign all_products = site.cottagecore | concat: site.witchy %}
   {% for item in all_products %}
-    {% if item.send_to_newsletter %}
+    {% if item.send_to_newsletter and item.status != 'hidden' %}
       {% assign item_date = item.updated_at | default: item.date_added %}
       {% assign item_sec = item_date | date: "%s" | plus: 0 %}
       {% if item_sec >= cutoff %}
