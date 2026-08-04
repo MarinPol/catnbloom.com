@@ -6,7 +6,7 @@ permalink: /privacy/
 
 **Last updated:** August 3, 2026
 
-CatnBloom Studio ("CatnBloom," "we," "us," or "our") respects your privacy. This Privacy Policy explains what information we collect through catnbloom.com (the "Site"), how we use it, and the choices available to you.
+CatnBloom Studio ("CatnBloom," "we," "us," or "our") respects your privacy. This Privacy Policy explains what information we collect through catnbloom.com (the "Site"), how we use it, and the choices available to you. 
 
 ## 1. Who We Are
 
