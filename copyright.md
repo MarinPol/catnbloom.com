@@ -4,7 +4,7 @@ title: "Copyright Notice"
 permalink: /copyright/
 ---
 
-**Last updated:** August 3, 2026
+**Last updated:** August 3, 2026 
 
 © 2026 CatnBloom Studio. All rights reserved.
 
