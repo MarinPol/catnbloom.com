@@ -20,7 +20,7 @@ CatnBloom Studio is an independent creative studio operating catnbloom.com as a 
 
 **Automatically collected information.** Like most websites, our hosting and content delivery infrastructure may automatically log standard technical information (such as IP address, browser type, and pages visited) for security and performance purposes.
 
-**Cookies.** The Site may use minimal technical cookies necessary for basic functionality (e.g., remembering menu state). We do not currently use advertising or cross-site tracking cookies.
+**Cookies.** The Site uses only minimal technical cookies necessary for basic functionality (e.g., remembering menu state). We do not currently use advertising or cross-site tracking cookies.
 
 ## 3. How We Use Your Information
 

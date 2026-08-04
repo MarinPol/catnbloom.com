@@ -10,7 +10,7 @@ permalink: /copyright/
 
 ## 1. Ownership
 
-All illustrations, designs, artwork, photographs, and written content published on catnbloom.com are original creations of CatnBloom Studio, unless explicitly stated otherwise. CatnBloom Studio is an independent creative studio built around original artwork created and refined by a human designer.
+All original illustrations, designs, artwork, original photographs, and written content published on catnbloom.com are original creations of CatnBloom Studio, unless explicitly stated otherwise. CatnBloom Studio is an independent creative studio built around original artwork created and refined by a human designer.
 
 ## 2. Permitted Use
 

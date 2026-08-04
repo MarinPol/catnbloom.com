@@ -10,7 +10,7 @@ Welcome to catnbloom.com (the "Site"), operated by CatnBloom Studio ("CatnBloom,
 
 ## 1. About This Site
 
-CatnBloom Studio is an independent creative studio built around original artwork created and refined by a human designer. The Site serves as a portfolio and showcase for our illustrated designs. CatnBloom Studio is an independent creative studio led by a human designer.
+CatnBloom Studio is an independent creative studio built around original artwork created and refined by a human designer. The Site serves as a portfolio and showcase for our illustrated designs.
 
 ## 2. No Direct Sales on This Site
 
