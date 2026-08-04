@@ -4,7 +4,7 @@ title: "Terms of Service"
 permalink: /terms/
 ---
 
-**Last updated:** August 3, 2026
+**Last updated:** August 3, 2026 
 
 Welcome to catnbloom.com (the "Site"), operated by CatnBloom Studio ("CatnBloom," "we," "us," or "our"). By accessing or using the Site, you agree to the following Terms of Service.
 
