@@ -74,7 +74,7 @@
     {% endif %}
 
     <!-- ========== LATEST DESIGNS (full width) ========== -->
-    {% assign latest_products = site.cottagecore | concat: site.witchy | sort: "date_added" | reverse %}
+    {% assign latest_products = site.cottagecore | concat: site.witchy | where_exp: "item", "item.status != 'hidden'" | sort: "date_added" | reverse %}
     {% assign latest_products = latest_products | slice: 0, 10 %}
 
     {% if latest_products.size > 0 %}

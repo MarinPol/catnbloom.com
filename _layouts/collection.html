@@ -10,7 +10,7 @@
   {% include header.html %}
   {% include breadcrumbs.html %}
 
-  {% assign items = site[page.collection_id] %}
+  {% assign items = site[page.collection_id] | where_exp: "item", "item.status != 'hidden'" %}
   {% assign showcase_items = items | slice: 0, 6 %}
   {% assign grid_items = items | slice: 6, 999 %}
 

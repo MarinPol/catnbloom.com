@@ -39,9 +39,9 @@
             <a href="{{ col.url }}" class="sitemap-subgroup-title">{{ col.hero_title | default: col.title }}</a>
 
             {% if col.collection_id == "cottagecore" %}
-              {% assign items = site.cottagecore | sort: "sku" %}
+              {% assign items = site.cottagecore | where_exp: "item", "item.status != 'hidden'" | sort: "sku" %}
             {% elsif col.collection_id == "witchy" %}
-              {% assign items = site.witchy | sort: "sku" %}
+              {% assign items = site.witchy | where_exp: "item", "item.status != 'hidden'" | sort: "sku" %}
             {% else %}
               {% assign items = empty %}
             {% endif %}

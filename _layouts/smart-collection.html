@@ -23,7 +23,7 @@
   {% assign smart_items = "" | split: "" %}
   {% for pid in page.products %}
     {% assign found = all_products | where: "sku", pid | first %}
-    {% if found %}
+    {% if found and found.status != 'hidden' %}
       {% assign smart_items = smart_items | push: found %}
     {% endif %}
   {% endfor %}
