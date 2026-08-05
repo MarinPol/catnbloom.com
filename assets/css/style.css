@@ -2231,3 +2231,202 @@ LEGAL PAGE
   margin: 0 var(--space-1, 8px);
   opacity: 0.5;
 }
+
+/* =========================
+   404 PAGE (Error 404 — This Page Wandered Off)
+   Изолированный блок, существующие модули не затронуты
+   ========================= */
+
+.error-404-container {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3, 24px);
+  padding-top: var(--space-6, 64px);
+  padding-bottom: var(--space-8, 96px);
+}
+
+.error-404-scene {
+  width: 100%;
+  max-width: 420px;
+}
+
+.error-404-illustration {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.error-404-copy {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2, 16px);
+}
+
+.error-404-tag {
+  font-size: var(--font-caption, 15px);
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.error-404-copy h1 {
+  margin: 0;
+  font-size: var(--font-h2, 36px);
+  color: var(--text-primary);
+}
+
+.error-404-copy p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-body, 16px);
+  line-height: var(--line-body, 1.5);
+}
+
+.error-404-home-btn {
+  width: auto;
+  min-width: 200px;
+  margin-top: var(--space-1, 8px);
+}
+
+.error-404-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3, 24px);
+  margin-top: var(--space-1, 8px);
+}
+
+.error-404-links a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: var(--font-caption, 15px);
+}
+
+.error-404-links a:hover {
+  color: var(--brand-secondary);
+}
+
+/* ---- animation stages (loops every 9s) ---- */
+
+.e404-mound,
+.e404-sprout,
+.e404-flower,
+.e404-cat-sit {
+  opacity: 0;
+}
+
+.e404-cat-dig {
+  animation: e404-dig-wiggle 0.6s ease-in-out infinite,
+             e404-cat-dig-visibility 9s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.e404-paw-a {
+  animation: e404-paw-scratch-a 0.6s ease-in-out infinite;
+  transform-origin: 6px 40px;
+}
+
+.e404-paw-b {
+  animation: e404-paw-scratch-b 0.6s ease-in-out infinite 0.15s;
+  transform-origin: 20px 42px;
+}
+
+.e404-mound {
+  animation: e404-mound-appear 9s ease-in-out infinite;
+}
+
+.e404-sprout .e404-stem {
+  stroke-dasharray: 52;
+  stroke-dashoffset: 52;
+}
+
+.e404-sprout {
+  animation: e404-sprout-appear 9s ease-in-out infinite;
+}
+
+.e404-flower {
+  animation: e404-flower-bloom 9s ease-in-out infinite;
+  transform-origin: 200px 140px;
+}
+
+.e404-cat-sit {
+  animation: e404-cat-sit-appear 9s ease-in-out infinite;
+}
+
+@keyframes e404-paw-scratch-a {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-14deg); }
+}
+
+@keyframes e404-paw-scratch-b {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(12deg); }
+}
+
+@keyframes e404-dig-wiggle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+
+@keyframes e404-cat-dig-visibility {
+  0%, 38% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+@keyframes e404-mound-appear {
+  0% { opacity: 0; transform: scale(0.7); }
+  15%, 92% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes e404-sprout-appear {
+  0%, 38% { opacity: 0; }
+  46% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes e404-flower-bloom {
+  0%, 55% { opacity: 0; transform: scale(0.2); }
+  70% { opacity: 1; transform: scale(1.1); }
+  78%, 92% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes e404-cat-sit-appear {
+  0%, 44% { opacity: 0; }
+  55%, 92% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .e404-cat-dig,
+  .e404-paw-a,
+  .e404-paw-b,
+  .e404-mound,
+  .e404-sprout,
+  .e404-flower,
+  .e404-cat-sit {
+    animation: none;
+  }
+  .e404-cat-dig { opacity: 0; }
+  .e404-mound,
+  .e404-sprout,
+  .e404-flower,
+  .e404-cat-sit { opacity: 1; }
+  .e404-sprout .e404-stem { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 768px) {
+  .error-404-copy h1 {
+    font-size: var(--font-h3, 28px);
+  }
+  .error-404-links {
+    gap: var(--space-2, 16px);
+  }
+}
