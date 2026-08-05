@@ -1,0 +1,105 @@
+---
+layout: null
+permalink: /404.html
+status: hidden
+title: Page Not Found
+seo_title: Page Not Found
+seo_description: This page could not be found. Return to CatnBloom Studio to explore illustrated cats, botanical worlds and studio notes.
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include head.html %}
+</head>
+<body>
+
+{% include header.html %}
+
+<main class="container error-404-container">
+
+  <section class="error-404-scene">
+
+    <svg class="error-404-illustration" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A cat digs a hole, a sprout grows, and a paw-shaped flower blooms">
+
+      <!-- ground -->
+      <path d="M0,190 Q200,178 400,190 L400,240 L0,240 Z" fill="var(--background-soft)"/>
+      <path d="M0,190 Q200,178 400,190" fill="none" stroke="var(--border-mid)" stroke-width="2"/>
+
+      <!-- grass tufts -->
+      <g stroke="var(--brand-secondary)" stroke-width="3" stroke-linecap="round" opacity="0.7">
+        <path d="M24,188 q-4,-14 -10,-18"/>
+        <path d="M24,188 q4,-16 0,-20"/>
+        <path d="M24,188 q8,-12 12,-16"/>
+        <path d="M368,188 q-4,-14 -10,-18"/>
+        <path d="M368,188 q4,-16 0,-20"/>
+        <path d="M368,188 q8,-12 12,-16"/>
+      </g>
+
+      <!-- dirt mound -->
+      <g class="e404-mound">
+        <ellipse cx="200" cy="192" rx="34" ry="9" fill="#8a6a4a"/>
+        <ellipse cx="188" cy="189" rx="10" ry="6" fill="#6f5439"/>
+        <ellipse cx="212" cy="190" rx="8" ry="5" fill="#6f5439"/>
+      </g>
+
+      <!-- sprout -->
+      <g class="e404-sprout">
+        <path class="e404-stem" d="M200,192 C200,170 200,155 200,140" fill="none" stroke="var(--brand-secondary)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M200,158 C188,154 180,144 182,134 C194,136 200,146 200,158 Z" fill="var(--brand-primary)"/>
+      </g>
+
+      <!-- paw-shaped flower -->
+      <g class="e404-flower" transform="translate(200,140)">
+        <circle cx="0" cy="0" r="15" fill="var(--accent-plum)"/>
+        <circle cx="-16" cy="-10" r="7" fill="var(--accent-plum)"/>
+        <circle cx="16" cy="-10" r="7" fill="var(--accent-plum)"/>
+        <circle cx="-11" cy="-24" r="6" fill="var(--accent-plum)"/>
+        <circle cx="11" cy="-24" r="6" fill="var(--accent-plum)"/>
+      </g>
+
+      <!-- cat: digging pose -->
+      <g class="e404-cat-dig" transform="translate(140,150)">
+        <path d="M0,40 C-2,20 6,6 22,4 C38,2 48,14 46,30 C45,38 40,42 34,42 L10,42 C4,42 0,42 0,40 Z" fill="#fff" stroke="var(--text-primary)" stroke-width="2"/>
+        <path d="M8,6 C4,-4 -2,-6 -6,-2 C-4,4 2,8 8,6 Z" fill="#fff" stroke="var(--text-primary)" stroke-width="2"/>
+        <circle cx="30" cy="16" r="1.6" fill="var(--text-primary)"/>
+        <path class="e404-paw-a" d="M6,40 C0,44 -6,46 -10,44" fill="none" stroke="var(--text-primary)" stroke-width="3" stroke-linecap="round"/>
+        <path class="e404-paw-b" d="M20,42 C18,48 16,52 12,54" fill="none" stroke="var(--text-primary)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M44,28 C52,26 58,20 56,14" fill="none" stroke="var(--text-primary)" stroke-width="2" stroke-linecap="round"/>
+      </g>
+
+      <!-- cat: sitting, watching the flower bloom -->
+      <g class="e404-cat-sit" transform="translate(140,150)">
+        <ellipse cx="20" cy="38" rx="24" ry="14" fill="#fff" stroke="var(--text-primary)" stroke-width="2"/>
+        <circle cx="24" cy="10" r="16" fill="#fff" stroke="var(--text-primary)" stroke-width="2"/>
+        <path d="M12,0 L8,-10 L18,-2 Z" fill="#fff" stroke="var(--text-primary)" stroke-width="2"/>
+        <path d="M32,-2 L40,-10 L34,2 Z" fill="#fff" stroke="var(--text-primary)" stroke-width="2"/>
+        <circle cx="19" cy="10" r="1.6" fill="var(--text-primary)"/>
+        <circle cx="31" cy="10" r="1.6" fill="var(--text-primary)"/>
+        <path d="M22,15 q2,2 4,0" fill="none" stroke="var(--text-primary)" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M0,30 C-14,26 -18,10 -10,2" fill="none" stroke="var(--text-primary)" stroke-width="2" stroke-linecap="round"/>
+      </g>
+
+    </svg>
+
+  </section>
+
+  <div class="error-404-copy">
+    <p class="error-404-tag">Error 404</p>
+    <h1>This Page Wandered Off</h1>
+    <p>The page you're looking for doesn't exist, or it may have moved. Let's get you back to something worth seeing.</p>
+
+    <a href="/" class="buy-button error-404-home-btn">Return Home</a>
+
+    <div class="error-404-links">
+      <a href="/cottagecore-cats/">Shop Collections</a>
+      <a href="/studio-notes/">Studio Notes</a>
+      <a href="/contact/">Contact Us</a>
+    </div>
+  </div>
+
+</main>
+
+{% include footer.html %}
+
+</body>
+</html>
