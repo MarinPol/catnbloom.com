@@ -1376,83 +1376,66 @@ FOOTER NEWSLETTER
 
 
 /* =========================
-MAILERLITE FORM OVERRIDE
-Встраивается в .footer-newsletter
+WEB3FORMS NEWSLETTER FORM
+Встраивается в .footer-newsletter-inner
 ========================= */
 
-.footer-newsletter-inner .ml-form-embedContainer {
-  margin: 0 !important;
-}
-
-.footer-newsletter-inner .ml-form-embedWrapper {
-  background-color: transparent !important;
-  border: none !important;
-  max-width: 360px !important;
-  margin: 0 !important;
-}
-
-.footer-newsletter-inner .ml-form-embedBody {
-  padding: 0 !important;
-}
-
-.footer-newsletter-inner .ml-form-embedContent {
-  display: none !important;
+.footer-newsletter-form {
+  margin: 0;
 }
 
 /* Инпут и кнопка Subscribe в одну строку (desktop) */
-.footer-newsletter-inner form {
-  display: flex !important;
-  gap: 8px !important;
-  align-items: flex-start !important;
+.footer-newsletter-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
 }
 
-.footer-newsletter-inner .ml-form-embedFields {
-  flex: 0 1 72% !important;
-  max-width: 72% !important;
+.footer-newsletter-input {
+  flex: 0 1 72%;
+  max-width: 72%;
+  border-radius: 6px;
+  border: 1px solid var(--about-stat-border);
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+  padding: 10px 12px;
+  box-sizing: border-box;
 }
 
-.footer-newsletter-inner .ml-form-fieldRow {
-  margin-bottom: 0 !important;
+.footer-newsletter-input:focus {
+  border-color: var(--brand-primary);
+  outline: none;
 }
 
-.footer-newsletter-inner .ml-form-fieldRow input {
-  border-radius: 6px !important;
-  border-color: var(--about-stat-border) !important;
-  font-family: Arial, sans-serif !important;
-  font-size: 0.9rem !important;
-  padding: 10px 12px !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+.footer-newsletter-btn {
+  flex: 0 0 26%;
+  max-width: 26%;
+  background-color: var(--brand-primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 10px 8px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
-.footer-newsletter-inner .ml-form-fieldRow input:focus {
-  border-color: var(--brand-primary) !important;
-  outline: none !important;
+.footer-newsletter-btn:hover {
+  background-color: var(--brand-hover);
 }
 
-.footer-newsletter-inner .ml-form-embedSubmit {
-  flex: 0 0 26% !important;
-  max-width: 26% !important;
+.footer-newsletter-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
 }
 
-.footer-newsletter-inner .ml-form-embedSubmit button {
-  background-color: var(--brand-primary) !important;
-  border-radius: 6px !important;
-  font-family: Arial, sans-serif !important;
-  font-size: 0.85rem !important;
-  font-weight: 700 !important;
-  padding: 10px 8px !important;
-  width: 100% !important;
-  white-space: nowrap !important;
-}
-
-.footer-newsletter .ml-form-embedSubmit button:hover {
-  background-color: var(--brand-hover) !important;
-}
-
-.footer-newsletter-inner .ml-form-successContent h4 {
-  font-size: 1rem !important;
-  color: var(--text-primary) !important;
+.footer-newsletter-result {
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  margin: 8px 0 0;
 }
 
 /* Нижний ярус: соцсети слева, юридические ссылки (Privacy/Terms/Copyright) справа */
@@ -1517,22 +1500,19 @@ MAILERLITE FORM OVERRIDE
   }
 
   /* Инпут и кнопка снова друг под другом на всю ширину */
-  .footer-newsletter-inner form {
-    flex-direction: column !important;
+  .footer-newsletter-row {
+    flex-direction: column;
   }
 
-  .footer-newsletter-inner .ml-form-embedFields {
-    flex: 1 1 100% !important;
-    max-width: 100% !important;
+  .footer-newsletter-input {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 
-  .footer-newsletter-inner .ml-form-embedSubmit {
-    flex: 1 1 100% !important;
-    max-width: 100% !important;
-  }
-
-  .footer-newsletter-inner .ml-form-embedSubmit button {
-    width: 100% !important;
+  .footer-newsletter-btn {
+    flex: 1 1 100%;
+    max-width: 100%;
+    width: 100%;
   }
 
   .footer-newsletter-legal {
