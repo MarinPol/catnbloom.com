@@ -127,15 +127,17 @@
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var formData = new FormData(form);
     var btn = form.querySelector('.footer-newsletter-btn');
     btn.disabled = true;
     btn.textContent = '...';
 
     fetch(form.action, {
       method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: formData
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: form.email.value,
+        botcheck: form.botcheck.checked
+      })
     })
       .then(function (res) { return res.json(); })
       .then(function (data) {
