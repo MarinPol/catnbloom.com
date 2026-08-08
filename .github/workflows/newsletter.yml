@@ -1,1 +1,39 @@
+name: Send Newsletter
 
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Тестовый прогон (true = не отправлять письма, только показать лог)"
+        required: false
+        default: "false"
+  schedule:
+    # Каждый понедельник в 09:00 UTC (~12:00 по Москве / 05:00 EST)
+    - cron: "0 9 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  send-newsletter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install feedparser
+
+      - name: Run newsletter script
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: python scripts/send_newsletter.py
