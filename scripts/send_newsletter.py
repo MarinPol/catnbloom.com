@@ -3,14 +3,19 @@
 send_newsletter.py
 CatnBloom Digital Art Studio — Шаг 5 плана "Рассылка своими руками"
 
-Читает subscribers.csv и feed.xml в корне репозитория, отбирает пункты
-за последние 7 дней, формирует HTML-письмо и рассылает через Gmail SMTP.
+Читает subscribers.csv из репозитория и скачивает живой feed.xml с сайта,
+отбирает пункты за последние 7 дней, формирует HTML-письмо и рассылает
+через Gmail SMTP.
 
 Переменные окружения (задаются в .github/workflows/newsletter.yml из GitHub Secrets):
   GMAIL_USER          — адрес отправителя (ccatnbloom@gmail.com)
   GMAIL_APP_PASSWORD  — App Password, сгенерированный в Google Account
   DRY_RUN             — "true"/"false"; при true письма не отправляются,
                          только печатается лог в консоль Actions
+
+ВАЖНО: feed.xml в самом репозитории — это НЕрендеренный Jekyll-шаблон,
+а не готовый XML. Скрипт скачивает реальный, собранный файл с сайта
+(https://www.catnbloom.com/feed.xml), а не читает его из репозитория.
 
 ДОПУЩЕНИЯ (не подтверждены в сессии создания файла — проверить после первого запуска):
   - subscribers.csv содержит колонку с заголовком "email" (регистр не важен,
@@ -24,6 +29,8 @@ import csv
 import os
 import smtplib
 import sys
+import urllib.request
+import urllib.error
 from datetime import datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -31,7 +38,12 @@ from xml.etree import ElementTree as ET
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SUBSCRIBERS_PATH = os.path.join(REPO_ROOT, "subscribers.csv")
-FEED_PATH = os.path.join(REPO_ROOT, "feed.xml")
+
+# ВАЖНО: feed.xml в самом репозитории — это НЕрендеренный Jekyll-шаблон
+# (содержит {% for %}, {% if %} и т.д.), а не готовый XML. Реальный,
+# собранный Jekyll'ом файл существует только на опубликованном сайте.
+# Поэтому скрипт скачивает живой feed.xml с сайта, а не читает файл из репо.
+FEED_URL = "https://www.catnbloom.com/feed.xml"
 
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 587
@@ -126,19 +138,31 @@ def parse_feed_datetime(raw):
     return None
 
 
-def load_recent_feed_items(path, window_days):
-    """Читает feed.xml, возвращает список item'ов за последние window_days дней."""
-    if not os.path.exists(path):
-        log(f"ОШИБКА: файл не найден: {path}")
+def fetch_feed_xml(url):
+    """Скачивает живой feed.xml с опубликованного сайта. Возвращает текст или None."""
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "CatnBloom-Newsletter-Bot/1.0"})
+        with urllib.request.urlopen(req, timeout=20) as response:
+            return response.read().decode("utf-8")
+    except urllib.error.URLError as e:
+        log(f"ОШИБКА: не удалось скачать {url}: {e}")
+        return None
+    except Exception as e:
+        log(f"ОШИБКА при скачивании feed.xml: {e}")
+        return None
+
+
+def load_recent_feed_items(feed_url, window_days):
+    """Скачивает feed.xml с сайта, возвращает список item'ов за последние window_days дней."""
+    xml_text = fetch_feed_xml(feed_url)
+    if xml_text is None:
         return []
 
     try:
-        tree = ET.parse(path)
+        root = ET.fromstring(xml_text)
     except ET.ParseError as e:
-        log(f"ОШИБКА: не удалось распарсить feed.xml: {e}")
+        log(f"ОШИБКА: не удалось распарсить feed.xml, скачанный с {feed_url}: {e}")
         return []
-
-    root = tree.getroot()
     channel = root.find("channel")
     if channel is None:
         log("ОШИБКА: в feed.xml не найден тег <channel>")
@@ -234,7 +258,7 @@ def main():
     subscribers = load_subscribers(SUBSCRIBERS_PATH)
     log(f"Подписчиков найдено: {len(subscribers)}")
 
-    items = load_recent_feed_items(FEED_PATH, WINDOW_DAYS)
+    items = load_recent_feed_items(FEED_URL, WINDOW_DAYS)
     log(f"Свежих пунктов в feed.xml (за {WINDOW_DAYS} дн.): {len(items)}")
 
     if not subscribers:
