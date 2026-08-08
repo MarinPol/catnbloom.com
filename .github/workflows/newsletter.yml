@@ -8,8 +8,8 @@ on:
         required: false
         default: "false"
   schedule:
-    # Каждый понедельник в 09:00 UTC (~12:00 по Москве / 05:00 EST)
-    - cron: "0 9 * * 1"
+    # Каждый понедельник в 14:00 UTC (10:00 AM Eastern Time, США)
+    - cron: "0 14 * * 1"
 
 permissions:
   contents: read
