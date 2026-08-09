@@ -143,7 +143,9 @@
       .then(function (data) {
         result.style.display = 'block';
         if (data.success) {
-          result.textContent = 'Thank you for subscribing!';
+          result.textContent = data.alreadySubscribed
+            ? "You're already subscribed."
+            : 'Almost there! Please check your email to confirm your subscription.';
           result.style.color = '#33502f';
           form.reset();
         } else {
