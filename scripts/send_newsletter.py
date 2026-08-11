@@ -17,12 +17,22 @@ CatnBloom Digital Art Studio — Шаг 5 плана "Рассылка свои�
 а не готовый XML. Скрипт скачивает реальный, собранный файл с сайта
 (https://www.catnbloom.com/feed.xml), а не читает его из репозитория.
 
-ДОПУЩЕНИЯ (не подтверждены в сессии создания файла — проверить после первого запуска):
-  - subscribers.csv содержит колонку с заголовком "email" (регистр не важен,
-    поиск идёт по названию столбца, а не по номеру позиции)
+ОТПИСКА (обновлено 2026-08-11): subscribers.csv теперь содержит 3-ю колонку
+unsub_token — постоянный персональный токен, выданный воркером newsletter
+(worker.js) в момент подтверждения подписки. Каждое письмо теперь содержит
+СВОЮ уникальную ссылку https://newsletter.catnbloom.com/unsubscribe?token=...,
+а не общую mailto-заглушку. Поэтому HTML письма собирается ОТДЕЛЬНО для
+каждого подписчика (build_email_html теперь принимает unsub_token),
+в отличие от прежней версии, где один и тот же HTML рассылался всем.
+
+ДОПУЩЕНИЯ:
+  - subscribers.csv содержит колонки "email" и "unsub_token" (регистр не
+    важен, поиск идёт по названию столбца, а не по номеру позиции)
+  - Строки, записанные ДО введения токена (без unsub_token), получат письмо
+    с fallback-заглушкой mailto — см. UNSUBSCRIBE_FALLBACK_NOTE ниже. Эти
+    строки нужно будет закрыть отдельно (переподписка или бэкфилл).
   - Окно отбора контента — 7 дней от текущего момента запуска
   - Тема письма — "CatnBloom Studio — Weekly Update"
-  - Отписка НЕ реализована как рабочий механизм — это временная mailto-заглушка
 """
 
 import csv
@@ -52,17 +62,16 @@ WINDOW_DAYS = 7
 EMAIL_SUBJECT = "CatnBloom Studio — Weekly Update"
 SITE_URL = "https://www.catnbloom.com"
 
-# Unsubscribe через mailto — согласовано как временное решение для старта
-# (закрывает требования CAN-SPAM Act без разворачивания инфраструктуры удаления из CSV).
-# Открытый долг: заменить на реальную ссылку/эндпоинт, когда появится unsubscribe-механизм.
-# ВАЖНО: адрес ниже должен совпадать с GMAIL_USER — проверьте перед первой отправкой.
-UNSUBSCRIBE_EMAIL = "ccatnbloom@gmail.com"
-UNSUBSCRIBE_NOTE = (
-    "You received this email because you subscribed to updates at CatnBloom. "
-    "If you no longer wish to receive updates, reply to this email with "
-    "\"UNSUBSCRIBE\" in the subject line or click "
-    f'<a href="mailto:{UNSUBSCRIBE_EMAIL}?subject=Unsubscribe" style="color:#999;">Unsubscribe</a>.'
-)
+# Базовый адрес воркера рассылки — используется для построения персональной
+# ссылки отписки. Должен совпадать с доменом, подключённым в Cloudflare
+# Workers Routes (см. MASTER LOG 2026-08-11).
+NEWSLETTER_WORKER_URL = "https://newsletter.catnbloom.com"
+
+# Fallback-заглушка — используется ТОЛЬКО для строк CSV без unsub_token
+# (старые записи, сделанные до внедрения токена). Как только эти строки
+# получат токен (переподписка или бэкфилл), эта ветка перестанет
+# использоваться сама собой.
+UNSUBSCRIBE_FALLBACK_EMAIL = "ccatnbloom@gmail.com"
 
 
 def log(message):
@@ -74,12 +83,14 @@ def is_dry_run():
 
 
 def load_subscribers(path):
-    """Читает CSV, ищет колонку email по заголовку. Возвращает список адресов."""
+    """Читает CSV, ищет колонки email и unsub_token по заголовку (регистронезависимо).
+    Возвращает список словарей {"email": ..., "unsub_token": ... или None}.
+    """
     if not os.path.exists(path):
         log(f"ОШИБКА: файл не найден: {path}")
         return []
 
-    emails = []
+    subscribers = []
     with open(path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         if reader.fieldnames is None:
@@ -87,10 +98,15 @@ def load_subscribers(path):
             return []
 
         email_col = None
+        token_col = None
         for name in reader.fieldnames:
-            if name and name.strip().lower() == "email":
+            if not name:
+                continue
+            key = name.strip().lower()
+            if key == "email":
                 email_col = name
-                break
+            elif key == "unsub_token":
+                token_col = name
 
         if email_col is None:
             log(
@@ -100,21 +116,30 @@ def load_subscribers(path):
             )
             return []
 
+        if token_col is None:
+            log(
+                "ПРЕДУПРЕЖДЕНИЕ: в subscribers.csv не найдена колонка 'unsub_token'. "
+                "Все письма уйдут с fallback-заглушкой отписки (mailto). "
+                f"Найденные заголовки: {reader.fieldnames}."
+            )
+
         for row in reader:
             addr = (row.get(email_col) or "").strip()
-            if addr:
-                emails.append(addr)
+            if not addr:
+                continue
+            token = (row.get(token_col) or "").strip() if token_col else ""
+            subscribers.append({"email": addr, "unsub_token": token or None})
 
-    # дедупликация с сохранением порядка
+    # дедупликация по email с сохранением порядка
     seen = set()
-    unique_emails = []
-    for addr in emails:
-        key = addr.lower()
+    unique_subscribers = []
+    for sub in subscribers:
+        key = sub["email"].lower()
         if key not in seen:
             seen.add(key)
-            unique_emails.append(addr)
+            unique_subscribers.append(sub)
 
-    return unique_emails
+    return unique_subscribers
 
 
 def parse_feed_datetime(raw):
@@ -199,7 +224,27 @@ def load_recent_feed_items(feed_url, window_days):
     return items
 
 
-def build_email_html(items):
+def build_unsubscribe_note(unsub_token):
+    """Строит блок отписки для письма. Персональная ссылка через токен,
+    если он есть; иначе — временная mailto-заглушка (старые записи без токена).
+    """
+    if unsub_token:
+        unsub_url = f"{NEWSLETTER_WORKER_URL}/unsubscribe?token={unsub_token}"
+        return (
+            "You received this email because you subscribed to updates at CatnBloom. "
+            f'If you no longer wish to receive updates, <a href="{unsub_url}" '
+            'style="color:#999;">unsubscribe here</a>.'
+        )
+    return (
+        "You received this email because you subscribed to updates at CatnBloom. "
+        "If you no longer wish to receive updates, reply to this email with "
+        "\"UNSUBSCRIBE\" in the subject line or click "
+        f'<a href="mailto:{UNSUBSCRIBE_FALLBACK_EMAIL}?subject=Unsubscribe" '
+        'style="color:#999;">Unsubscribe</a>.'
+    )
+
+
+def build_email_html(items, unsub_token):
     if not items:
         body_rows = "<p>No new updates this week.</p>"
     else:
@@ -215,6 +260,8 @@ def build_email_html(items):
             )
         body_rows = f'<table role="presentation" width="100%">{"".join(rows)}</table>'
 
+    unsubscribe_note = build_unsubscribe_note(unsub_token)
+
     html = f"""\
 <!DOCTYPE html>
 <html>
@@ -227,7 +274,7 @@ def build_email_html(items):
       <a href="{SITE_URL}" style="color:#1D4D54;">Visit the studio</a>
     </p>
     <hr style="border:none;border-top:1px solid #e5e5e5;margin:32px 0 16px;">
-    <p style="font-size:11px;color:#999;">{UNSUBSCRIBE_NOTE}</p>
+    <p style="font-size:11px;color:#999;">{unsubscribe_note}</p>
   </div>
 </body>
 </html>
@@ -257,6 +304,12 @@ def main():
 
     subscribers = load_subscribers(SUBSCRIBERS_PATH)
     log(f"Подписчиков найдено: {len(subscribers)}")
+    no_token_count = sum(1 for s in subscribers if not s["unsub_token"])
+    if no_token_count:
+        log(
+            f"ПРЕДУПРЕЖДЕНИЕ: {no_token_count} из {len(subscribers)} подписчиков "
+            "без unsub_token — им уйдёт письмо с fallback mailto-заглушкой отписки."
+        )
 
     items = load_recent_feed_items(FEED_URL, WINDOW_DAYS)
     log(f"Свежих пунктов в feed.xml (за {WINDOW_DAYS} дн.): {len(items)}")
@@ -269,12 +322,11 @@ def main():
         log("Новых пунктов нет — письмо не отправляется (нечего рассылать).")
         return
 
-    html_body = build_email_html(items)
-
     if dry_run:
         log("DRY_RUN включён — письма НЕ отправляются. Ниже — кому бы ушло:")
-        for addr in subscribers:
-            log(f"  -> {addr}")
+        for sub in subscribers:
+            token_status = "с персональной ссылкой отписки" if sub["unsub_token"] else "с fallback mailto (нет токена)"
+            log(f"  -> {sub['email']} ({token_status})")
         log("Тема письма: " + EMAIL_SUBJECT)
         return
 
@@ -285,13 +337,14 @@ def main():
         smtp_conn.starttls()
         smtp_conn.login(gmail_user, gmail_password)
 
-        for addr in subscribers:
+        for sub in subscribers:
             try:
-                send_email(smtp_conn, gmail_user, addr, EMAIL_SUBJECT, html_body)
+                html_body = build_email_html(items, sub["unsub_token"])
+                send_email(smtp_conn, gmail_user, sub["email"], EMAIL_SUBJECT, html_body)
                 sent_count += 1
             except Exception as e:
-                log(f"ОШИБКА отправки на {addr}: {e}")
-                failed.append(addr)
+                log(f"ОШИБКА отправки на {sub['email']}: {e}")
+                failed.append(sub["email"])
 
     log(f"Готово. Отправлено: {sent_count}/{len(subscribers)}")
     if failed:
