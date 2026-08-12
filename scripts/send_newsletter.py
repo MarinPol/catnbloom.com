@@ -51,6 +51,7 @@ ASSUMPTIONS:
 import csv
 import json
 import os
+import re
 import sys
 import urllib.request
 import urllib.error
@@ -72,6 +73,7 @@ SENDER_ADDRESS = "CatnBloom Studio <newsletter@mail.catnbloom.com>"
 WINDOW_DAYS = 7
 EMAIL_SUBJECT = "CatnBloom Studio — Weekly Update"
 SITE_URL = "https://www.catnbloom.com"
+LOGO_URL = "https://www.catnbloom.com/assets/images/ctbl-icon.png"
 
 # Base URL of the newsletter worker -- used to build the personal unsubscribe
 # link. Must match the domain connected in Cloudflare Workers Routes.
@@ -254,6 +256,41 @@ def build_unsubscribe_note(unsub_token):
     )
 
 
+IMG_TAG_RE = re.compile(r"<img[^>]*>", re.IGNORECASE)
+
+
+def extract_image_tag(description_html, width=140):
+    """Finds the first <img> tag inside the RSS description HTML and returns
+    it resized to a small thumbnail width for the compact side-by-side email
+    layout. Returns an empty string if no image is found.
+    """
+    match = IMG_TAG_RE.search(description_html or "")
+    if not match:
+        return ""
+    img_tag = match.group(0)
+    # Force a small, fixed width/height style regardless of whatever width/
+    # style attributes the original tag had (feed.xml sets width="600" for
+    # RSS readers, which is too large for this compact layout).
+    img_tag = re.sub(r'\swidth="[^"]*"', "", img_tag)
+    img_tag = re.sub(r'\sstyle="[^"]*"', "", img_tag, flags=re.IGNORECASE)
+    img_tag = img_tag.replace(
+        "<img",
+        f'<img width="{width}" style="width:{width}px;max-width:100%;height:auto;'
+        'display:block;border-radius:4px;"',
+        1,
+    )
+    return img_tag
+
+
+def strip_image_tag(description_html):
+    """Removes the <img> tag (and a trailing <br>) from the description HTML,
+    leaving just the text paragraph(s) for the right-hand column.
+    """
+    text = IMG_TAG_RE.sub("", description_html or "")
+    text = re.sub(r"^\s*<br\s*/?>\s*", "", text, flags=re.IGNORECASE)
+    return text.strip()
+
+
 def build_email_html(items, unsub_token):
     if not items:
         body_rows = "<p>No new updates this week.</p>"
@@ -262,12 +299,19 @@ def build_email_html(items, unsub_token):
         for it in items:
             rows.append(
                 f'<tr><td style="padding:16px 0;border-bottom:1px solid #e5e5e5;">'
+                f'<table role="presentation" width="100%"><tr>'
+                f'<td width="140" valign="top" style="padding-right:16px;">'
+                f'{extract_image_tag(it["description"], width=140)}'
+                f'</td>'
+                f'<td valign="top">'
                 f'<a href="{it["link"]}" style="font-size:16px;font-weight:600;'
                 f'color:#1D4D54;text-decoration:none;">{it["title"]}</a><br>'
                 f'<span style="font-size:13px;color:#666;">'
                 f'{it["pub_date"].strftime("%B %d, %Y")}</span>'
-                f'<div style="margin-top:10px;font-size:14px;line-height:1.5;color:#333;">'
-                f'{it["description"]}</div>'
+                f'<div style="margin-top:8px;font-size:14px;line-height:1.5;color:#333;">'
+                f'{strip_image_tag(it["description"])}</div>'
+                f'</td>'
+                f'</tr></table>'
                 f'</td></tr>'
             )
         body_rows = f'<table role="presentation" width="100%">{"".join(rows)}</table>'
@@ -279,7 +323,14 @@ def build_email_html(items, unsub_token):
 <html>
 <body style="font-family:Georgia,serif;background:#fff;color:#2b2b2b;margin:0;padding:24px;">
   <div style="max-width:600px;margin:0 auto;">
-    <h1 style="font-size:22px;color:#1D4D54;">CatnBloom Studio</h1>
+    <table role="presentation"><tr>
+      <td style="padding-right:12px;vertical-align:middle;">
+        <img src="{LOGO_URL}" width="40" height="40" alt="CatnBloom" style="display:block;border-radius:6px;">
+      </td>
+      <td style="vertical-align:middle;">
+        <h1 style="font-size:22px;color:#1D4D54;margin:0;">CatnBloom Studio</h1>
+      </td>
+    </tr></table>
     <p style="font-size:15px;line-height:1.6;">Here's what's new this week:</p>
     {body_rows}
     <p style="margin-top:24px;">
