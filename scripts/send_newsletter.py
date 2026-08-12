@@ -75,6 +75,20 @@ EMAIL_SUBJECT = "CatnBloom Studio — Weekly Update"
 SITE_URL = "https://www.catnbloom.com"
 LOGO_URL = "https://www.catnbloom.com/assets/images/ctbl-icon.png"
 
+# Design tokens taken directly from the site's style.css (:root block),
+# not approximated. Email clients don't support CSS variables reliably,
+# so the actual values are hardcoded here rather than referencing var(--x).
+FONT_FAMILY = "Arial, sans-serif"        # body { font-family: Arial, sans-serif; }
+COLOR_TEXT_PRIMARY = "#2d2d2d"           # --text-primary
+COLOR_TEXT_SECONDARY = "#555"            # --text-secondary
+COLOR_TEXT_MUTED = "#888"                # --text-muted
+COLOR_BRAND_PRIMARY = "#a3b18a"          # --brand-primary (sage green — h3 color, buy-button bg)
+COLOR_BORDER = "#eee"                    # --border
+FONT_SIZE_BODY = "16px"                  # --font-body
+FONT_SIZE_H3_ICON = "22px"               # --font-h3-icon (matches site's h3)
+FONT_SIZE_CARD_TITLE = "19px"            # --font-card-title (.article-card-title)
+LINE_HEIGHT_BODY = "1.6"                 # body { line-height: 1.6; }
+
 # Base URL of the newsletter worker -- used to build the personal unsubscribe
 # link. Must match the domain connected in Cloudflare Workers Routes.
 NEWSLETTER_WORKER_URL = "https://newsletter.catnbloom.com"
@@ -240,19 +254,20 @@ def build_unsubscribe_note(unsub_token):
     """Builds the unsubscribe block for the email. Personal link via token if
     available; otherwise a temporary mailto fallback (old records without a token).
     """
+    link_style = f'style="color:{COLOR_TEXT_MUTED};"'
     if unsub_token:
         unsub_url = f"{NEWSLETTER_WORKER_URL}/unsubscribe?token={unsub_token}"
         return (
             "You received this email because you subscribed to updates at CatnBloom. "
             f'If you no longer wish to receive updates, <a href="{unsub_url}" '
-            'style="color:#999;">unsubscribe here</a>.'
+            f'{link_style}>unsubscribe here</a>.'
         )
     return (
         "You received this email because you subscribed to updates at CatnBloom. "
         "If you no longer wish to receive updates, reply to this email with "
         "\"UNSUBSCRIBE\" in the subject line or click "
         f'<a href="mailto:{UNSUBSCRIBE_FALLBACK_EMAIL}?subject=Unsubscribe" '
-        'style="color:#999;">Unsubscribe</a>.'
+        f'{link_style}>Unsubscribe</a>.'
     )
 
 
@@ -298,17 +313,19 @@ def build_email_html(items, unsub_token):
         rows = []
         for it in items:
             rows.append(
-                f'<tr><td style="padding:16px 0;border-bottom:1px solid #e5e5e5;">'
+                f'<tr><td style="padding:20px 0;border-bottom:1px solid {COLOR_BORDER};">'
                 f'<table role="presentation" width="100%"><tr>'
-                f'<td width="140" valign="top" style="padding-right:16px;">'
-                f'{extract_image_tag(it["description"], width=140)}'
+                f'<td width="220" valign="top" style="padding-right:20px;">'
+                f'{extract_image_tag(it["description"], width=220)}'
                 f'</td>'
                 f'<td valign="top">'
-                f'<a href="{it["link"]}" style="font-size:16px;font-weight:600;'
-                f'color:#1D4D54;text-decoration:none;">{it["title"]}</a><br>'
-                f'<span style="font-size:13px;color:#666;">'
+                f'<a href="{it["link"]}" style="font-family:{FONT_FAMILY};'
+                f'font-size:{FONT_SIZE_CARD_TITLE};font-weight:700;'
+                f'color:{COLOR_TEXT_PRIMARY};text-decoration:none;">{it["title"]}</a><br>'
+                f'<span style="font-family:{FONT_FAMILY};font-size:14px;color:{COLOR_TEXT_MUTED};">'
                 f'{it["pub_date"].strftime("%B %d, %Y")}</span>'
-                f'<div style="margin-top:8px;font-size:14px;line-height:1.5;color:#333;">'
+                f'<div style="margin-top:10px;font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};'
+                f'line-height:{LINE_HEIGHT_BODY};color:{COLOR_TEXT_PRIMARY};">'
                 f'{strip_image_tag(it["description"])}</div>'
                 f'</td>'
                 f'</tr></table>'
@@ -321,23 +338,24 @@ def build_email_html(items, unsub_token):
     html = f"""\
 <!DOCTYPE html>
 <html>
-<body style="font-family:Georgia,serif;background:#fff;color:#2b2b2b;margin:0;padding:24px;">
+<body style="font-family:{FONT_FAMILY};background:{"#fff"};color:{COLOR_TEXT_PRIMARY};margin:0;padding:24px;font-size:{FONT_SIZE_BODY};line-height:{LINE_HEIGHT_BODY};">
   <div style="max-width:600px;margin:0 auto;">
     <table role="presentation"><tr>
       <td style="padding-right:12px;vertical-align:middle;">
-        <img src="{LOGO_URL}" width="40" height="40" alt="CatnBloom" style="display:block;border-radius:6px;">
+        <img src="{LOGO_URL}" width="48" height="48" alt="CatnBloom" style="display:block;border-radius:8px;">
       </td>
       <td style="vertical-align:middle;">
-        <h1 style="font-size:22px;color:#1D4D54;margin:0;">CatnBloom Studio</h1>
+        <h1 style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_H3_ICON};font-weight:700;color:{COLOR_TEXT_PRIMARY};margin:0;">CatnBloom Studio</h1>
       </td>
     </tr></table>
-    <p style="font-size:15px;line-height:1.6;">Here's what's new this week:</p>
+    <div style="border-bottom:2px solid {COLOR_BRAND_PRIMARY};margin:20px 0 24px;"></div>
+    <p style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};line-height:{LINE_HEIGHT_BODY};color:{COLOR_TEXT_PRIMARY};">Here's what's new this week:</p>
     {body_rows}
     <p style="margin-top:24px;">
-      <a href="{SITE_URL}" style="color:#1D4D54;">Visit the studio</a>
+      <a href="{SITE_URL}" style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};color:{COLOR_BRAND_PRIMARY};font-weight:700;">Visit the studio</a>
     </p>
-    <hr style="border:none;border-top:1px solid #e5e5e5;margin:32px 0 16px;">
-    <p style="font-size:11px;color:#999;">{unsubscribe_note}</p>
+    <hr style="border:none;border-top:1px solid {COLOR_BORDER};margin:32px 0 16px;">
+    <p style="font-family:{FONT_FAMILY};font-size:12px;color:{COLOR_TEXT_MUTED};">{unsubscribe_note}</p>
   </div>
 </body>
 </html>
