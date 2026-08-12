@@ -321,6 +321,10 @@ def send_email_via_resend(api_key, to_addr, subject, html_body, unsub_token):
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            # REQUIRED by Resend: requests without a User-Agent header are
+            # rejected with 403 "error code: 1010" before they are even
+            # processed. See https://resend.com/docs/knowledge-base/403-error-1010
+            "User-Agent": "CatnBloom-Newsletter-Script/1.0",
         },
         method="POST",
     )
