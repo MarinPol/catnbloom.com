@@ -73,6 +73,7 @@ SENDER_ADDRESS = "CatnBloom Studio <newsletter@mail.catnbloom.com>"
 WINDOW_DAYS = 7
 EMAIL_SUBJECT = "CatnBloom Studio — Weekly Update"
 SITE_URL = "https://www.catnbloom.com"
+SMART_COLLECTIONS_URL = "https://www.catnbloom.com/smart/"
 LOGO_URL = "https://www.catnbloom.com/assets/images/ctbl-icon.png"
 
 # Design tokens taken directly from the site's style.css (:root block),
@@ -273,6 +274,33 @@ def build_unsubscribe_note(unsub_token):
 
 IMG_TAG_RE = re.compile(r"<img[^>]*>", re.IGNORECASE)
 
+# SKU prefix -> human-readable collection name, confirmed by the author.
+# Extend this dict as new collections are added (e.g. a future "C03").
+COLLECTION_LABELS = {
+    "C01": "Cottagecore Cats",
+    "C02": "Witchy Cats + Plants",
+}
+
+
+def collection_label_for_item(link):
+    """Returns a short 'From the X collection' subtitle based on the SKU
+    found in the item's URL, or a Studio Notes label for articles, or None
+    if neither pattern matches (better to omit the line than guess).
+    """
+    if not link:
+        return None
+    if "/studio-notes/" in link:
+        return "From the Studio Notes journal."
+
+    match = re.search(r"/([a-zA-Z]\d{2})-\d+/?", link)
+    if not match:
+        return None
+    sku_prefix = match.group(1).upper()
+    collection_name = COLLECTION_LABELS.get(sku_prefix)
+    if not collection_name:
+        return None
+    return f"From the {collection_name} collection."
+
 
 def extract_image_tag(description_html, width=140):
     """Finds the first <img> tag inside the RSS description HTML and returns
@@ -312,7 +340,13 @@ def build_email_html(items, unsub_token):
     else:
         rows = []
         for it in items:
-            rows.append(
+            collection_note = collection_label_for_item(it["link"])
+        collection_line = (
+            f'<div style="margin-top:6px;font-family:{FONT_FAMILY};font-size:13px;'
+            f'color:{COLOR_TEXT_MUTED};">{collection_note}</div>'
+            if collection_note else ""
+        )
+        rows.append(
                 f'<tr><td style="padding:20px 0;border-bottom:1px solid {COLOR_BORDER};">'
                 f'<table role="presentation" width="100%"><tr>'
                 f'<td width="220" valign="top" style="padding-right:20px;">'
@@ -321,12 +355,17 @@ def build_email_html(items, unsub_token):
                 f'<td valign="top">'
                 f'<a href="{it["link"]}" style="font-family:{FONT_FAMILY};'
                 f'font-size:{FONT_SIZE_CARD_TITLE};font-weight:700;'
-                f'color:{COLOR_TEXT_PRIMARY};text-decoration:none;">{it["title"]}</a><br>'
-                f'<span style="font-family:{FONT_FAMILY};font-size:14px;color:{COLOR_TEXT_MUTED};">'
-                f'{it["pub_date"].strftime("%B %d, %Y")}</span>'
+                f'color:{COLOR_TEXT_PRIMARY};text-decoration:none;">{it["title"]}</a>'
+                f'{collection_line}'
                 f'<div style="margin-top:10px;font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};'
                 f'line-height:{LINE_HEIGHT_BODY};color:{COLOR_TEXT_PRIMARY};">'
                 f'{strip_image_tag(it["description"])}</div>'
+                f'<div style="margin-top:12px;">'
+                f'<a href="{it["link"]}" style="font-family:{FONT_FAMILY};font-size:14px;'
+                f'font-weight:700;color:{COLOR_BRAND_PRIMARY};text-decoration:none;">Explore the collection →</a>'
+                f'</div>'
+                f'<div style="margin-top:10px;font-family:{FONT_FAMILY};font-size:12px;color:{COLOR_TEXT_MUTED};">'
+                f'{it["pub_date"].strftime("%B %d, %Y")}</div>'
                 f'</td>'
                 f'</tr></table>'
                 f'</td></tr>'
@@ -335,25 +374,37 @@ def build_email_html(items, unsub_token):
 
     unsubscribe_note = build_unsubscribe_note(unsub_token)
 
+    # Extra closing block with links to the site — shown only when the email
+    # features more than one item, per the colleague's note: with a single
+    # item the "Visit the studio" link right after it is already enough;
+    # with several, people may want to browse everything, not just the first one.
+    closing_links_block = ""
+    if len(items) > 1:
+        closing_links_block = f"""\
+    <div style="border-top:1px solid {COLOR_BORDER};margin:24px 0 0;padding-top:20px;text-align:center;">
+      <a href="{SITE_URL}" style="display:block;font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};color:{COLOR_BRAND_PRIMARY};font-weight:700;text-decoration:none;margin-bottom:10px;">Visit the studio →</a>
+      <a href="{SMART_COLLECTIONS_URL}" style="display:block;font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};color:{COLOR_BRAND_PRIMARY};font-weight:700;text-decoration:none;">Explore by month →</a>
+    </div>
+"""
+
     html = f"""\
 <!DOCTYPE html>
 <html>
 <body style="font-family:{FONT_FAMILY};background:{"#fff"};color:{COLOR_TEXT_PRIMARY};margin:0;padding:24px;font-size:{FONT_SIZE_BODY};line-height:{LINE_HEIGHT_BODY};">
   <div style="max-width:600px;margin:0 auto;">
-    <table role="presentation"><tr>
-      <td style="padding-right:12px;vertical-align:middle;">
-        <img src="{LOGO_URL}" width="48" height="48" alt="CatnBloom" style="display:block;border-radius:8px;">
-      </td>
-      <td style="vertical-align:middle;">
-        <h1 style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_H3_ICON};font-weight:700;color:{COLOR_TEXT_PRIMARY};margin:0;">CatnBloom Studio</h1>
+    <table role="presentation" width="100%" style="margin:16px 0 8px;"><tr>
+      <td align="center">
+        <img src="{LOGO_URL}" width="48" height="48" alt="CatnBloom" style="display:block;margin:0 auto 10px;border-radius:8px;">
+        <h1 style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_H3_ICON};font-weight:700;color:{COLOR_TEXT_PRIMARY};margin:0;text-align:center;">CatnBloom Studio</h1>
       </td>
     </tr></table>
     <div style="border-bottom:2px solid {COLOR_BRAND_PRIMARY};margin:20px 0 24px;"></div>
-    <p style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};line-height:{LINE_HEIGHT_BODY};color:{COLOR_TEXT_PRIMARY};">Here's what's new this week:</p>
+    <p style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};line-height:{LINE_HEIGHT_BODY};color:{COLOR_TEXT_PRIMARY};">New illustrations from the studio this week.</p>
     {body_rows}
     <p style="margin-top:24px;">
       <a href="{SITE_URL}" style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};color:{COLOR_BRAND_PRIMARY};font-weight:700;">Visit the studio</a>
     </p>
+    {closing_links_block}
     <hr style="border:none;border-top:1px solid {COLOR_BORDER};margin:32px 0 16px;">
     <p style="font-family:{FONT_FAMILY};font-size:12px;color:{COLOR_TEXT_MUTED};">{unsubscribe_note}</p>
   </div>
