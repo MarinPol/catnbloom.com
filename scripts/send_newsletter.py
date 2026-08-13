@@ -342,7 +342,7 @@ def build_email_html(items, unsub_token):
         for it in items:
             collection_note = collection_label_for_item(it["link"])
         collection_line = (
-            f'<div style="margin-top:6px;font-family:{FONT_FAMILY};font-size:13px;'
+            f'<div style="margin-top:10px;font-family:{FONT_FAMILY};font-size:13px;'
             f'color:{COLOR_TEXT_MUTED};">{collection_note}</div>'
             if collection_note else ""
         )
@@ -356,15 +356,15 @@ def build_email_html(items, unsub_token):
                 f'<a href="{it["link"]}" style="font-family:{FONT_FAMILY};'
                 f'font-size:{FONT_SIZE_CARD_TITLE};font-weight:700;'
                 f'color:{COLOR_TEXT_PRIMARY};text-decoration:none;">{it["title"]}</a>'
-                f'{collection_line}'
                 f'<div style="margin-top:10px;font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};'
                 f'line-height:{LINE_HEIGHT_BODY};color:{COLOR_TEXT_PRIMARY};">'
                 f'{strip_image_tag(it["description"])}</div>'
                 f'<div style="margin-top:12px;">'
                 f'<a href="{it["link"]}" style="font-family:{FONT_FAMILY};font-size:14px;'
-                f'font-weight:700;color:{COLOR_BRAND_PRIMARY};text-decoration:none;">Explore the collection →</a>'
+                f'font-weight:700;color:{COLOR_BRAND_PRIMARY};text-decoration:none;">View design →</a>'
                 f'</div>'
-                f'<div style="margin-top:10px;font-family:{FONT_FAMILY};font-size:12px;color:{COLOR_TEXT_MUTED};">'
+                f'{collection_line}'
+                f'<div style="margin-top:8px;font-family:{FONT_FAMILY};font-size:12px;color:{COLOR_TEXT_MUTED};">'
                 f'{it["pub_date"].strftime("%B %d, %Y")}</div>'
                 f'</td>'
                 f'</tr></table>'
@@ -374,16 +374,22 @@ def build_email_html(items, unsub_token):
 
     unsubscribe_note = build_unsubscribe_note(unsub_token)
 
-    # Extra closing block with links to the site — shown only when the email
-    # features more than one item, per the colleague's note: with a single
-    # item the "Visit the studio" link right after it is already enough;
-    # with several, people may want to browse everything, not just the first one.
-    closing_links_block = ""
+    # Closing block with site links, placed right before the disclaimer per
+    # the colleague's feedback (previously "Visit the studio" was a separate,
+    # visually isolated line right after the cards — now consolidated here).
+    # "Explore by month" is only useful once there's more than one item to
+    # browse alongside; with a single item it's not worth the extra line.
+    explore_by_month_link = ""
     if len(items) > 1:
-        closing_links_block = f"""\
+        explore_by_month_link = (
+            f'<a href="{SMART_COLLECTIONS_URL}" style="display:block;font-family:{FONT_FAMILY};'
+            f'font-size:{FONT_SIZE_BODY};color:{COLOR_BRAND_PRIMARY};font-weight:700;'
+            f'text-decoration:none;margin-top:10px;">Explore by month →</a>'
+        )
+    closing_links_block = f"""\
     <div style="border-top:1px solid {COLOR_BORDER};margin:24px 0 0;padding-top:20px;text-align:center;">
-      <a href="{SITE_URL}" style="display:block;font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};color:{COLOR_BRAND_PRIMARY};font-weight:700;text-decoration:none;margin-bottom:10px;">Visit the studio →</a>
-      <a href="{SMART_COLLECTIONS_URL}" style="display:block;font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};color:{COLOR_BRAND_PRIMARY};font-weight:700;text-decoration:none;">Explore by month →</a>
+      <a href="{SITE_URL}" style="display:block;font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};color:{COLOR_BRAND_PRIMARY};font-weight:700;text-decoration:none;">Visit the studio →</a>
+      {explore_by_month_link}
     </div>
 """
 
@@ -399,11 +405,8 @@ def build_email_html(items, unsub_token):
       </td>
     </tr></table>
     <div style="border-bottom:2px solid {COLOR_BRAND_PRIMARY};margin:20px 0 24px;"></div>
-    <p style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};line-height:{LINE_HEIGHT_BODY};color:{COLOR_TEXT_PRIMARY};">New illustrations from the studio this week.</p>
+    <p style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};line-height:{LINE_HEIGHT_BODY};color:{COLOR_TEXT_PRIMARY};">Fresh from CatnBloom Studio: this week's newest designs.</p>
     {body_rows}
-    <p style="margin-top:24px;">
-      <a href="{SITE_URL}" style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};color:{COLOR_BRAND_PRIMARY};font-weight:700;">Visit the studio</a>
-    </p>
     {closing_links_block}
     <hr style="border:none;border-top:1px solid {COLOR_BORDER};margin:32px 0 16px;">
     <p style="font-family:{FONT_FAMILY};font-size:12px;color:{COLOR_TEXT_MUTED};">{unsubscribe_note}</p>
