@@ -350,12 +350,12 @@ def build_email_html(items, unsub_token):
         rows = []
         for it in items:
             collection_note = collection_label_for_item(it["link"])
-        collection_line = (
-            f'<div style="margin-top:10px;font-family:{FONT_FAMILY};font-size:13px;'
-            f'color:{COLOR_TEXT_MUTED};">{collection_note}</div>'
-            if collection_note else ""
-        )
-        rows.append(
+            collection_line = (
+                f'<div style="margin-top:10px;font-family:{FONT_FAMILY};font-size:13px;'
+                f'color:{COLOR_TEXT_MUTED};">{collection_note}</div>'
+                if collection_note else ""
+            )
+            rows.append(
                 f'<tr><td style="padding:20px 0;border-bottom:1px solid {COLOR_BORDER};">'
                 f'<table role="presentation" width="100%"><tr>'
                 f'<td width="220" valign="top" style="padding-right:20px;">'
