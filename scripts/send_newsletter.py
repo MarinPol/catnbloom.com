@@ -273,6 +273,8 @@ def build_unsubscribe_note(unsub_token):
 
 
 IMG_TAG_RE = re.compile(r"<img[^>]*>", re.IGNORECASE)
+A_TAG_RE = re.compile(r"<a[^>]*>.*?</a>", re.IGNORECASE | re.DOTALL)
+EMPTY_P_RE = re.compile(r"<p>\s*</p>", re.IGNORECASE)
 
 # SKU prefix -> human-readable collection name, confirmed by the author.
 # Extend this dict as new collections are added (e.g. a future "C03").
@@ -326,11 +328,18 @@ def extract_image_tag(description_html, width=140):
 
 
 def strip_image_tag(description_html):
-    """Removes the <img> tag (and a trailing <br>) from the description HTML,
-    leaving just the text paragraph(s) for the right-hand column.
+    """Removes the <img> tag (and a trailing <br>) plus any <a> links already
+    embedded in the RSS description (feed.xml includes its own "View design"
+    link) from the description HTML, leaving just the text paragraph(s) for
+    the right-hand column. The embedded link is removed rather than kept
+    because: (1) it duplicated our own "View design" CTA, and (2) a nested
+    <a> inside another <a> is invalid HTML that broke the rest of the email
+    for some clients (Gmail dropped the remaining cards after it).
     """
     text = IMG_TAG_RE.sub("", description_html or "")
     text = re.sub(r"^\s*<br\s*/?>\s*", "", text, flags=re.IGNORECASE)
+    text = A_TAG_RE.sub("", text)
+    text = EMPTY_P_RE.sub("", text)
     return text.strip()
 
 
