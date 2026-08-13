@@ -373,8 +373,6 @@ def build_email_html(items, unsub_token):
                 f'font-weight:700;color:{COLOR_BRAND_PRIMARY};text-decoration:none;">View design →</a>'
                 f'</div>'
                 f'{collection_line}'
-                f'<div style="margin-top:8px;font-family:{FONT_FAMILY};font-size:12px;color:{COLOR_TEXT_MUTED};">'
-                f'{it["pub_date"].strftime("%B %d, %Y")}</div>'
                 f'</td>'
                 f'</tr></table>'
                 f'</td></tr>'
@@ -382,6 +380,15 @@ def build_email_html(items, unsub_token):
         body_rows = f'<table role="presentation" width="100%">{"".join(rows)}</table>'
 
     unsubscribe_note = build_unsubscribe_note(unsub_token)
+
+    # Single issue label for the whole email (e.g. "Week 32 · August 2026")
+    # instead of a per-item date. The per-item date used to show updated_at,
+    # not the actual creation date, and with several items updated on the
+    # same day it just repeated the identical date three times with no real
+    # information value. One issue-level label is clearer.
+    now = datetime.now(timezone.utc)
+    week_number = now.isocalendar()[1]
+    issue_label = f"Week {week_number} · {now.strftime('%B %Y')}"
 
     # Closing block with site links, placed right before the disclaimer per
     # the colleague's feedback (previously "Visit the studio" was a separate,
@@ -415,6 +422,7 @@ def build_email_html(items, unsub_token):
     </tr></table>
     <div style="border-bottom:2px solid {COLOR_BRAND_PRIMARY};margin:20px 0 24px;"></div>
     <p style="font-family:{FONT_FAMILY};font-size:{FONT_SIZE_BODY};line-height:{LINE_HEIGHT_BODY};color:{COLOR_TEXT_PRIMARY};">Fresh from CatnBloom Studio: this week's newest designs.</p>
+    <p style="font-family:{FONT_FAMILY};font-size:13px;color:{COLOR_TEXT_MUTED};margin-top:-8px;">{issue_label}</p>
     {body_rows}
     {closing_links_block}
     <hr style="border:none;border-top:1px solid {COLOR_BORDER};margin:32px 0 16px;">
