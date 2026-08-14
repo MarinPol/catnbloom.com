@@ -698,17 +698,7 @@ FOOTER
   justify-content: flex-start;
 }
 
-/* ---- Нижний ярус: отделён линией ---- */
-.footer-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-strong);
-  flex-wrap: wrap;
-}
+/* ---- Нижний ярус: отделён линией (свойства объединены с блоком ниже) ---- */
 
 /* =========================
 SHARE-BUTTONS
@@ -1156,10 +1146,6 @@ ICON TITLE — aligned
 CONTACT PAGE
 ========================= */
 
-.contact-info-block {
-  margin-top: 24px;
-}
-
 .contact-info-text {
   font-size: 0.95rem;
   color: var(--text-secondary);
@@ -1463,6 +1449,9 @@ WEB3FORMS NEWSLETTER FORM
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-strong);
 }
 
 /* FOOTER SOCIAL + RSS ROW (нижний ярус, слева) */
