@@ -128,21 +128,35 @@
     btn.disabled = true;
     btn.textContent = '...';
 
+    var submittedEmail = form.email.value;
+
     fetch(form.action, {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'text/plain' },
       body: JSON.stringify({
-        email: form.email.value,
+        email: submittedEmail,
         botcheck: form.botcheck.checked
       })
     })
       .then(function (res) { return res.json(); })
       .then(function (data) {
         result.style.display = 'block';
+        result.innerHTML = '';
         if (data.success) {
-          result.textContent = data.alreadySubscribed
-            ? "You're already subscribed."
-            : 'Almost there! Please check your email to confirm your subscription.';
+          if (data.alreadySubscribed) {
+            var textNode = document.createTextNode("You're already subscribed. ");
+            var unsubBtn = document.createElement('button');
+            unsubBtn.type = 'button';
+            unsubBtn.className = 'footer-newsletter-unsub-link';
+            unsubBtn.textContent = 'Not you? Send unsubscribe link';
+            unsubBtn.addEventListener('click', function () {
+              requestUnsubscribeLink(submittedEmail, unsubBtn, result, textNode);
+            });
+            result.appendChild(textNode);
+            result.appendChild(unsubBtn);
+          } else {
+            result.textContent = 'Almost there! Please check your email to confirm your subscription.';
+          }
           result.style.color = '#33502f';
           form.reset();
         } else {
@@ -160,5 +174,27 @@
         btn.textContent = 'Subscribe';
       });
   });
+
+  function requestUnsubscribeLink(email, unsubBtn, result, textNode) {
+    unsubBtn.disabled = true;
+    unsubBtn.textContent = 'Sending...';
+
+    fetch('https://newsletter.catnbloom.com/request-unsubscribe', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ email: email })
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        result.textContent = data.success
+          ? (data.message || 'If that address is on our list, we\'ve sent an unsubscribe link to it.')
+          : (data.message || 'Something went wrong. Please try again.');
+        result.style.color = data.success ? '#33502f' : '#a33';
+      })
+      .catch(function () {
+        result.textContent = 'Something went wrong. Please try again.';
+        result.style.color = '#a33';
+      });
+  }
 })();
 </script>
