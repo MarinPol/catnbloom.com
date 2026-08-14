@@ -7,7 +7,7 @@ tagline: "Wearable art inspired by cats, botanicals, and the worlds that grow be
 photo: "/assets/images/about-designer.webp"
 
 detail_images:
-  - "https://ik.imagekit.io/catnbloom/notes/about-studio2.jpg?tr=f-auto"
+  - "about-studio2.jpg"
   - ""
   - "about-designer.webp"
 
