@@ -1438,6 +1438,24 @@ WEB3FORMS NEWSLETTER FORM
   margin: 8px 0 0;
 }
 
+.footer-newsletter-unsub-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.footer-newsletter-unsub-link:disabled {
+  opacity: 0.7;
+  cursor: default;
+  text-decoration: none;
+}
+
 /* Нижний ярус: соцсети слева, юридические ссылки (Privacy/Terms/Copyright) справа */
 .footer-bottom {
   display: flex;
