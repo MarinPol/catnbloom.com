@@ -7,7 +7,7 @@ tagline: "Wearable art inspired by cats, botanicals, and the worlds that grow be
 photo: "/assets/images/about-designer.webp"
 
 detail_images:
-  - "about-studio2.jpg"
+  - "about-studio2.webp"
   - ""
   - "about-designer.webp"
 
