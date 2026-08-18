@@ -28,11 +28,17 @@
         <div class="detail-gallery">
 
             {% for img in page.detail_images %}
-            <a href="/assets/images/products/{{ img }}"
+            {% if img contains 'http' %}
+              {% assign img_src = img %}
+            {% else %}
+              {% assign img_src = '/assets/images/products/' | append: img %}
+            {% endif %}
+
+            <a href="{{ img_src }}"
                data-lightbox="product-gallery"
                class="gallery-item">
 
-                <img src="/assets/images/products/{{ img }}"
+                <img src="{{ img_src }}"
                      alt="{{ page.title }} detail {{ forloop.index }}"
                      loading="lazy">
             </a>
