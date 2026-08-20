@@ -111,7 +111,9 @@
     "@type": "Offer",
     "availability": "https://schema.org/InStock",
     "url": "{{ page.teepublic_url | default: page.url | absolute_url }}",
+    "price": "{{ page.price | default: '24.99' }}",
     "priceCurrency": "USD",
+    "priceValidUntil": "{{ page.price_valid_until | default: '2027-06-30' }}",
     "seller": {
       "@type": "Organization",
       "name": "CatnBloom Studio"
