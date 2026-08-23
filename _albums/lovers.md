@@ -8,5 +8,5 @@ seo_description: "A curated Lovers capsule of CatnBloom cat and plant designs."
 products:
   - C01-031
   - C01-032
-  - C01-006
+  - C02-001
 ---
