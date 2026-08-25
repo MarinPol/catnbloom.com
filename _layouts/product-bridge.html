@@ -85,7 +85,12 @@
         {% endif %}
 
         <!-- PLATFORM SWITCHER -->
-        {% if page.teepublic_url or (page.teepublic_variants and page.teepublic_variants.size > 0) %}
+        {% assign has_tp_variants = false %}
+        {% if page.teepublic_variants and page.teepublic_variants.size > 0 %}
+          {% assign has_tp_variants = true %}
+        {% endif %}
+
+        {% if page.teepublic_url or has_tp_variants %}
         <div class="platform-switcher">
 
             <button class="switch-tab active"
