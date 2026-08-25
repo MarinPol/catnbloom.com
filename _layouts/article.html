@@ -57,10 +57,15 @@
     <div class="detail-gallery">
       {% for img in page.detail_images %}
       {% assign img_clean = img | strip %}{% if img_clean != "" %}
-      <a href="/assets/images/articles/{{ img }}"
+      {% if img_clean contains 'http' %}
+        {% assign img_src = img_clean %}
+      {% else %}
+        {% assign img_src = '/assets/images/articles/' | append: img_clean %}
+      {% endif %}
+      <a href="{{ img_src }}"
          data-lightbox="article-gallery"
          class="gallery-item">
-        <img src="/assets/images/articles/{{ img }}"
+        <img src="{{ img_src }}"
              alt="{{ page.title }} {{ forloop.index }}"
              loading="lazy">
       </a>
