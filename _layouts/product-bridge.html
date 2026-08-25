@@ -85,34 +85,65 @@
         {% endif %}
 
         <!-- PLATFORM SWITCHER -->
-        {% if page.teepublic_url %}
+        {% if page.teepublic_url or (page.teepublic_variants and page.teepublic_variants.size > 0) %}
         <div class="platform-switcher">
 
             <button class="switch-tab active"
                     id="tab-tp"
-                    onclick="togglePlatform('TeePublic','{{ page.teepublic_url }}')">
+                    onclick="togglePlatform('tp')">
                 Apparel
             </button>
 
             {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
             <button class="switch-tab"
                     id="tab-rb"
-                    onclick="togglePlatform('Redbubble','{{ page.redbubble_url }}')">
+                    onclick="togglePlatform('rb')">
                 Stickers & Notebooks
             </button>
             {% endif %}
 
         </div>
 
-        <a href="{{ page.teepublic_url }}"
-           class="buy-button"
-           id="action-btn"
-           target="_blank">
+        <!-- TEEPUBLIC CTA — supports either a single link (legacy) or several
+             variants of the SAME design (e.g. Light/Dark/Invert garment versions).
+             Variants never create separate product pages/SKUs — same product,
+             only the TeePublic listing differs. -->
+        <div class="cta-block" id="tp-cta">
+            {% if page.teepublic_variants and page.teepublic_variants.size > 0 %}
+            <div class="buy-variants">
+                {% for variant in page.teepublic_variants %}
+                <a href="{{ variant.url }}"
+                   class="buy-button buy-button-variant"
+                   target="_blank">
+                    <i data-lucide="shopping-cart"></i>
+                    <span>See on TeePublic — {{ variant.label }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <a href="{{ page.teepublic_url }}"
+               class="buy-button"
+               target="_blank">
 
-            <i data-lucide="shopping-cart"></i>
-            <span>See on TeePublic</span>
+                <i data-lucide="shopping-cart"></i>
+                <span>See on TeePublic</span>
 
-        </a>
+            </a>
+            {% endif %}
+        </div>
+
+        {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
+        <div class="cta-block" id="rb-cta" style="display:none;">
+            <a href="{{ page.redbubble_url }}"
+               class="buy-button"
+               target="_blank">
+
+                <i data-lucide="shopping-cart"></i>
+                <span>See on Redbubble</span>
+
+            </a>
+        </div>
+        {% endif %}
         {% endif %}
 
         <!-- EXTRA LINKS -->
@@ -168,25 +199,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
 
 <script>
-function togglePlatform(platform, url) {
-    const btn = document.getElementById('action-btn');
-    if (!btn) return;
+function togglePlatform(platform) {
+    const tp = document.getElementById('tab-tp');
+    const rb = document.getElementById('tab-rb');
+    const tpCta = document.getElementById('tp-cta');
+    const rbCta = document.getElementById('rb-cta');
 
-    btn.href = url;
-    btn.innerHTML = '<i data-lucide="shopping-cart"></i><span>See on ' + platform + '</span>';
+    if (tp) tp.classList.toggle('active', platform === 'tp');
+    if (rb) rb.classList.toggle('active', platform === 'rb');
+
+    if (tpCta) tpCta.style.display = (platform === 'tp') ? '' : 'none';
+    if (rbCta) rbCta.style.display = (platform === 'rb') ? '' : 'none';
 
     if (window.lucide) {
         lucide.createIcons();
     }
-
-    const tp = document.getElementById('tab-tp');
-    const rb = document.getElementById('tab-rb');
-
-    if (tp) tp.classList.remove('active');
-    if (rb) rb.classList.remove('active');
-
-    if (platform === 'TeePublic' && tp) tp.classList.add('active');
-    if (platform === 'Redbubble' && rb) rb.classList.add('active');
 }
 
 document.addEventListener("DOMContentLoaded", function () {
