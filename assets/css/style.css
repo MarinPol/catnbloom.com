@@ -501,6 +501,22 @@ SWITCHER
 }
 
 /* =========================
+TEEPUBLIC VARIANTS
+(same design, different garment
+color version — no separate SKU)
+========================= */
+
+.buy-variants {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buy-button-variant {
+  font-size: 0.95rem;
+}
+
+/* =========================
 TAGS
 ========================= */
 
