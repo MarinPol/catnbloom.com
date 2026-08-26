@@ -554,6 +554,37 @@ color version — no separate SKU)
 }
 
 /* =========================
+SIZING & COLOR GUIDE LINK
+(static, on every product page)
+========================= */
+
+.sizing-guide-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-mid);
+  border-radius: 8px;
+  background: var(--background-soft);
+  color: var(--text-secondary, #555);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.sizing-guide-note:hover {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.sizing-guide-note i {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+/* =========================
 TAGS
 ========================= */
 
