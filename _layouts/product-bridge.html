@@ -116,14 +116,19 @@
         <div class="cta-block" id="tp-cta">
             {% if page.teepublic_variants and page.teepublic_variants.size > 0 %}
             <div class="buy-variants">
-                {% for variant in page.teepublic_variants %}
-                <a href="{{ variant.url }}"
-                   class="buy-button buy-button-variant"
-                   target="_blank">
-                    <i data-lucide="shopping-cart"></i>
-                    <span>See on TeePublic — {{ variant.label }}</span>
-                </a>
-                {% endfor %}
+                <p class="buy-variants-label">See on TeePublic — choose your version:</p>
+                <div class="buy-variants-row">
+                    {% for variant in page.teepublic_variants %}
+                    {% assign short_label = variant.label | remove: " version" | remove: " Version" %}
+                    <a href="{{ variant.url }}"
+                       class="buy-button-variant"
+                       target="_blank"
+                       aria-label="See on TeePublic — {{ variant.label }}">
+                        <i data-lucide="shopping-cart"></i>
+                        <span>{{ short_label }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
             {% else %}
             <a href="{{ page.teepublic_url }}"
