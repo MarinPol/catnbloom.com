@@ -480,7 +480,6 @@ SWITCHER
 .platform-switcher {
   display: flex;
   gap: 12px;
-  margin-top: 20px;
 }
 
 .switch-tab {
@@ -555,33 +554,29 @@ color version — no separate SKU)
 
 /* =========================
 SIZING & COLOR GUIDE LINK
-(static, on every product page)
+(static, on every product page —
+plain inline link, not a boxed plaque)
 ========================= */
 
 .sizing-guide-note {
-  display: flex;
+  display: inline-flex;
+  align-self: flex-start;
   align-items: center;
-  gap: 8px;
-  margin-top: 14px;
-  padding: 12px 14px;
-  border: 1px solid var(--border-mid);
-  border-radius: 8px;
-  background: var(--background-soft);
+  gap: 6px;
   color: var(--text-secondary, #555);
   font-size: 0.9rem;
-  text-decoration: none;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .sizing-guide-note:hover {
-  border-color: var(--brand-primary);
   color: var(--brand-primary);
 }
 
 .sizing-guide-note i {
   flex-shrink: 0;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 /* =========================
