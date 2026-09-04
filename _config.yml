@@ -63,3 +63,12 @@ show_drafts: false
 
 # CLEAN BUILD SAFETY
 strict_front_matter: true
+
+# EXCLUDE FROM PUBLIC BUILD
+# Internal working documents that must never be rendered as public pages.
+# Without this list, Jekyll builds every .md/.html file in the repo root by default —
+# including internal protocol/log files never meant to be visible to site visitors.
+exclude:
+  - PROJECT_MASTER.md
+  - README.md
+  - inventory.html
