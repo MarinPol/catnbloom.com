@@ -68,7 +68,11 @@ strict_front_matter: true
 # Internal working documents that must never be rendered as public pages.
 # Without this list, Jekyll builds every .md/.html file in the repo root by default —
 # including internal protocol/log files never meant to be visible to site visitors.
+# NOTE: Jekyll treats ANY file with YAML front matter as a page, regardless of extension
+# (.txt included) — this is why cottagecore-flowers.txt required explicit exclusion below.
 exclude:
   - PROJECT_MASTER.md
   - README.md
   - subscribers.csv
+  - cottagecore-flowers.txt
+  - scripts/send_newsletter.py
