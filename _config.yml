@@ -71,4 +71,3 @@ strict_front_matter: true
 exclude:
   - PROJECT_MASTER.md
   - README.md
-  - inventory.html
