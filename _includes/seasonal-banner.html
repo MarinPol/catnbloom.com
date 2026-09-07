@@ -1,0 +1,45 @@
+{%- comment -%}
+=========================
+SEASONAL BANNER
+Content lives entirely in _data/seasonal_banner.yml — this file only renders it.
+Included once from header.html, so it appears on every page automatically.
+=========================
+{%- endcomment -%}
+
+{% assign sb = site.data.seasonal_banner %}
+
+{% if sb.enabled %}
+
+  {% if sb.link and sb.link != "" %}
+    <a href="{{ sb.link }}" class="seasonal-banner seasonal-banner-link">
+  {% else %}
+    <div class="seasonal-banner">
+  {% endif %}
+
+    <div class="seasonal-banner-inner">
+
+      <div class="seasonal-banner-media seasonal-banner-media-left">
+        {% if sb.left_image and sb.left_image != "" %}
+          <img src="{{ sb.left_image }}" alt="" class="seasonal-banner-img">
+        {% endif %}
+      </div>
+
+      {% if sb.text and sb.text != "" %}
+        <p class="seasonal-banner-text">{{ sb.text }}</p>
+      {% endif %}
+
+      <div class="seasonal-banner-media seasonal-banner-media-right">
+        {% if sb.right_image and sb.right_image != "" %}
+          <img src="{{ sb.right_image }}" alt="" class="seasonal-banner-img">
+        {% endif %}
+      </div>
+
+    </div>
+
+  {% if sb.link and sb.link != "" %}
+    </a>
+  {% else %}
+    </div>
+  {% endif %}
+
+{% endif %}
