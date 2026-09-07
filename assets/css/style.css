@@ -2664,7 +2664,7 @@ the banner separates it from the header instead of sitting flush.
     max-width: 100%;
     padding: 14px 16px 18px;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
     font-size: initial;
     line-height: initial;
@@ -2675,17 +2675,19 @@ the banner separates it from the header instead of sitting flush.
   }
 
   .seasonal-banner-media-left {
-    height: 90px;
+    height: auto;
+    width: 100%;
   }
 
   .seasonal-banner-img {
-    height: 90px;
+    height: auto;
+    width: 100%;
   }
 
   .seasonal-banner-text {
     flex: none;
     width: 100%;
-    text-align: left;
+    text-align: center;
     font-size: 1rem;
     line-height: 1.35;
   }
