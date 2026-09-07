@@ -2629,7 +2629,6 @@ Full-bleed strip under the header, matches the height standard of
 .seasonal-banner-img {
   height: 76px;
   width: auto;
-  max-width: 220px;
   object-fit: contain;
   display: block;
   vertical-align: middle;
@@ -2659,7 +2658,6 @@ Full-bleed strip under the header, matches the height standard of
 
   .seasonal-banner-img {
     height: 64px;
-    max-width: 110px;
   }
 
   .seasonal-banner-text {
@@ -2672,7 +2670,20 @@ Full-bleed strip under the header, matches the height standard of
     display: none;
   }
 
+  .seasonal-banner-inner {
+    height: 48px;
+  }
+
+  .seasonal-banner-media {
+    height: 48px;
+  }
+
+  .seasonal-banner-img {
+    height: 48px;
+  }
+
   .seasonal-banner-text {
     text-align: left;
+    font-size: 0.85rem;
   }
 }
