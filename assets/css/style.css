@@ -60,6 +60,10 @@ Nothing below this block has been modified or removed.
   --info-card-bg: #f7f7f2;
   --surface-dark: #1a1a1a;
 
+  /* Seasonal banner — warm yellow, matches the sun in the site's illustrations
+     (see hero graphics). Not part of the core palette, used only here. */
+  --seasonal-banner-bg: #fef4d0;
+
   /* RESERVED — Witchy / Home accent group (см. CatnBloom_Color_Tokens_v1_1.md, разд. "Статус: резерв").
      Решение 2026-07-18: перекраска Witchy-коллекции сейчас НЕ проводится.
      Токены фиксируются "на память" под будущие точечные акценты (баннеры, картинки,
@@ -2571,5 +2575,99 @@ LEGAL PAGE
   }
   .error-404-links {
     gap: var(--space-2, 16px);
+  }
+}
+
+/* =========================
+SEASONAL BANNER
+Toggled via _data/seasonal_banner.yml (enabled: true/false).
+Full-bleed strip under the header, matches the height standard of
+.home-quote-banner / .home-closing-banner (~76-84px).
+========================= */
+
+.seasonal-banner {
+  display: block;
+  width: 100%;
+  background: var(--seasonal-banner-bg);
+  text-decoration: none;
+  color: inherit;
+}
+
+.seasonal-banner-link:hover .seasonal-banner-text {
+  text-decoration: underline;
+}
+
+.seasonal-banner-inner {
+  max-width: 1050px;
+  margin: 0 auto;
+  min-height: 76px;
+  padding: 10px 26px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.seasonal-banner-media {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  height: 56px;
+}
+
+.seasonal-banner-media-left {
+  justify-content: flex-start;
+}
+
+.seasonal-banner-media-right {
+  justify-content: flex-end;
+}
+
+.seasonal-banner-img {
+  height: 100%;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+}
+
+.seasonal-banner-text {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .seasonal-banner-inner {
+    padding: 8px 16px;
+    gap: 10px;
+    min-height: 64px;
+  }
+
+  .seasonal-banner-media {
+    height: 42px;
+  }
+
+  .seasonal-banner-img {
+    max-width: 110px;
+  }
+
+  .seasonal-banner-text {
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .seasonal-banner-media-left {
+    display: none;
+  }
+
+  .seasonal-banner-text {
+    text-align: left;
   }
 }
