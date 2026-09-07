@@ -64,14 +64,14 @@ Nothing below this block has been modified or removed.
      (see hero graphics). Not part of the core palette, used only here. */
   --seasonal-banner-bg: #fef4d0;
 
-  /* RESERVED — Witchy / Home accent group (см. CatnBloom_Color_Tokens_v1_1.md, разд. "Статус: резерв").
-     Решение 2026-07-18: перекраска Witchy-коллекции сейчас НЕ проводится. 
-     Токены фиксируются "на память" под будущие точечные акценты (баннеры, картинки,
-     выделение), а не под системную схему witchy-раздела. Реальные текущие роли —
-     все шесть привязаны к блокам Главной (.home-name-frame, .extra-link,
-     .home-card-purple/-brown/-green, .home-quote-banner) — см. md-файл. Значения,
-     имена и порядок ниже не менялись — правка декларативная (только комментарий),
-     Шаг 6 чек-листа v1.2 закрыт без изменений кода. */
+  /* RESERVED — Witchy / Home accent group (see CatnBloom_Color_Tokens_v1_1.md, "Reserved status" section).
+     Decision 2026-07-18: recoloring the Witchy collection is NOT happening right now.
+     Tokens are kept "on file" for future point accents (banners, images,
+     highlights), not for a systemic witchy-section color scheme. Current real
+     roles — all six are tied to Home page blocks (.home-name-frame, .extra-link,
+     .home-card-purple/-brown/-green, .home-quote-banner) — see the md file. Values,
+     names and order below were not changed — this is a declarative edit (comment only),
+     checklist v1.2 Step 6 closed with no code changes. */
   --accent-wine: #6b1f3a;
   --accent-wine-deep: #7b2d2d;
   --accent-plum: #3E1E46;
@@ -92,41 +92,41 @@ Nothing below this block has been modified or removed.
 
 /* =========================
 STEP 6 — v1.1 DECISION TOKENS
-Source: _2_CatnBloom_Decision_Checklist_v1_1.md (Шаги 1–5, компромиссные значения)
-Declaration only — usages NOT replaced yet (см. Implementation Order, п.4 списка оставшихся шагов).
-Существующие токены выше (Step 0) не тронуты.
+Source: _2_CatnBloom_Decision_Checklist_v1_1.md (Steps 1-5, compromise values)
+Declaration only — usages NOT replaced yet (see Implementation Order, item 4 of the remaining steps list).
+Existing tokens above (Step 0) are untouched.
 ========================= */
 :root {
   /* 1.2 — H3 icon-title (About / Collection) */
   --font-h3-icon: 22px;
 
-  /* 1.3 / 1.4 — заголовки внутри текста статьи (Studio Notes) */
+  /* 1.3 / 1.4 — headings inside article text (Studio Notes) */
   --font-h2-inline: 24px;
   --font-h3-inline: 20px;
 
-  /* 1.5 — заголовок карточки статьи (.article-card-title) */
+  /* 1.5 — article card title (.article-card-title) */
   --font-card-title: 19px;
 
-  /* 1.7 — навигационное меню (не входит в Body Medium) */
-  --font-nav: 16px;          /* .nav-right a — компромисс "15–16px", взят верхний предел, вес 600 сохранить */
+  /* 1.7 — navigation menu (not part of Body Medium) */
+  --font-nav: 16px;          /* .nav-right a — compromise "15-16px", upper bound chosen, weight 600 kept */
   --font-nav-dropdown: 14px; /* .dropdown-menu a */
 
-  /* 2.2 — .article-body (сохранён "воздушный" текст) */
+  /* 2.2 — .article-body (kept the "airy" text) */
   --line-article-body: 1.7;
 
-  /* 2.3 — .home-intro-text (буквица) */
+  /* 2.3 — .home-intro-text (drop cap) */
   --font-intro: 19px;
   --line-intro: 1.85;
 
-  /* 2.5 — footer newsletter: сохранить иерархию title/subtitle */
+  /* 2.5 — footer newsletter: keep title/subtitle hierarchy */
   --font-footer-newsletter-title: 16px;
   --font-footer-newsletter-sub: 14px;
 
-  /* 3.3 — расстояние между секциями главной (дифференцированно, не единые 96px) */
-  --section-gap-lg: 96px;  /* только перед curtain-reveal и после trust-block */
-  --section-gap-md: 48px;  /* между тесно связанными секциями, дефолт */
+  /* 3.3 — spacing between Home page sections (differentiated, not a flat 96px) */
+  --section-gap-lg: 96px;  /* only before curtain-reveal and after trust-block */
+  --section-gap-md: 48px;  /* between closely related sections, default */
 
-  /* 3.2 — карточки Studio Notes grid */
+  /* 3.2 — Studio Notes grid cards */
   --studio-card-grid-gap: 24px;
   --studio-card-padding: 24px;
   --studio-card-inner-gap: 16px;
@@ -720,7 +720,7 @@ FOOTER
   margin: 0 auto;
 }
 
-/* ---- Верхний ярус: 3 колонки ---- */
+/* ---- Top tier: 3 columns ---- */
 .footer-top {
   display: grid;
   grid-template-columns: 1fr 1fr 1.2fr;
@@ -737,7 +737,7 @@ FOOTER
   letter-spacing: 0.01em;
 }
 
-/* Колонка 1 — брендинг */
+/* Column 1 — branding */
 .footer-copyright {
   font-size: var(--font-body);
   color: var(--text-secondary);
@@ -760,7 +760,7 @@ FOOTER
   line-height: var(--line-body);
 }
 
-/* Колонка 2 — категории (список тегов вместо строки с точками) */
+/* Column 2 — categories (tag list instead of a dot-separated line) */
 .footer-tags-list {
   list-style: none;
   margin: 0;
@@ -775,13 +775,13 @@ FOOTER
   color: var(--text-secondary);
 }
 
-/* Колонка 3 — подписка */
+/* Column 3 — newsletter signup */
 .footer-col-newsletter {
   display: flex;
   justify-content: flex-start;
 }
 
-/* ---- Нижний ярус: отделён линией (свойства объединены с блоком ниже) ---- */
+/* ---- Bottom tier: separated by a line (properties merged with the block below) ---- */
 
 /* =========================
 SHARE-BUTTONS
@@ -1412,8 +1412,8 @@ CONTACT INFO CARDS
 FOOTER NEWSLETTER
 ========================= */
 
-/* Блок подписки теперь живёт внутри 3-й колонки .footer-top,
-   поэтому фон/border-top секции убраны — колонка наследует фон .site-footer */
+/* Newsletter block now lives inside the 3rd column of .footer-top,
+   so the section's background/border-top were removed — the column inherits .site-footer's background */
 .footer-newsletter-inner {
   max-width: 360px;
   text-align: left;
@@ -1435,7 +1435,7 @@ FOOTER NEWSLETTER
   line-height: 1.4;
 }
 
-/* Дисклеймер физически внутри колонки Newsletter, сразу под формой подписки */
+/* Disclaimer sits physically inside the Newsletter column, right under the signup form */
 .footer-newsletter-legal {
   font-size: 0.75rem;
   color: #6b6b6b;
@@ -1446,14 +1446,14 @@ FOOTER NEWSLETTER
 
 /* =========================
 WEB3FORMS NEWSLETTER FORM
-Встраивается в .footer-newsletter-inner
+Sits inside .footer-newsletter-inner
 ========================= */
 
 .footer-newsletter-form {
   margin: 0;
 }
 
-/* Инпут и кнопка Subscribe в одну строку (desktop) */
+/* Input and Subscribe button in one row (desktop) */
 .footer-newsletter-row {
   display: flex;
   gap: 8px;
@@ -1525,7 +1525,7 @@ WEB3FORMS NEWSLETTER FORM
   text-decoration: none;
 }
 
-/* Нижний ярус: соцсети слева, юридические ссылки (Privacy/Terms/Copyright) справа */
+/* Bottom tier: social icons on the left, legal links (Privacy/Terms/Copyright) on the right */
 .footer-bottom {
   display: flex;
   align-items: center;
@@ -1537,7 +1537,7 @@ WEB3FORMS NEWSLETTER FORM
   border-top: 1px solid var(--border-strong);
 }
 
-/* FOOTER SOCIAL + RSS ROW (нижний ярус, слева) */
+/* FOOTER SOCIAL + RSS ROW (bottom tier, left side) */
 .footer-social-row {
   display: flex;
   align-items: center;
@@ -1547,7 +1547,7 @@ WEB3FORMS NEWSLETTER FORM
   border-top: none;
 }
 
-/* Иконки тёмные/контрастные, увеличенная кликабельная зона (мин. 40×40px) */
+/* Dark/high-contrast icons, enlarged click area (min. 40x40px) */
 .footer-social-icon {
   display: flex;
   align-items: center;
@@ -1580,7 +1580,7 @@ WEB3FORMS NEWSLETTER FORM
     gap: 28px;
   }
 
-  /* Блок подписки переносится на самый верх мобильного футера */
+  /* Newsletter block moves to the very top of the mobile footer */
   .footer-col-newsletter {
     order: -1;
   }
@@ -1589,7 +1589,7 @@ WEB3FORMS NEWSLETTER FORM
     max-width: none;
   }
 
-  /* Инпут и кнопка снова друг под другом на всю ширину */
+  /* Input and button stack again, full width */
   .footer-newsletter-row {
     flex-direction: column;
   }
@@ -1624,7 +1624,7 @@ WEB3FORMS NEWSLETTER FORM
   }
 }
 
-/* ---- ALBUM PAGE — минимальная витрина по SKU ---- */
+/* ---- ALBUM PAGE — minimal showcase by SKU ---- */
 .album-hero {
   text-align: center;
   padding: 20px 0 10px;
@@ -2304,12 +2304,12 @@ LEGAL PAGE
 
 /* =========================
    404 PAGE (Error 404 — This Page Wandered Off)
-   Изолированный блок, существующие модули не затронуты.
-   Иллюстрация — флипбук из 14 реальных трассированных кадров
-   присланного видео (кот подбегает → копает → холмик →
-   росток → лапа-цветок раскрывается → кот садится → логотип
-   CatnBloom), кадры переключаются через opacity-keyframes,
-   зациклено на 9s. Один типографский цвет через currentColor.
+   Isolated block, existing modules are untouched.
+   Illustration — a flipbook of 14 real traced frames
+   from the submitted video (cat runs up → digs → mound →
+   sprout → paw-flower opens → cat sits down → CatnBloom
+   logo), frames switch via opacity-keyframes,
+   looped over 9s. A single typographic color via currentColor.
    ========================= */
 
 .error-404-container {
@@ -2601,10 +2601,10 @@ Full-bleed strip under the header, matches the height standard of
   max-width: 1050px;
   margin: 0 auto;
   min-height: 76px;
-  padding: 10px 26px;
+  padding: 0 26px;
   box-sizing: border-box;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   gap: 18px;
 }
@@ -2612,8 +2612,7 @@ Full-bleed strip under the header, matches the height standard of
 .seasonal-banner-media {
   flex: 0 0 auto;
   display: flex;
-  align-items: center;
-  height: 56px;
+  align-items: stretch;
 }
 
 .seasonal-banner-media-left {
@@ -2635,6 +2634,7 @@ Full-bleed strip under the header, matches the height standard of
 .seasonal-banner-text {
   margin: 0;
   flex: 1;
+  align-self: center;
   text-align: center;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 1.1rem;
@@ -2644,13 +2644,9 @@ Full-bleed strip under the header, matches the height standard of
 
 @media (max-width: 768px) {
   .seasonal-banner-inner {
-    padding: 8px 16px;
+    padding: 0 16px;
     gap: 10px;
     min-height: 64px;
-  }
-
-  .seasonal-banner-media {
-    height: 42px;
   }
 
   .seasonal-banner-img {
