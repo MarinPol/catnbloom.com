@@ -65,7 +65,7 @@ Nothing below this block has been modified or removed.
   --seasonal-banner-bg: #fef4d0;
 
   /* RESERVED — Witchy / Home accent group (см. CatnBloom_Color_Tokens_v1_1.md, разд. "Статус: резерв").
-     Решение 2026-07-18: перекраска Witchy-коллекции сейчас НЕ проводится.
+     Решение 2026-07-18: перекраска Witchy-коллекции сейчас НЕ проводится. 
      Токены фиксируются "на память" под будущие точечные акценты (баннеры, картинки,
      выделение), а не под системную схему witchy-раздела. Реальные текущие роли —
      все шесть привязаны к блокам Главной (.home-name-frame, .extra-link,
