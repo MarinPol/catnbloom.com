@@ -8,7 +8,7 @@
 enabled: true
 
 # Free text in the center. Keep it short — it sits between two images.
-text: "Wearable art for the season."
+text: "Wearable art for the season"
 
 # Left and right images (PNG with transparency recommended).
 # Leave a value empty ("") to hide that side only; text still shows.
