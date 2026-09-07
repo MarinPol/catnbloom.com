@@ -2600,19 +2600,22 @@ Full-bleed strip under the header, matches the height standard of
 .seasonal-banner-inner {
   max-width: 1050px;
   margin: 0 auto;
-  min-height: 76px;
+  height: 76px;
   padding: 0 26px;
   box-sizing: border-box;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
+  font-size: 0;
+  line-height: 0;
 }
 
 .seasonal-banner-media {
   flex: 0 0 auto;
+  height: 76px;
   display: flex;
-  align-items: stretch;
+  align-items: center;
 }
 
 .seasonal-banner-media-left {
@@ -2624,32 +2627,38 @@ Full-bleed strip under the header, matches the height standard of
 }
 
 .seasonal-banner-img {
-  height: 100%;
+  height: 76px;
   width: auto;
   max-width: 220px;
   object-fit: contain;
   display: block;
+  vertical-align: middle;
 }
 
 .seasonal-banner-text {
   margin: 0;
   flex: 1;
-  align-self: center;
   text-align: center;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 1.1rem;
+  line-height: 1.3;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 @media (max-width: 768px) {
   .seasonal-banner-inner {
+    height: 64px;
     padding: 0 16px;
     gap: 10px;
-    min-height: 64px;
+  }
+
+  .seasonal-banner-media {
+    height: 64px;
   }
 
   .seasonal-banner-img {
+    height: 64px;
     max-width: 110px;
   }
 
