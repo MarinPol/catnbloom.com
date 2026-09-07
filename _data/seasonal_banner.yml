@@ -1,0 +1,19 @@
+# =========================
+# SEASONAL BANNER — content only, no logic here.
+# Edit this file every month to change or turn off the banner.
+# Nothing else needs to change (see _includes/seasonal-banner.html).
+# =========================
+
+# Master switch. Set to false to hide the banner site-wide without deleting anything.
+enabled: true
+
+# Free text in the center. Keep it short — it sits between two images.
+text: "Wearable art for the season."
+
+# Left and right images (PNG with transparency recommended).
+# Leave a value empty ("") to hide that side only; text still shows.
+left_image: /assets/images/seasonal/halloween-left.png
+right_image: /assets/images/seasonal/halloween-right.png
+
+# Optional: makes the whole banner a link. Leave empty ("") for no link.
+link: /witchy-cats-plants/
