@@ -2581,8 +2581,17 @@ LEGAL PAGE
 /* =========================
 SEASONAL BANNER
 Toggled via _data/seasonal_banner.yml (enabled: true/false).
-Full-bleed strip under the header, matches the height standard of
-.home-quote-banner / .home-closing-banner (~76-84px).
+
+Desktop (>768px): 3 parts in a single row (left image / text / right image),
+inner content aligned to the SAME left/right edges as the rest of the home
+page (.home-page: max-width 1140px, 20px horizontal padding) so the banner
+lines up with the CatnBloom Studio box, the collection cards and the pink
+quote banner below it.
+
+Mobile (<=768px): right image is dropped entirely (design decision — the
+wide right graphic doesn't work at mobile scale), layout switches to a
+stacked column (image on top, text below, left-aligned), and a margin above
+the banner separates it from the header instead of sitting flush.
 ========================= */
 
 .seasonal-banner {
@@ -2598,10 +2607,10 @@ Full-bleed strip under the header, matches the height standard of
 }
 
 .seasonal-banner-inner {
-  max-width: 1050px;
+  max-width: 1140px;
   margin: 0 auto;
   height: 76px;
-  padding: 0 26px;
+  padding: 0 20px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -2646,44 +2655,38 @@ Full-bleed strip under the header, matches the height standard of
 }
 
 @media (max-width: 768px) {
+  .seasonal-banner {
+    margin-top: 16px;
+  }
+
   .seasonal-banner-inner {
-    height: 64px;
-    padding: 0 16px;
+    height: auto;
+    max-width: 100%;
+    padding: 14px 16px 18px;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
+    font-size: initial;
+    line-height: initial;
   }
 
-  .seasonal-banner-media {
-    height: 64px;
-  }
-
-  .seasonal-banner-img {
-    height: 64px;
-  }
-
-  .seasonal-banner-text {
-    font-size: 0.92rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .seasonal-banner-media-left {
+  .seasonal-banner-media-right {
     display: none;
   }
 
-  .seasonal-banner-inner {
-    height: 48px;
-  }
-
-  .seasonal-banner-media {
-    height: 48px;
+  .seasonal-banner-media-left {
+    height: 90px;
   }
 
   .seasonal-banner-img {
-    height: 48px;
+    height: 90px;
   }
 
   .seasonal-banner-text {
+    flex: none;
+    width: 100%;
     text-align: left;
-    font-size: 0.85rem;
+    font-size: 1rem;
+    line-height: 1.35;
   }
 }
