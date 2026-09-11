@@ -25,10 +25,27 @@ sitemap: false
     .search-box { margin-top: 16px; padding: 8px 12px; width: 100%; max-width: 320px;
       box-sizing: border-box; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
     .no-results { display: none; padding: 12px; color: #777; font-style: italic; }
+    .summary-bar { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 12px; }
+    .summary-card { background: #f4f4f4; border: 1px solid #ddd; border-radius: 6px;
+      padding: 10px 16px; font-size: 14px; }
+    .summary-card strong { display: block; font-size: 20px; margin-top: 2px; }
+    .link-yes { color: #4a6b3a; font-weight: 600; }
+    .link-no { color: #999; }
   </style>
 </head>
 <body>
   <h1>Inventory Dashboard</h1>
+
+  {% assign all_products = site.cottagecore | concat: site.witchy | sort: 'sku' %}
+  {% assign c1_products = site.cottagecore | size %}
+  {% assign c2_products = site.witchy | size %}
+  {% assign total_products = all_products | size %}
+
+  <div class="summary-bar">
+    <div class="summary-card">Total designs<strong>{{ total_products }}</strong></div>
+    <div class="summary-card">Cottagecore (C01)<strong>{{ c1_products }}</strong></div>
+    <div class="summary-card">Witchy (C02)<strong>{{ c2_products }}</strong></div>
+  </div>
 
   <input type="text" id="searchBox" class="search-box" placeholder="Search by SKU or Title…">
 
@@ -39,16 +56,39 @@ sitemap: false
         <th data-key="title">Title</th>
         <th data-key="collection">Collection</th>
         <th class="sortable" data-key="status">Status</th>
+        <th class="sortable" data-key="redbubble">Redbubble</th>
+        <th class="sortable" data-key="teepublic">TeePublic</th>
+        <th class="sortable" data-key="dateadded">Date Added</th>
+        <th class="sortable" data-key="updated">Updated</th>
       </tr>
     </thead>
     <tbody id="inventoryBody">
-      {% assign all_products = site.cottagecore | concat: site.witchy | sort: 'sku' %}
-
       {% for item in all_products %}
+        {% comment %} Redbubble presence: any non-empty value other than "none" counts as present {% endcomment %}
+        {% assign rb_value = item.redbubble_url | default: "" | strip %}
+        {% assign rb_present = false %}
+        {% if rb_value != "" and rb_value != "none" %}
+          {% assign rb_present = true %}
+        {% endif %}
+
+        {% comment %} TeePublic count: teepublic_variants array size, else 1 if teepublic_url is set, else 0 {% endcomment %}
+        {% assign tp_value = item.teepublic_url | default: "" | strip %}
+        {% if item.teepublic_variants and item.teepublic_variants.size > 0 %}
+          {% assign tp_count = item.teepublic_variants.size %}
+        {% elsif tp_value != "" and tp_value != "none" %}
+          {% assign tp_count = 1 %}
+        {% else %}
+          {% assign tp_count = 0 %}
+        {% endif %}
+
         <tr class="inventory-row"
             data-sku="{{ item.sku | downcase }}"
             data-title="{{ item.title | downcase }}"
-            data-status="{{ item.status }}">
+            data-status="{{ item.status }}"
+            data-redbubble="{{ rb_present }}"
+            data-teepublic="{{ tp_count }}"
+            data-dateadded="{{ item.date_added }}"
+            data-updated="{{ item.updated_at }}">
           <td><a href="/{{ item.collection_slug }}/{{ item.sku | downcase }}/" target="_blank" rel="noopener">{{ item.sku }}</a></td>
           <td>{{ item.title }}</td>
           <td>{{ item.collection_name }}</td>
@@ -59,6 +99,22 @@ sitemap: false
               <span class="status-active">ACTIVE</span>
             {% endif %}
           </td>
+          <td>
+            {% if rb_present %}
+              <span class="link-yes">Yes</span>
+            {% else %}
+              <span class="link-no">No</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if tp_count > 0 %}
+              <span class="link-yes">TP: {{ tp_count }}</span>
+            {% else %}
+              <span class="link-no">No</span>
+            {% endif %}
+          </td>
+          <td>{{ item.date_added }}</td>
+          <td>{{ item.updated_at }}</td>
         </tr>
       {% endfor %}
     </tbody>
