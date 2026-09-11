@@ -31,6 +31,8 @@ sitemap: false
     .summary-card strong { display: block; font-size: 20px; margin-top: 2px; }
     .link-yes { color: #4a6b3a; font-weight: 600; }
     .link-no { color: #999; }
+    .feature-none { color: #b04a4a; }
+    .feature-list { font-size: 13px; }
   </style>
 </head>
 <body>
@@ -60,10 +62,40 @@ sitemap: false
         <th class="sortable" data-key="teepublic">TeePublic</th>
         <th class="sortable" data-key="dateadded">Date Added</th>
         <th class="sortable" data-key="updated">Updated</th>
+        <th class="sortable" data-key="featurecount">Wheel (Seasons)</th>
+        <th class="sortable" data-key="albumcount">Albums</th>
       </tr>
     </thead>
     <tbody id="inventoryBody">
       {% for item in all_products %}
+        {% comment %} Reverse lookup: which Smart Collection months (sc01–sc12) feature this SKU {% endcomment %}
+        {% assign season_str = "" %}
+        {% assign season_count = 0 %}
+        {% for sc in site.smart %}
+          {% if sc.products contains item.sku %}
+            {% assign sc_num = sc.url | remove: '/smart/sc' | remove: '/' %}
+            {% assign season_count = season_count | plus: 1 %}
+            {% if season_str == "" %}
+              {% assign season_str = sc_num %}
+            {% else %}
+              {% assign season_str = season_str | append: ', ' | append: sc_num %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% comment %} Reverse lookup: which Albums feature this SKU {% endcomment %}
+        {% assign album_str = "" %}
+        {% assign album_count = 0 %}
+        {% for alb in site.albums %}
+          {% if alb.products contains item.sku %}
+            {% assign album_count = album_count | plus: 1 %}
+            {% if album_str == "" %}
+              {% assign album_str = alb.title %}
+            {% else %}
+              {% assign album_str = album_str | append: ', ' | append: alb.title %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
         {% comment %} Redbubble presence: any non-empty value other than "none" counts as present {% endcomment %}
         {% assign rb_value = item.redbubble_url | default: "" | strip %}
         {% assign rb_present = false %}
@@ -88,7 +120,9 @@ sitemap: false
             data-redbubble="{{ rb_present }}"
             data-teepublic="{{ tp_count }}"
             data-dateadded="{{ item.date_added }}"
-            data-updated="{{ item.updated_at }}">
+            data-updated="{{ item.updated_at }}"
+            data-featurecount="{{ season_count }}"
+            data-albumcount="{{ album_count }}">
           <td><a href="/{{ item.collection_slug }}/{{ item.sku | downcase }}/" target="_blank" rel="noopener">{{ item.sku }}</a></td>
           <td>{{ item.title }}</td>
           <td>{{ item.collection_name }}</td>
@@ -115,6 +149,20 @@ sitemap: false
           </td>
           <td>{{ item.date_added }}</td>
           <td>{{ item.updated_at }}</td>
+          <td class="feature-list">
+            {% if season_str != "" %}
+              {{ season_str }}
+            {% else %}
+              <span class="feature-none">— not featured</span>
+            {% endif %}
+          </td>
+          <td class="feature-list">
+            {% if album_str != "" %}
+              {{ album_str }}
+            {% else %}
+              <span class="feature-none">— not featured</span>
+            {% endif %}
+          </td>
         </tr>
       {% endfor %}
     </tbody>
@@ -182,6 +230,11 @@ sitemap: false
         rows.sort((a, b) => {
           const av = a.dataset[key] || '';
           const bv = b.dataset[key] || '';
+          // Numeric-aware compare (handles counts like featurecount/albumcount: "2" vs "12")
+          const an = Number(av), bn = Number(bv);
+          if (av !== '' && bv !== '' && !isNaN(an) && !isNaN(bn)) {
+            return (an - bn) * dir;
+          }
           if (av < bv) return -1 * dir;
           if (av > bv) return 1 * dir;
           return 0;
