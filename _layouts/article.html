@@ -26,16 +26,21 @@
     </div>
     {% endif %}
 
-    <!-- READ ALSO — plain navigation, no lightbox -->
-    {% if page.related_articles and page.related_articles.size > 0 %}
+    <!-- READ ALSO — manual override (related_articles) with automatic
+         latest-articles fallback, so this module works independently
+         without requiring every article to list related_articles by hand -->
     {% assign all_notes = site.studio_notes %}
-    {% assign has_related = false %}
-    {% for slug in page.related_articles %}
-      {% assign related = all_notes | where: "slug", slug | first %}
-      {% if related %}{% assign has_related = true %}{% endif %}
-    {% endfor %}
+    {% assign has_manual_related = false %}
 
-    {% if has_related %}
+    {% if page.related_articles and page.related_articles.size > 0 %}
+      {% for slug in page.related_articles %}
+        {% assign related = all_notes | where: "slug", slug | first %}
+        {% if related %}{% assign has_manual_related = true %}{% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if has_manual_related %}
+    <!-- MANUAL: curated links (e.g. "this year" → "next year" continuations) -->
     <div class="article-read-also">
       <div class="read-also-heading">
         <i data-lucide="book-open"></i>
@@ -48,6 +53,23 @@
           {{ related.title }}
         </a>
         {% endif %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <!-- AUTOMATIC FALLBACK: latest articles, current page excluded.
+         Default count is 5 — override per-article with related_count. -->
+    {% assign related_limit = page.related_count | default: 5 %}
+    {% assign auto_related = all_notes | where_exp: "item", "item.url != page.url" | sort: "date" | reverse | slice: 0, related_limit %}
+    {% if auto_related.size > 0 %}
+    <div class="article-read-also">
+      <div class="read-also-heading">
+        <i data-lucide="book-open"></i>
+        <span>Read Also</span>
+      </div>
+      {% for related in auto_related %}
+        <a href="{{ related.url }}" class="read-also-item">
+          {{ related.title }}
+        </a>
       {% endfor %}
     </div>
     {% endif %}
