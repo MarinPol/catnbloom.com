@@ -53,16 +53,19 @@
     </div>
     {% endif %}
 
-    <!-- READ ALSO — automatic, always independent of Related Articles above. 
+    <!-- READ ALSO — automatic, always independent of Related Articles above.
          Pulls the latest articles site-wide, excluding the current page and
          anything already shown in Related Articles, so nothing repeats.
          Default count is 5 — override per-article with related_count. -->
     {% assign related_limit = page.related_count | default: 5 %}
-    {% assign auto_related = all_notes | where_exp: "item", "item.url != page.url" | sort: "date" | reverse %}
-    {% if related_list.size > 0 %}
-      {% assign related_urls = related_list | map: "url" %}
-      {% assign auto_related = auto_related | where_exp: "item", "related_urls contains item.url == false" %}
-    {% endif %}
+    {% assign auto_related_raw = all_notes | where_exp: "item", "item.url != page.url" | sort: "date" | reverse %}
+    {% assign auto_related = "" | split: "" %}
+    {% assign related_urls = related_list | map: "url" %}
+    {% for item in auto_related_raw %}
+      {% unless related_urls contains item.url %}
+        {% assign auto_related = auto_related | push: item %}
+      {% endunless %}
+    {% endfor %}
     {% assign auto_related = auto_related | slice: 0, related_limit %}
 
     {% if auto_related.size > 0 %}
