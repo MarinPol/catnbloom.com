@@ -26,40 +26,45 @@
     </div>
     {% endif %}
 
-    <!-- READ ALSO — manual override (related_articles) with automatic
-         latest-articles fallback, so this module works independently
-         without requiring every article to list related_articles by hand -->
+    <!-- RELATED ARTICLES — purely manual. Shows only what this page's own
+         related_articles lists. If not set, this block simply doesn't
+         render — no fallback, no automatic matching. -->
     {% assign all_notes = site.studio_notes %}
-    {% assign has_manual_related = false %}
+    {% assign related_list = "" | split: "" %}
 
     {% if page.related_articles and page.related_articles.size > 0 %}
       {% for slug in page.related_articles %}
         {% assign related = all_notes | where: "slug", slug | first %}
-        {% if related %}{% assign has_manual_related = true %}{% endif %}
+        {% if related %}{% assign related_list = related_list | push: related %}{% endif %}
       {% endfor %}
     {% endif %}
 
-    {% if has_manual_related %}
-    <!-- MANUAL: curated links (e.g. "this year" → "next year" continuations) -->
+    {% if related_list.size > 0 %}
     <div class="article-read-also">
       <div class="read-also-heading">
-        <i data-lucide="book-open"></i>
-        <span>Read Also</span>
+        <i data-lucide="link-2"></i>
+        <span>Related Articles</span>
       </div>
-      {% for slug in page.related_articles %}
-        {% assign related = all_notes | where: "slug", slug | first %}
-        {% if related %}
+      {% for related in related_list %}
         <a href="{{ related.url }}" class="read-also-item">
           {{ related.title }}
         </a>
-        {% endif %}
       {% endfor %}
     </div>
-    {% else %}
-    <!-- AUTOMATIC FALLBACK: latest articles, current page excluded.
+    {% endif %}
+
+    <!-- READ ALSO — automatic, always independent of Related Articles above.
+         Pulls the latest articles site-wide, excluding the current page and
+         anything already shown in Related Articles, so nothing repeats.
          Default count is 5 — override per-article with related_count. -->
     {% assign related_limit = page.related_count | default: 5 %}
-    {% assign auto_related = all_notes | where_exp: "item", "item.url != page.url" | sort: "date" | reverse | slice: 0, related_limit %}
+    {% assign auto_related = all_notes | where_exp: "item", "item.url != page.url" | sort: "date" | reverse %}
+    {% if related_list.size > 0 %}
+      {% assign related_urls = related_list | map: "url" %}
+      {% assign auto_related = auto_related | where_exp: "item", "related_urls contains item.url == false" %}
+    {% endif %}
+    {% assign auto_related = auto_related | slice: 0, related_limit %}
+
     {% if auto_related.size > 0 %}
     <div class="article-read-also">
       <div class="read-also-heading">
@@ -72,7 +77,6 @@
         </a>
       {% endfor %}
     </div>
-    {% endif %}
     {% endif %}
 
     <!-- GALLERY — same pattern as product-bridge -->
