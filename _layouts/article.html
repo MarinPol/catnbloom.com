@@ -3,7 +3,7 @@
 
 <head>
   {% include head.html %}
-  {% if page.detail_images and page.detail_images.size > 0 %}
+  {% if page.image_url or page.detail_images and page.detail_images.size > 0 %}
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
   {% endif %}
 </head>
@@ -21,7 +21,9 @@
     <!-- MAIN IMAGE — only if provided -->
     {% if page.image_url %}
     <div class="product-image-container">
-      <img src="{{ page.image_url }}" alt="{{ page.title }}">
+      <a href="{{ page.image_url }}" data-lightbox="article-gallery" class="gallery-item">
+        <img src="{{ page.image_url }}" alt="{{ page.title }}">
+      </a>
     </div>
     {% endif %}
 
@@ -121,7 +123,7 @@
   </div>
 </div>
 
-{% if page.detail_images and page.detail_images.size > 0 %}
+{% if page.image_url or page.detail_images and page.detail_images.size > 0 %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
 {% endif %}
