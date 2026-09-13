@@ -90,6 +90,16 @@
           {% assign has_tp_variants = true %}
         {% endif %}
 
+        {% assign has_rb_variants = false %}
+        {% if page.redbubble_variants and page.redbubble_variants.size > 0 %}
+          {% assign has_rb_variants = true %}
+        {% endif %}
+
+        {% assign has_rb_single = false %}
+        {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' and page.redbubble_url != '' %}
+          {% assign has_rb_single = true %}
+        {% endif %}
+
         {% if page.teepublic_url or has_tp_variants %}
         <div class="platform-switcher">
 
@@ -99,7 +109,7 @@
                 Apparel
             </button>
 
-            {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
+            {% if has_rb_single or has_rb_variants %}
             <button class="switch-tab"
                     id="tab-rb"
                     onclick="togglePlatform('rb')">
@@ -142,8 +152,30 @@
             {% endif %}
         </div>
 
-        {% if page.redbubble_url and page.redbubble_url != '/' and page.redbubble_url != 'none' %}
+        <!-- REDBUBBLE CTA — mirrors the TeePublic logic above: supports either
+             a single link (legacy, page.redbubble_url) or several variants of
+             the SAME design (page.redbubble_variants). Variants never create
+             separate product pages/SKUs — same product, only the Redbubble
+             listing differs. -->
+        {% if has_rb_single or has_rb_variants %}
         <div class="cta-block" id="rb-cta" style="display:none;">
+            {% if has_rb_variants %}
+            <div class="buy-variants">
+                <p class="buy-variants-label">See on Redbubble — choose your version:</p>
+                <div class="buy-variants-row">
+                    {% for variant in page.redbubble_variants %}
+                    {% assign short_label = variant.label | remove: " version" | remove: " Version" %}
+                    <a href="{{ variant.url }}"
+                       class="buy-button-variant"
+                       target="_blank"
+                       aria-label="See on Redbubble — {{ variant.label }}">
+                        <i data-lucide="shopping-cart"></i>
+                        <span>{{ short_label }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
             <a href="{{ page.redbubble_url }}"
                class="buy-button"
                target="_blank">
@@ -152,6 +184,7 @@
                 <span>See on Redbubble</span>
 
             </a>
+            {% endif %}
         </div>
         {% endif %}
         {% endif %}
