@@ -11,7 +11,7 @@
   {% include breadcrumbs.html %}
 
   {% assign items = site[page.collection_id] | where_exp: "item", "item.status != 'hidden'" | sort: "date_added" | reverse %}
-  {% assign showcase_items = items | slice: 0, 3 %}
+  {% assign showcase_items = items | slice: 0, 6 %}
   {% assign grid_items = items | slice: 3, 999 %}
 
   <div class="container collection-page">
