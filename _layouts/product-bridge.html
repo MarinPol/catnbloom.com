@@ -14,6 +14,41 @@
 {% include header.html %}
 {% include breadcrumbs.html %}
 
+{% assign nav_items = site[page.collection] | where_exp: "item", "item.status != 'hidden'" | sort: "date_added" | reverse %}
+{% assign nav_total = nav_items.size %}
+{% assign nav_current_index = -1 %}
+{% for item in nav_items %}
+  {% if item.url == page.url %}
+    {% assign nav_current_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% if nav_current_index > -1 and nav_total > 1 %}
+  {% assign nav_prev_index = nav_current_index | minus: 1 %}
+  {% if nav_prev_index < 0 %}
+    {% assign nav_prev_index = nav_total | minus: 1 %}
+  {% endif %}
+
+  {% assign nav_next_index = nav_current_index | plus: 1 %}
+  {% if nav_next_index >= nav_total %}
+    {% assign nav_next_index = 0 %}
+  {% endif %}
+
+  {% assign nav_prev = nav_items[nav_prev_index] %}
+  {% assign nav_next = nav_items[nav_next_index] %}
+
+  <div class="product-pager">
+    <a href="{{ nav_prev.url }}" class="product-pager-link product-pager-prev" title="{{ nav_prev.title }}">
+      <i data-lucide="chevron-left"></i>
+      <span>Previous design</span>
+    </a>
+    <a href="{{ nav_next.url }}" class="product-pager-link product-pager-next" title="{{ nav_next.title }}">
+      <span>Next design</span>
+      <i data-lucide="chevron-right"></i>
+    </a>
+  </div>
+{% endif %}
+
 <div class="container product-page">
 
     <!-- LEFT BLOCK -->
