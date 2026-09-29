@@ -337,6 +337,46 @@ BREADCRUMBS
 LAYOUT
 ========================= */
 
+.product-pager {
+  max-width: 1050px;
+  margin: 10px auto 0;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.product-pager-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 6px 4px;
+  transition: color 0.2s ease;
+}
+
+.product-pager-link:hover {
+  color: var(--brand-primary);
+}
+
+.product-pager-link i {
+  width: 18px;
+  height: 18px;
+}
+
+.product-pager-next {
+  margin-left: auto;
+}
+
+@media (max-width: 480px) {
+  .product-pager-link span {
+    display: none;
+  }
+}
+
 .container {
   max-width: 1050px;
   margin: 40px auto;
