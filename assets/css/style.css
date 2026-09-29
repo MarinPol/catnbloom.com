@@ -661,6 +661,18 @@ SHOWCASE (DESKTOP)
   flex: 0 0 calc((100% - 36px) / 3);
 }
 
+/* Desktop: showcase box is fixed to 3 items (newest), items 4-6 are not
+   duplicated here — they already appear as the first 3 cards of the grid
+   below, so no design is lost. */
+.showcase-item:nth-child(n+4) {
+  display: none;
+}
+
+/* Desktop: box no longer scrolls (fixed 3), arrows are not needed. */
+.showcase-btn {
+  display: none;
+}
+
 .showcase-item img {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -696,6 +708,17 @@ MOBILE FIX (GRID MODE)
   .showcase-item {
     flex: unset;
     width: 100%;
+  }
+
+  /* Mobile: showcase shows all 6 newest (2x3 grid, no empty slot) */
+  .showcase-item:nth-child(n+4) {
+    display: block;
+  }
+
+  /* Mobile: grid's first 3 cards are the same items already shown above
+     in the showcase (items 4-6 by freshness) — hide to avoid duplicates. */
+  .product-grid .product-item:nth-child(-n+3) {
+    display: none;
   }
 
   .product-showcase {
