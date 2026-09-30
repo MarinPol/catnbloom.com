@@ -354,17 +354,22 @@ LAYOUT
   font-weight: 600;
   color: var(--text-secondary);
   text-decoration: none;
-  padding: 6px 4px;
-  transition: color 0.2s ease;
+  padding: 10px 16px;
+  border: 2px solid var(--brand-primary);
+  border-radius: 8px;
+  background: #fff;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .product-pager-link:hover {
-  color: var(--brand-primary);
+  background: var(--brand-primary);
+  color: #fff;
 }
 
 .product-pager-link i {
   width: 18px;
   height: 18px;
+  flex-shrink: 0;
 }
 
 .product-pager-next {
@@ -374,6 +379,10 @@ LAYOUT
 @media (max-width: 480px) {
   .product-pager-link span {
     display: none;
+  }
+
+  .product-pager-link {
+    padding: 10px 14px;
   }
 }
 
