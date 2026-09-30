@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" rel="stylesheet">
 
 </head>
- 
+
 <body>
 
 {% include header.html %}
@@ -39,12 +39,20 @@
 
   <div class="product-pager">
     <a href="{{ nav_prev.url }}" class="product-pager-link product-pager-prev" title="{{ nav_prev.title }}">
-      <i data-lucide="chevron-left"></i>
-      <span>Previous design</span>
+      <i data-lucide="chevron-left" class="product-pager-arrow"></i>
+      <img src="{{ nav_prev.image_url }}" alt="" class="product-pager-thumb" loading="lazy">
+      <span class="product-pager-text">
+        <span class="product-pager-label">Previous</span>
+        <span class="product-pager-title">{{ nav_prev.title }}</span>
+      </span>
     </a>
     <a href="{{ nav_next.url }}" class="product-pager-link product-pager-next" title="{{ nav_next.title }}">
-      <span>Next design</span>
-      <i data-lucide="chevron-right"></i>
+      <span class="product-pager-text">
+        <span class="product-pager-label">Next</span>
+        <span class="product-pager-title">{{ nav_next.title }}</span>
+      </span>
+      <img src="{{ nav_next.image_url }}" alt="" class="product-pager-thumb" loading="lazy">
+      <i data-lucide="chevron-right" class="product-pager-arrow"></i>
     </a>
   </div>
 {% endif %}
