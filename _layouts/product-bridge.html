@@ -41,20 +41,24 @@
     <a href="{{ nav_prev.url }}" class="product-pager-link product-pager-prev" title="{{ nav_prev.title }}">
       <i data-lucide="chevron-left" class="product-pager-arrow"></i>
       <img src="{{ nav_prev.image_url }}" alt="" class="product-pager-thumb" loading="lazy">
-      <span class="product-pager-text">
-        <span class="product-pager-label">Previous</span>
-        <span class="product-pager-title">{{ nav_prev.title }}</span>
-      </span>
+      <span class="product-pager-title">{{ nav_prev.title }}</span>
     </a>
     <a href="{{ nav_next.url }}" class="product-pager-link product-pager-next" title="{{ nav_next.title }}">
-      <span class="product-pager-text">
-        <span class="product-pager-label">Next</span>
-        <span class="product-pager-title">{{ nav_next.title }}</span>
-      </span>
+      <span class="product-pager-title">{{ nav_next.title }}</span>
       <img src="{{ nav_next.image_url }}" alt="" class="product-pager-thumb" loading="lazy">
       <i data-lucide="chevron-right" class="product-pager-arrow"></i>
     </a>
   </div>
+
+  {% if page.collection == "cottagecore" %}
+    {% assign other_items = site.witchy | where_exp: "item", "item.status != 'hidden'" | sort: "date_added" | reverse %}
+    {% assign other_first = other_items | first %}
+    <p class="product-pager-switch">Another collection: <a href="{{ other_first.url }}">Witchy Cats + Plants →</a></p>
+  {% elsif page.collection == "witchy" %}
+    {% assign other_items = site.cottagecore | where_exp: "item", "item.status != 'hidden'" | sort: "date_added" | reverse %}
+    {% assign other_first = other_items | first %}
+    <p class="product-pager-switch">Another collection: <a href="{{ other_first.url }}">Cottagecore Cats →</a></p>
+  {% endif %}
 {% endif %}
 
 <div class="container product-page">
