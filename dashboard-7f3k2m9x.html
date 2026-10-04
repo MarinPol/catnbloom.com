@@ -33,6 +33,17 @@ sitemap: false
     .link-no { color: #999; }
     .feature-none { color: #b04a4a; }
     .feature-list { font-size: 13px; }
+    /* Thumbnail column: small preview + larger hover preview */
+    .thumb-cell { width: 88px; padding: 6px; }
+    .thumb-wrap { position: relative; display: inline-block; width: 72px; height: 72px; }
+    .thumb-wrap .thumb-small { width: 72px; height: 72px; object-fit: cover; display: block;
+      border-radius: 6px; border: 1px solid #ddd; background: #f4f4f4; }
+    .thumb-wrap .thumb-large { display: none; position: absolute; left: 80px; top: -40px; z-index: 20;
+      width: 320px; height: 320px; object-fit: contain; background: #fff; border: 1px solid #ccc;
+      border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.25); }
+    .thumb-wrap:hover .thumb-large { display: block; }
+    .thumb-none { display: inline-block; width: 72px; height: 72px; line-height: 72px; text-align: center;
+      font-size: 11px; color: #b04a4a; border: 1px dashed #ccc; border-radius: 6px; }
   </style>
 </head>
 <body>
@@ -54,6 +65,7 @@ sitemap: false
   <table>
     <thead>
       <tr>
+        <th style="cursor:default;">Preview</th>
         <th class="sortable" data-key="sku">SKU</th>
         <th data-key="title">Title</th>
         <th data-key="collection">Collection</th>
@@ -113,6 +125,25 @@ sitemap: false
           {% assign tp_count = 0 %}
         {% endif %}
 
+        {% comment %} Thumbnail: ImageKit resize on the fly (retina-ready); other hosts used as-is {% endcomment %}
+        {% assign img_src = item.image_url | default: "" | strip %}
+        {% assign thumb_small = "" %}
+        {% assign thumb_large = "" %}
+        {% if img_src != "" %}
+          {% if img_src contains "ik.imagekit.io" %}
+            {% if img_src contains "?" %}
+              {% assign tr_join = "&" %}
+            {% else %}
+              {% assign tr_join = "?" %}
+            {% endif %}
+            {% capture thumb_small %}{{ img_src }}{{ tr_join }}tr=w-160,h-160,c-at_max,f-auto{% endcapture %}
+            {% capture thumb_large %}{{ img_src }}{{ tr_join }}tr=w-640,h-640,c-at_max,f-auto{% endcapture %}
+          {% else %}
+            {% assign thumb_small = img_src %}
+            {% assign thumb_large = img_src %}
+          {% endif %}
+        {% endif %}
+
         <tr class="inventory-row"
             data-sku="{{ item.sku | downcase }}"
             data-title="{{ item.title | downcase }}"
@@ -123,6 +154,16 @@ sitemap: false
             data-updated="{{ item.updated_at }}"
             data-featurecount="{{ season_count }}"
             data-albumcount="{{ album_count }}">
+          <td class="thumb-cell">
+            {% if thumb_small != "" %}
+              <a class="thumb-wrap" href="/{{ item.collection_slug }}/{{ item.sku | downcase }}/" target="_blank" rel="noopener">
+                <img class="thumb-small" src="{{ thumb_small }}" alt="{{ item.sku }}" loading="lazy" width="72" height="72">
+                <img class="thumb-large" src="{{ thumb_large }}" alt="" loading="lazy">
+              </a>
+            {% else %}
+              <span class="thumb-none">no image</span>
+            {% endif %}
+          </td>
           <td><a href="/{{ item.collection_slug }}/{{ item.sku | downcase }}/" target="_blank" rel="noopener">{{ item.sku }}</a></td>
           <td>{{ item.title }}</td>
           <td>{{ item.collection_name }}</td>
