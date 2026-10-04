@@ -42,6 +42,17 @@ sitemap: false
       width: 320px; height: 320px; object-fit: contain; background: #fff; border: 1px solid #ccc;
       border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.25); }
     .thumb-wrap:hover .thumb-large { display: block; }
+    .thumb-broken { border: 2px solid #b04a4a !important; }
+    .img-ok { color: #4a6b3a; font-weight: 600; }
+    .img-bad { color: #b04a4a; font-weight: 700; }
+    .img-pending { color: #999; }
+    .img-issues { font-size: 12px; line-height: 1.5; margin-top: 4px; }
+    .img-issues a { color: #b04a4a; font-weight: 600; }
+    .toolbar { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 16px; }
+    .toolbar .search-box { margin-top: 0; }
+    .check-btn { padding: 8px 14px; cursor: pointer; }
+    .check-progress { font-size: 13px; color: #555; }
+    .only-bad { font-size: 14px; cursor: pointer; }
     .thumb-none { display: inline-block; width: 72px; height: 72px; line-height: 72px; text-align: center;
       font-size: 11px; color: #b04a4a; border: 1px dashed #ccc; border-radius: 6px; }
   </style>
@@ -60,7 +71,12 @@ sitemap: false
     <div class="summary-card">Witchy (C02)<strong>{{ c2_products }}</strong></div>
   </div>
 
-  <input type="text" id="searchBox" class="search-box" placeholder="Search by SKU or Title…">
+  <div class="toolbar">
+    <input type="text" id="searchBox" class="search-box" placeholder="Search by SKU or Title…">
+    <button type="button" id="checkImagesBtn" class="check-btn">Check all images</button>
+    <label class="only-bad"><input type="checkbox" id="onlyBad"> Only rows with image problems</label>
+    <span class="check-progress" id="checkProgress"></span>
+  </div>
 
   <table>
     <thead>
@@ -76,6 +92,7 @@ sitemap: false
         <th class="sortable" data-key="updated">Updated</th>
         <th class="sortable" data-key="featurecount">Wheel (Seasons)</th>
         <th class="sortable" data-key="albumcount">Albums</th>
+        <th class="sortable" data-key="brokencount">Images</th>
       </tr>
     </thead>
     <tbody id="inventoryBody">
@@ -144,6 +161,22 @@ sitemap: false
           {% endif %}
         {% endif %}
 
+        {% comment %} Image list for broken-URL check. URL resolution mirrors product-bridge.html (http = external, else local prefix). Empty entries are kept: product-bridge renders them as broken squares. {% endcomment %}
+        {% assign check_imgs = "" | split: "" %}
+        {% assign main_check = item.image_url | default: "" | strip %}
+        {% assign check_imgs = check_imgs | push: main_check %}
+        {% for d in item.detail_images %}
+          {% assign d_clean = d | default: "" | strip %}
+          {% if d_clean == "" %}
+            {% assign check_imgs = check_imgs | push: "" %}
+          {% elsif d_clean contains 'http' %}
+            {% assign check_imgs = check_imgs | push: d_clean %}
+          {% else %}
+            {% capture d_local %}/assets/images/products/{{ d_clean }}{% endcapture %}
+            {% assign check_imgs = check_imgs | push: d_local %}
+          {% endif %}
+        {% endfor %}
+
         <tr class="inventory-row"
             data-sku="{{ item.sku | downcase }}"
             data-title="{{ item.title | downcase }}"
@@ -153,11 +186,13 @@ sitemap: false
             data-dateadded="{{ item.date_added }}"
             data-updated="{{ item.updated_at }}"
             data-featurecount="{{ season_count }}"
-            data-albumcount="{{ album_count }}">
+            data-albumcount="{{ album_count }}"
+            data-brokencount="-1"
+            data-images="{{ check_imgs | jsonify | escape }}">
           <td class="thumb-cell">
             {% if thumb_small != "" %}
               <a class="thumb-wrap" href="/{{ item.collection_slug }}/{{ item.sku | downcase }}/" target="_blank" rel="noopener">
-                <img class="thumb-small" src="{{ thumb_small }}" alt="{{ item.sku }}" loading="lazy" width="72" height="72">
+                <img class="thumb-small" src="{{ thumb_small }}" alt="{{ item.sku }}" loading="lazy" width="72" height="72" onerror="this.classList.add('thumb-broken')">
                 <img class="thumb-large" src="{{ thumb_large }}" alt="" loading="lazy">
               </a>
             {% else %}
@@ -204,6 +239,7 @@ sitemap: false
               <span class="feature-none">— not featured</span>
             {% endif %}
           </td>
+          <td class="img-cell"><span class="img-pending">not checked</span></td>
         </tr>
       {% endfor %}
     </tbody>
@@ -219,6 +255,9 @@ sitemap: false
       const searchBox = document.getElementById('searchBox');
       const loadMoreBtn = document.getElementById('loadMoreBtn');
       const noResults = document.getElementById('noResults');
+      const onlyBadBox = document.getElementById('onlyBad');
+      const checkBtn = document.getElementById('checkImagesBtn');
+      const progressEl = document.getElementById('checkProgress');
       const headers = document.querySelectorAll('th.sortable');
 
       const PAGE_SIZE = 24;
@@ -232,7 +271,9 @@ sitemap: false
 
       function getMatchingRows() {
         const query = searchBox.value.trim().toLowerCase();
+        const onlyBad = onlyBadBox.checked;
         return getRows().filter(row => {
+          if (onlyBad && !(Number(row.dataset.brokencount) > 0)) return false;
           if (!query) return true;
           return row.dataset.sku.includes(query) || row.dataset.title.includes(query);
         });
@@ -251,7 +292,7 @@ sitemap: false
 
         allRows.forEach(row => row.style.display = 'none');
 
-        const isFiltering = searchBox.value.trim().length > 0;
+        const isFiltering = searchBox.value.trim().length > 0 || onlyBadBox.checked;
         const toShow = isFiltering ? matching : matching.slice(0, visibleCount);
 
         toShow.forEach(row => row.style.display = 'table-row');
@@ -300,6 +341,94 @@ sitemap: false
         visibleCount += PAGE_SIZE;
         render();
       });
+
+      onlyBadBox.addEventListener('change', applySearch);
+
+      // ---- Broken image check ----
+      // Loads every image of every row (including rows not shown yet) via new Image().
+      // ImageKit URLs are requested as small 100px versions to save bandwidth;
+      // this still detects a missing file. Other hosts are requested as-is.
+      const TIMEOUT_MS = 20000;
+      const CONCURRENCY = 8;
+
+      function checkUrl(url) {
+        return new Promise(resolve => {
+          let testUrl = url;
+          if (url.indexOf('ik.imagekit.io') !== -1) {
+            testUrl = url + (url.indexOf('?') === -1 ? '?' : '&') + 'tr=w-100';
+          }
+          const img = new Image();
+          const timer = setTimeout(() => { img.src = ''; resolve('timeout'); }, TIMEOUT_MS);
+          img.onload = () => { clearTimeout(timer); resolve('ok'); };
+          img.onerror = () => { clearTimeout(timer); resolve('failed'); };
+          img.src = testUrl;
+        });
+      }
+
+      function esc(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+      }
+
+      function renderRowResult(row, results) {
+        const cell = row.querySelector('.img-cell');
+        const bad = results.filter(r => r.status !== 'ok');
+        row.dataset.brokencount = String(bad.length);
+        if (bad.length === 0) {
+          cell.innerHTML = '<span class="img-ok">✓ ' + results.length + '/' + results.length + '</span>';
+          return;
+        }
+        let html = '<span class="img-bad">⚠ ' + bad.length + ' problem' + (bad.length > 1 ? 's' : '') + '</span><div class="img-issues">';
+        bad.forEach(r => {
+          const label = r.index === 0 ? 'main image' : 'detail #' + r.index;
+          if (r.status === 'empty') {
+            html += esc(label) + ': empty entry<br>';
+          } else {
+            html += '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(label) + '</a>: ' + r.status + '<br>';
+          }
+        });
+        cell.innerHTML = html + '</div>';
+      }
+
+      async function runCheck() {
+        checkBtn.disabled = true;
+        const tasks = [];
+        const perRow = new Map();
+        getRows().forEach(row => {
+          let urls = [];
+          try { urls = JSON.parse(row.dataset.images || '[]'); } catch (e) { urls = []; }
+          const results = urls.map((url, index) => ({ url, index, status: url === '' ? 'empty' : 'pending' }));
+          perRow.set(row, results);
+          row.querySelector('.img-cell').innerHTML = '<span class="img-pending">checking…</span>';
+          results.forEach(r => { if (r.status === 'pending') tasks.push({ row, r }); });
+        });
+
+        const total = tasks.length;
+        let done = 0;
+        let cursor = 0;
+        progressEl.textContent = 'Checking 0/' + total + '…';
+
+        async function worker() {
+          while (cursor < tasks.length) {
+            const t = tasks[cursor++];
+            t.r.status = await checkUrl(t.r.url);
+            done++;
+            progressEl.textContent = 'Checking ' + done + '/' + total + '…';
+          }
+        }
+        await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+
+        let problemRows = 0;
+        perRow.forEach((results, row) => {
+          renderRowResult(row, results);
+          if (Number(row.dataset.brokencount) > 0) problemRows++;
+        });
+        progressEl.textContent = 'Done: ' + total + ' images checked, ' + problemRows + ' row(s) with problems.';
+        checkBtn.disabled = false;
+        checkBtn.textContent = 'Re-check all images';
+        render();
+      }
+
+      checkBtn.addEventListener('click', runCheck);
 
       // Default sort: SKU ascending (matches Liquid-side sort, keeps JS/data-attrs authoritative)
       sortRows('sku');
