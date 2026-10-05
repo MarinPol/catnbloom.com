@@ -29,7 +29,7 @@
   {% endfor %}
 
   {% assign showcase_items = smart_items | slice: 0, 6 %}
-  {% assign grid_items = smart_items | slice: 6, 999 %}
+  {% assign grid_items = smart_items | slice: 3, 999 %}
 
   <div class="container collection-page">
 
@@ -75,7 +75,7 @@
   </div>
 
   {% if showcase_items.size > 0 %}
-  <section class="product-showcase">
+  <section class="product-showcase showcase-fixed">
     <div class="showcase-wrapper">
       <button class="showcase-btn left" onclick="moveShowcase(-1)">&#8249;</button>
 
