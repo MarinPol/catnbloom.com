@@ -1237,6 +1237,15 @@ ARTICLE BODY
   font-style: italic;
 }
 
+.article-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: var(--space-3) auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
 /* =========================
 READ ALSO (left block)
 ========================= */
