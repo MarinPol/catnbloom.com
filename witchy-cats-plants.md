@@ -15,4 +15,7 @@ artistic_direction: "Digitally illustrated compositions combining symbolic tarot
 design_intent: "Created as wearable art inspired by gentle mysticism — designs made for everyday use on clothing, prints, stickers, and small accessories."
 
 tagline: "Find your everyday magic with CatnBloom."
+
+seo_title: "Witchy Cat & Tarot Cat Art | CatnBloom Studio"
+seo_description: "Illustrated witchy cats among tarot symbols, herbs and moonlit botanicals. Original designs by CatnBloom Studio, available on apparel, stickers and gifts."
 ---

@@ -15,4 +15,7 @@ artistic_direction: "Digitally illustrated compositions with cats resting in flo
 design_intent: "Created as wearable art for a slower lifestyle — designs meant for everyday use like clothing, prints, and small accessories."
 
 tagline: "Find your everyday magic with CatnBloom."
+
+seo_title: "Cottagecore Cat Art & Designs | CatnBloom Studio"
+seo_description: "Illustrated cottagecore cats among flowers, gardens and quiet countryside scenes. Original designs by CatnBloom Studio, available on apparel and everyday gifts."
 ---
