@@ -7,105 +7,117 @@
 
 <body>
 
-  {% include header.html %}
-
   {% comment %}
   =====================================================
-  LANDING LAYOUT v2 (editorial theme page, e.g. /t-shirts/)
-  Built from the author's screenshot mock-up (landing-prototip2).
+  LANDING LAYOUT v3 (editorial theme page, e.g. /t-shirts/)
+
+  NO site header here on purpose: the landing has its own hero (collage +
+  H1 bar with a "Home" pill). The global footer is still included.
 
   Blocks:
     1. Hero            - image collage + H1 bar (the only H1 on the page)
-    2. Differences     - "What makes our designs different", 3 cards
+    2. Differences     - 3 cards
     3. Studio Picks    - numbered list + stage (JS only switches the stage)
-    4. History         - "A short history of the tee", compact timeline
-    5. Optional        - Markdown body of the page (rendered only if not empty)
+    4. History         - "A short history of the tee"
+    5. Divider         - grass strip
+    6. Optional        - Markdown body of the page
 
-  All text is server-rendered by Liquid, so every title and story is in the
-  HTML for search engines. JS only toggles which slide is visible.
+  STUDIO PICKS DATA (front matter, one line per design, easy to swap):
+    picks:
+      - sku: "C01-041"          # card is looked up by SKU
+        name: "Design name"     # shown only while the SKU has no card yet
+        print: "https://..."    # optional transparent print for the tee mock-up
+        # optional fine tuning of the print on the tee (percent of the photo):
+        # print_x: 40.5   print_y: 41.2   print_w: 24.7
+    picks_stage_image: {src, alt}   # blank T-shirt photo shared by all designs
 
-  Front matter used by this layout:
-    hero_title, hero_subtitle, hero_text (Markdown)
-    hero_collections: [{label, url}]
-    hero_collage: main / banner / tee / oval, each {src, alt}
-    differences_title, differences: [{title, text}], differences_deco: {src}
-    picks_title, picks_intro, picks_note, products: [SKU, ...]
-    history_title, history_items: [{year, text, image: {src, alt}}],
-    history_note, history_deco: {src}, divider_image: {src}
+  A pick whose SKU matches no card is still rendered (name + empty thumb),
+  so the page layout is complete while SKUs are being filled in.
+  A pick whose card has status: hidden is skipped everywhere.
 
-  Optional field in a product card (not in this page):
-    tee_image - large image of the design on a T-shirt (visual mock-up);
-                falls back to image_url when it is not set.
-
-  External links (TeePublic / Redbubble) are rendered only when the product
-  card has a valid URL. The page never presents itself as a shop.
+  Product thumbnails from ImageKit are requested resized (?tr=...) to keep
+  the page light.
   =====================================================
   {% endcomment %}
 
   {% assign all_products = site.cottagecore | concat: site.witchy %}
 
-  {% assign picks = "" | split: "" %}
-  {% for pid in page.products %}
-    {% assign found = all_products | where: "sku", pid | first %}
-    {% if found and found.status != 'hidden' %}
-      {% assign picks = picks | push: found %}
+  {% comment %} Build the working lists once: active picks + their resolved cards {% endcomment %}
+  {% assign active_picks = "" | split: "" %}
+  {% assign resolved = "" | split: "" %}
+  {% for pk in page.picks %}
+    {% assign card = all_products | where: "sku", pk.sku | first %}
+    {% if card %}
+      {% if card.status != 'hidden' %}
+        {% assign active_picks = active_picks | push: pk %}
+        {% assign resolved = resolved | push: card %}
+      {% endif %}
+    {% else %}
+      {% assign active_picks = active_picks | push: pk %}
     {% endif %}
   {% endfor %}
 
-  {% assign dated_picks = picks | where_exp: "i", "i.date_added" | sort: "date_added" %}
-  {% assign newest = dated_picks | last %}
+  {% assign dated_cards = resolved | where_exp: "i", "i.date_added" | sort: "date_added" %}
+  {% assign newest = dated_cards | last %}
 
   {% assign collage = page.hero_collage %}
+  {% assign stage_base = page.picks_stage_image %}
 
   {% comment %} ============ 1. HERO ============ {% endcomment %}
   <header class="landing-hero">
 
-    {% if collage.main.src and collage.main.src != '' %}
-    <div class="landing-collage">
+    <div class="landing-hero-top">
+      <div class="landing-collage">
 
-      <figure class="landing-collage-main">
-        <img src="{{ collage.main.src }}"
-             alt="{{ collage.main.alt | default: page.hero_title | default: page.title | escape }}"
-             fetchpriority="high">
-      </figure>
-
-      {% if collage.banner.src and collage.banner.src != '' %}
-      <figure class="landing-collage-banner">
-        <img src="{{ collage.banner.src }}"
-             alt="{{ collage.banner.alt | default: '' | escape }}">
-      </figure>
-      {% endif %}
-
-      {% if collage.tee.src and collage.tee.src != '' %}
-      <figure class="landing-collage-tee">
-        <img src="{{ collage.tee.src }}"
-             alt="{{ collage.tee.alt | default: '' | escape }}">
-      </figure>
-      {% endif %}
-
-      {% if page.hero_text or page.hero_collections %}
-      <div class="landing-hero-info">
-        {% if page.hero_collections and page.hero_collections.size > 0 %}
-        <ul class="landing-hero-collections">
-          {% for c in page.hero_collections %}
-          <li><a href="{{ c.url }}">{{ c.label }}</a></li>
-          {% endfor %}
-        </ul>
+        {% if collage.main.src and collage.main.src != '' %}
+        <figure class="landing-collage-main">
+          <img src="{{ collage.main.src }}"
+               alt="{{ collage.main.alt | default: page.hero_title | default: page.title | escape }}"
+               width="1000" height="951"
+               fetchpriority="high">
+        </figure>
         {% endif %}
-        {% if page.hero_text %}
-        <div class="landing-hero-text">{{ page.hero_text | markdownify }}</div>
+
+        {% if collage.banner.src and collage.banner.src != '' %}
+        <figure class="landing-collage-banner">
+          <img src="{{ collage.banner.src }}"
+               alt="{{ collage.banner.alt | default: '' | escape }}"
+               width="860" height="265">
+        </figure>
         {% endif %}
+
+        {% if collage.tee.src and collage.tee.src != '' %}
+        <figure class="landing-collage-tee">
+          <img src="{{ collage.tee.src }}"
+               alt="{{ collage.tee.alt | default: '' | escape }}"
+               width="900" height="475">
+        </figure>
+        {% endif %}
+
+        {% if page.hero_text or page.hero_collections %}
+        <div class="landing-hero-info">
+          {% if page.hero_collections and page.hero_collections.size > 0 %}
+          <ul class="landing-hero-collections">
+            {% for c in page.hero_collections %}
+            <li><a href="{{ c.url }}">{{ c.label }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% if page.hero_text %}
+          <div class="landing-hero-text">{{ page.hero_text | markdownify }}</div>
+          {% endif %}
+        </div>
+        {% endif %}
+
+        {% if collage.oval.src and collage.oval.src != '' %}
+        <img class="landing-hero-oval"
+             src="{{ collage.oval.src }}"
+             alt="{{ collage.oval.alt | default: '' | escape }}"
+             width="641" height="408">
+        {% endif %}
+
       </div>
-      {% endif %}
-
-      {% if collage.oval.src and collage.oval.src != '' %}
-      <img class="landing-hero-oval"
-           src="{{ collage.oval.src }}"
-           alt="{{ collage.oval.alt | default: '' | escape }}">
-      {% endif %}
-
     </div>
-    {% endif %}
 
     <div class="landing-hero-bar">
       <h1>{{ page.hero_title | default: page.title }}</h1>
@@ -120,6 +132,8 @@
 
   </header>
 
+  <main>
+
   {% comment %} ============ 2. WHAT MAKES OUR DESIGNS DIFFERENT ============ {% endcomment %}
   {% if page.differences and page.differences.size > 0 %}
   <section class="landing-section landing-differences" aria-labelledby="diffHeading">
@@ -130,6 +144,7 @@
            src="{{ page.differences_deco.src }}"
            alt=""
            aria-hidden="true"
+           width="208" height="267"
            loading="lazy">
       {% endif %}
 
@@ -153,7 +168,7 @@
   {% endif %}
 
   {% comment %} ============ 3. STUDIO PICKS ============ {% endcomment %}
-  {% if picks.size > 0 %}
+  {% if active_picks.size > 0 %}
   <section class="landing-section landing-picks" id="studioPicks" aria-labelledby="picksHeading">
     <div class="landing-panel">
 
@@ -171,20 +186,29 @@
 
           <div class="picks-column">
             <ol class="picks-list">
-              {% for p in picks %}
-              {% assign row_title = p.title | remove: " — Wearable Art" %}
+              {% for pk in active_picks %}
+              {% assign card = all_products | where: "sku", pk.sku | first %}
+              {% assign row_title = card.title | remove: " — Wearable Art" %}
+              {% if row_title == "" %}{% assign row_title = pk.name %}{% endif %}
+              {% assign thumb = card.image_url %}
+              {% if thumb contains 'ik.imagekit.io' %}{% assign thumb = thumb | append: '?tr=w-128,h-128,c-at_max,f-auto' %}{% endif %}
               <li class="picks-item">
                 <a class="picks-link"
-                   href="{{ p.url }}"
+                   href="{% if card %}{{ card.url }}{% else %}#studioPicks{% endif %}"
                    {% if forloop.first %}aria-current="true"{% endif %}>
                   <span class="picks-number">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
+                  {% if card and thumb != "" %}
                   <img class="picks-thumb"
-                       src="{{ p.image_url }}"
+                       src="{{ thumb }}"
                        alt="Illustration: {{ row_title | escape }}"
+                       width="64" height="64"
                        loading="lazy">
+                  {% else %}
+                  <span class="picks-thumb picks-thumb-empty" aria-hidden="true"></span>
+                  {% endif %}
                   <span class="picks-title">
                     {{ row_title }}
-                    {% if newest and p.sku == newest.sku %}<span class="picks-badge">new</span>{% endif %}
+                    {% if newest and card.sku == newest.sku %}<span class="picks-badge">new</span>{% endif %}
                   </span>
                 </a>
               </li>
@@ -193,10 +217,13 @@
 
             {% if newest %}
             {% assign newest_title = newest.title | remove: " — Wearable Art" %}
+            {% assign newest_thumb = newest.image_url %}
+            {% if newest_thumb contains 'ik.imagekit.io' %}{% assign newest_thumb = newest_thumb | append: '?tr=w-128,h-160,c-at_max,f-auto' %}{% endif %}
             <a class="picks-newest" href="{{ newest.url }}">
               <img class="picks-newest-thumb"
-                   src="{{ newest.image_url }}"
+                   src="{{ newest_thumb }}"
                    alt="Illustration: {{ newest_title | escape }}"
+                   width="64" height="80"
                    loading="lazy">
               <span class="picks-newest-text">
                 <span class="picks-newest-tag">Newest design</span>
@@ -208,58 +235,88 @@
           </div>
 
           <div class="picks-stage" aria-live="polite">
-            {% for p in picks %}
-            {% assign stage_title = p.title | remove: " — Wearable Art" %}
-            {% assign stage_image = p.tee_image | default: p.image_url %}
+            {% for pk in active_picks %}
+            {% assign card = all_products | where: "sku", pk.sku | first %}
+            {% assign stage_title = card.title | remove: " — Wearable Art" %}
+            {% if stage_title == "" %}{% assign stage_title = pk.name %}{% endif %}
+
+            {% assign has_print = false %}
+            {% if pk.print and pk.print != '' and stage_base.src and stage_base.src != '' %}
+              {% assign has_print = true %}
+            {% endif %}
 
             {% assign tp_variants = false %}
-            {% if p.teepublic_variants and p.teepublic_variants.size > 0 %}
+            {% if card.teepublic_variants and card.teepublic_variants.size > 0 %}
               {% assign tp_variants = true %}
             {% endif %}
             {% assign tp_single = false %}
-            {% if p.teepublic_url and p.teepublic_url != '' and p.teepublic_url != 'none' and p.teepublic_url != '/' %}
+            {% if card.teepublic_url and card.teepublic_url != '' and card.teepublic_url != 'none' and card.teepublic_url != '/' %}
               {% assign tp_single = true %}
             {% endif %}
             {% assign rb_variants = false %}
-            {% if p.redbubble_variants and p.redbubble_variants.size > 0 %}
+            {% if card.redbubble_variants and card.redbubble_variants.size > 0 %}
               {% assign rb_variants = true %}
             {% endif %}
             {% assign rb_single = false %}
-            {% if p.redbubble_url and p.redbubble_url != '' and p.redbubble_url != 'none' and p.redbubble_url != '/' %}
+            {% if card.redbubble_url and card.redbubble_url != '' and card.redbubble_url != 'none' and card.redbubble_url != '/' %}
               {% assign rb_single = true %}
             {% endif %}
 
             <article class="picks-slide" {% unless forloop.first %}hidden{% endunless %}>
-              <figure class="picks-figure">
-                {% if p.tee_image and p.tee_image != '' %}
-                  <img src="{{ stage_image }}"
+
+              {% if has_print %}
+              <figure class="picks-figure picks-figure-tee">
+                <div class="tee-stage"
+                     style="--print-x: {{ pk.print_x | default: 40.5 }}%; --print-y: {{ pk.print_y | default: 41.2 }}%; --print-w: {{ pk.print_w | default: 24.7 }}%;">
+                  <img class="tee-stage-base"
+                       src="{{ stage_base.src }}"
+                       alt=""
+                       {% unless forloop.first %}loading="lazy"{% endunless %}>
+                  <img class="tee-stage-print"
+                       src="{{ pk.print }}"
                        alt="{{ stage_title | escape }} design on a T-shirt (visual mock-up)"
                        {% unless forloop.first %}loading="lazy"{% endunless %}>
-                {% else %}
-                  <img src="{{ stage_image }}"
-                       alt="{{ p.alt_text | default: stage_title | escape }}"
-                       {% unless forloop.first %}loading="lazy"{% endunless %}>
-                {% endif %}
-                {% if p.tee_image and p.tee_image != '' %}
-                  <figcaption class="picks-caption">Product image is a visual mock-up.</figcaption>
-                {% endif %}
+                </div>
+                <figcaption class="picks-caption">Product image is a visual mock-up.</figcaption>
               </figure>
+              {% elsif card %}
+              {% assign stage_image = card.tee_image | default: card.image_url %}
+              {% if stage_image contains 'ik.imagekit.io' %}{% assign stage_image = stage_image | append: '?tr=w-960,f-auto' %}{% endif %}
+              <figure class="picks-figure">
+                <img src="{{ stage_image }}"
+                     alt="{{ card.alt_text | default: stage_title | escape }}"
+                     {% unless forloop.first %}loading="lazy"{% endunless %}>
+              </figure>
+              {% elsif stage_base.src and stage_base.src != '' %}
+              <figure class="picks-figure picks-figure-tee">
+                <div class="tee-stage">
+                  <img class="tee-stage-base"
+                       src="{{ stage_base.src }}"
+                       alt="{{ stage_base.alt | default: '' | escape }}"
+                       {% unless forloop.first %}loading="lazy"{% endunless %}>
+                </div>
+              </figure>
+              {% endif %}
 
               <div class="picks-slide-head">
                 <h3 class="picks-slide-title">{{ stage_title }}</h3>
+                {% if card %}
                 <a class="picks-view-btn"
-                   href="{{ p.url }}"
+                   href="{{ card.url }}"
                    aria-label="View design: {{ stage_title | escape }}">View design</a>
+                {% endif %}
               </div>
 
-              <p class="picks-slide-story">{{ p.story | strip_html | strip }}</p>
+              {% if card and card.story %}
+              <p class="picks-slide-story">{{ card.story | strip_html | strip }}</p>
+              {% endif %}
 
               {% if tp_variants or tp_single or rb_variants or rb_single %}
               <p class="picks-note">{{ page.picks_note | default: "Our site is a studio showcase. The shirts are made and shipped by TeePublic and Redbubble." }}</p>
 
               <div class="picks-actions">
                 {% if tp_variants %}
-                  {% for variant in p.teepublic_variants %}
+                  {% for variant in card.teepublic_variants %}
                     {% assign short_label = variant.label | remove: " version" | remove: " Version" %}
                     <a class="buy-button-variant picks-buy"
                        href="{{ variant.url }}"
@@ -271,7 +328,7 @@
                   {% endfor %}
                 {% elsif tp_single %}
                   <a class="buy-button-variant picks-buy"
-                     href="{{ p.teepublic_url }}"
+                     href="{{ card.teepublic_url }}"
                      target="_blank"
                      rel="noopener"
                      aria-label="See on TeePublic: {{ stage_title | escape }}">
@@ -280,7 +337,7 @@
                 {% endif %}
 
                 {% if rb_variants %}
-                  {% for variant in p.redbubble_variants %}
+                  {% for variant in card.redbubble_variants %}
                     {% assign short_label = variant.label | remove: " version" | remove: " Version" %}
                     <a class="buy-button-variant picks-buy"
                        href="{{ variant.url }}"
@@ -292,7 +349,7 @@
                   {% endfor %}
                 {% elsif rb_single %}
                   <a class="buy-button-variant picks-buy"
-                     href="{{ p.redbubble_url }}"
+                     href="{{ card.redbubble_url }}"
                      target="_blank"
                      rel="noopener"
                      aria-label="See on Redbubble: {{ stage_title | escape }}">
@@ -325,15 +382,15 @@
         <ol class="history-list">
           {% for h in page.history_items %}
           <li class="history-item">
+            {% if h.image.src and h.image.src != '' %}
+            <img class="history-photo"
+                 src="{{ h.image.src }}"
+                 alt="{{ h.image.alt | default: '' | escape }}"
+                 loading="lazy">
+            {% endif %}
             <div class="history-head">
               <span class="history-year">{{ h.year }}</span>
               <span class="history-dots" aria-hidden="true"></span>
-              {% if h.image.src and h.image.src != '' %}
-              <img class="history-photo"
-                   src="{{ h.image.src }}"
-                   alt="{{ h.image.alt | default: '' | escape }}"
-                   loading="lazy">
-              {% endif %}
             </div>
             <p class="history-text">{{ h.text }}</p>
           </li>
@@ -350,6 +407,7 @@
            src="{{ page.history_deco.src }}"
            alt=""
            aria-hidden="true"
+           width="300" height="206"
            loading="lazy">
       {% endif %}
 
@@ -362,6 +420,7 @@
        src="{{ page.divider_image.src }}"
        alt=""
        aria-hidden="true"
+       width="1200" height="155"
        loading="lazy">
   {% endif %}
 
@@ -372,6 +431,8 @@
     {{ content }}
   </section>
   {% endif %}
+
+  </main>
 
   <script>
   (function () {
