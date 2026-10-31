@@ -12,49 +12,47 @@ seo_description: "Explore illustrated T-shirts featuring CatnBloom Studio design
 
 # =====================================================================
 # STUDIO PICKS - THE ONLY PLACE YOU EDIT TO CHANGE THE SET OF DESIGNS
-# One block per design. The order here = numbers 01-10 on the page.
-#   sku   : SKU of the product card (looked up automatically)
-#   name  : shown only until the SKU has a card, then the card title is used
-#   print : transparent print image for the T-shirt mock-up (optional)
-# Replace "C0X-XXX" with the real SKU. Until then the row still shows on the
-# page (name + empty thumbnail), so the layout is never empty.
-# To swap a design: change sku (and print). Nothing else.
+# One line per design: just the SKU. Order here = numbers 01-10 on the page.
+# Title, thumbnail, story, "View design", TeePublic and Redbubble links are
+# all taken from the product card with that SKU. Nothing is typed twice.
+#
+# Pattern: odd rows = Cottagecore (C01-*) on the light tee,
+#          even rows = Witchy (C02-*) on the black tee.
+#
+# Print on the tee (transparent WebP, 300x360) is NOT stored in the repo.
+# It is loaded from external storage by SKU:
+#   picks_print_base + lowercase SKU + "." + picks_print_ext
+#   e.g. https://ik.imagekit.io/catnbloom/prints/c01-001.webp
+# Upload the file to ImageKit folder /prints/ named like the SKU - that is all.
+# If the file is missing, the slide shows the product image instead.
+#
+# Optional per-pick keys (rarely needed):
+#   name: "..."   shown only while the SKU has no card yet
+#   tee: dark     force the black tee (default: C02-* dark, others light)
+#   print: "https://..."   explicit print URL instead of the automatic one
+#   print_x / print_y / print_w   fine tuning in percent of the tee photo
+# To swap a design: change the sku. Nothing else.
 # =====================================================================
 picks_stage_image:
   src: "/assets/images/t-shirts/tee-base.webp"
   alt: "Plain white T-shirt hanging on a brick wall by a sunlit window"
+picks_stage_image_dark:
+  src: "/assets/images/t-shirts/tee-base-black.webp"
+  alt: "Plain black T-shirt hanging on a brick wall by a sunlit window"
+picks_print_base: "https://ik.imagekit.io/catnbloom/prints/"
+picks_print_ext: "webp"
 
 picks:
-  - sku: "C0X-XXX"
-    name: "Pumpkin Hug Autumn Kitten"
-    print: "/assets/images/t-shirts/print-01.webp"
-  - sku: "C0X-XXX"
-    name: "Higher for the Beauty"
-    print: ""
-  - sku: "C0X-XXX"
-    name: "Enchanter Cat Flower Spell Moon Roof"
-    print: ""
-  - sku: "C0X-XXX"
-    name: "Flower Eyes Cat"
-    print: ""
-  - sku: "C0X-XXX"
-    name: "Star Gardener Tarot Cat"
-    print: ""
-  - sku: "C0X-XXX"
-    name: "Flower Cart Cat Pair"
-    print: ""
-  - sku: "C0X-XXX"
-    name: "2027 Crystal Ball Cat King"
-    print: ""
-  - sku: "C0X-XXX"
-    name: "Oval Parasol Swing Kittens"
-    print: ""
-  - sku: "C0X-XXX"
-    name: "Snow Enchanter Cat"
-    print: ""
-  - sku: "C0X-XXX"
-    name: "Witch's Pumpkin House Cat"
-    print: ""
+  - sku: "C01-001"
+  - sku: "C02-001"
+  - sku: "C01-004"
+  - sku: "C02-002"
+  - sku: "C01-035"
+  - sku: "C02-008"
+  - sku: "C01-038"
+  - sku: "C02-019"
+  - sku: "C01-039"
+  - sku: "C02-0XX"   # TODO: 10th design (Witchy) - SKU not chosen yet
 
 # --- 1. Hero ---
 hero_title: "T-Shirts with Cats & Flowers"
