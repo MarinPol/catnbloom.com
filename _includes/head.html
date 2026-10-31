@@ -178,9 +178,18 @@
 </script>
 
 {% elsif page.layout == 'landing' %}
+{% comment %} Landing SKUs come from the "picks" list (sku per item); the old flat "products" list still works as a fallback. {% endcomment %}
 {% assign landing_all_products = site.cottagecore | concat: site.witchy %}
+{% assign landing_skus = "" | split: "" %}
+{% if page.picks %}
+  {% for pk in page.picks %}
+    {% assign landing_skus = landing_skus | push: pk.sku %}
+  {% endfor %}
+{% else %}
+  {% assign landing_skus = page.products %}
+{% endif %}
 {% assign landing_schema_items = "" | split: "" %}
-{% for pid in page.products %}
+{% for pid in landing_skus %}
   {% assign found_item = landing_all_products | where: "sku", pid | first %}
   {% if found_item and found_item.status != 'hidden' %}
     {% assign landing_schema_items = landing_schema_items | push: found_item %}
@@ -357,7 +366,7 @@
 </script>
 
 <!-- CORE STYLES -->
-<link rel="stylesheet" href="/assets/css/style.css?v=3336">
+<link rel="stylesheet" href="/assets/css/style.css?v=3337">
 
 <!-- ICONS -->
 <script src="https://unpkg.com/lucide@0.383.0/dist/umd/lucide.min.js"></script>
