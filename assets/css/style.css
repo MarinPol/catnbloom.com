@@ -3,7 +3,7 @@
 /* =========================
 DESIGN SYSTEM TOKENS v1.0
 Source: CatnBloom_Design_System_v1_0.md + CatnBloom_Color_Tokens_v1_0.md
-Step 0 of unification plan — declaration only, no usages replaced yet. 
+Step 0 of unification plan — declaration only, no usages replaced yet.
 Nothing below this block has been modified or removed.
 ========================= */
 :root {
@@ -2851,23 +2851,26 @@ the banner separates it from the header instead of sitting flush.
 
 
 /* =========================
-LANDING PAGE v2 (layout: landing, e.g. /t-shirts/)
-Built from the author's screenshot mock-up.
-Blocks: hero collage + H1 bar / differences / Studio Picks / history / divider.
+LANDING PAGE v3 (layout: landing, e.g. /t-shirts/)
+Built from the author's mock-up and SVG sources.
+No site header on landing pages: the hero collage replaces it.
+Hero is a fixed-ratio composition (percent positions taken from the SVG),
+which collapses to a single column on mobile.
 Only this block is landing-specific; existing modules are not touched.
-Reuses .buy-button-variant (modified by .picks-buy). Landing sections do not
-use the global flex .container, so no reset is needed.
+Reuses .buy-button-variant (modified by .picks-buy).
 ========================= */
 
 :root {
   /* Landing-only colors taken from the mock-up (not part of the core palette) */
-  --landing-slate: #5a7896;
+  --landing-slate: #566f8d;
   --landing-slate-deep: #3f566e;
   --landing-slate-soft: #e1eaf3;
   --landing-mauve-deep: #8f7c78;
   --landing-warm: #d9a566;
   --landing-warm-soft: #fbeedb;
+  --landing-sand: #c9ad93;
   --landing-wide: 1280px;
+  --landing-hero-max: 1600px;
 }
 
 /* ---- Shared: section wrapper, outlined panel, gray title bar ---- */
@@ -2910,84 +2913,76 @@ use the global flex .container, so no reset is needed.
   margin: 0 0 var(--section-gap-md);
 }
 
+.landing-hero-top {
+  background: var(--landing-slate);
+}
+
+/* Fixed-ratio composition: 2080 x 1110 (size of the source collage) */
 .landing-collage {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  background: var(--landing-slate);
+  max-width: var(--landing-hero-max);
+  margin: 0 auto;
+  aspect-ratio: 2080 / 1110;
+  container-type: inline-size;
 }
 
 .landing-collage figure {
   margin: 0;
+  position: absolute;
 }
 
-.landing-collage-main {
-  grid-column: 1;
-  grid-row: 1 / 4;
-}
-
-.landing-collage-main img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 520px;
-  object-fit: cover;
-}
-
-.landing-collage-banner {
-  grid-column: 2;
-  grid-row: 1;
-  padding: var(--space-2) var(--space-3) 0;
-}
-
-.landing-collage-banner img {
+.landing-collage figure img {
   display: block;
   width: 100%;
   height: auto;
 }
 
+.landing-collage-main {
+  left: 1.92%;
+  top: 3.24%;
+  width: 52.6%;
+}
+
+.landing-collage-banner {
+  left: 57.5%;
+  top: 4.7%;
+  width: 41.5%;
+}
+
 .landing-collage-tee {
-  grid-column: 2;
-  grid-row: 2;
-  padding: var(--space-2) var(--space-3) 0;
+  left: 53.96%;
+  top: 31.2%;
+  width: 44.1%;
 }
 
-.landing-collage-tee img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 280px;
-  object-fit: cover;
-}
-
-/* Text box under the tee photo; left padding leaves room for the oval */
+/* Text box in the lower right corner of the collage (scales with the collage) */
 .landing-hero-info {
-  grid-column: 2;
-  grid-row: 3;
-  padding: var(--space-3) var(--space-3) var(--space-3) 30%;
+  position: absolute;
+  left: 68.4%;
+  top: 77.5%;
+  width: 30%;
   color: #fff;
 }
 
 .landing-hero-collections {
   list-style: none;
-  margin: 0 0 var(--space-2);
+  margin: 0 0 0.9cqw;
   padding: 0;
 }
 
 .landing-hero-collections li {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: var(--font-body-lg);
-  line-height: 1.4;
+  gap: 0.7cqw;
+  font-size: 1.6cqw;
+  line-height: 1.35;
 }
 
 .landing-hero-collections li::before {
   content: "";
-  flex: 0 0 14px;
-  height: 14px;
+  flex: 0 0 0.9cqw;
+  height: 0.9cqw;
   border: 1px solid rgba(255, 255, 255, 0.7);
   background: var(--accent-mauve);
 }
@@ -3007,39 +3002,39 @@ use the global flex .container, so no reset is needed.
 }
 
 .landing-hero-text {
-  padding-left: var(--space-2);
-  border-left: 6px solid var(--accent-sage-dark);
-  font-size: var(--font-body);
-  line-height: var(--line-body);
+  padding-left: 1cqw;
+  border-left: 0.45cqw solid var(--accent-sage-dark);
+  font-size: 1.22cqw;
+  line-height: 1.4;
 }
 
 .landing-hero-text p {
   margin: 0;
 }
 
-/* Oval with the cat: sits on the collage edge and overlaps the H1 bar */
+/* Oval with the cat: sits on the collage and overlaps the H1 bar */
 .landing-hero-oval {
   position: absolute;
-  left: 48%;
-  bottom: 0;
+  left: 36.2%;
+  top: 73.2%;
   z-index: 3;
-  width: clamp(220px, 30%, 440px);
+  width: 30.8%;
   height: auto;
-  transform: translate(-50%, 36%);
   pointer-events: none;
 }
 
+/* Bar under the collage; top padding keeps the H1 clear of the oval */
 .landing-hero-bar {
   position: relative;
   z-index: 1;
-  padding: var(--space-4) var(--space-3) var(--space-3);
-  background: linear-gradient(180deg, var(--landing-slate) 0%, var(--landing-mauve-deep) 60%);
+  padding: clamp(40px, 6.2vw, 100px) var(--space-3) var(--space-3);
+  background: linear-gradient(180deg, var(--landing-slate) 0%, var(--landing-mauve-deep) 70%);
   text-align: center;
 }
 
 .landing-hero h1 {
   margin: 0 0 var(--space-3);
-  font-size: clamp(2.25rem, 6.2vw, 5rem);
+  font-size: clamp(2.25rem, 5.6vw, 4.75rem);
   font-weight: 400;
   line-height: 1.1;
   color: #fff;
@@ -3093,9 +3088,9 @@ use the global flex .container, so no reset is needed.
 .landing-diff-deco {
   position: absolute;
   left: 5%;
-  top: -34px;
+  top: -40px;
   z-index: 2;
-  width: clamp(90px, 12%, 160px);
+  width: clamp(80px, 11%, 140px);
   height: auto;
   pointer-events: none;
 }
@@ -3203,6 +3198,12 @@ use the global flex .container, so no reset is needed.
   border: 1px solid var(--border);
   border-radius: 6px;
   background: #fff;
+}
+
+/* Empty thumbnail while a SKU has no card yet (tan square from the mock-up) */
+.picks-thumb-empty {
+  display: block;
+  background: var(--landing-sand);
 }
 
 .picks-title {
@@ -3319,7 +3320,7 @@ use the global flex .container, so no reset is needed.
   pointer-events: none;
 }
 
-.picks-figure img {
+.picks-figure > img {
   position: relative;
   display: block;
   width: 100%;
@@ -3328,12 +3329,51 @@ use the global flex .container, so no reset is needed.
   background: #fff;
 }
 
-.picks-caption {
+/* T-shirt mock-up: blank tee photo + transparent print on top.
+   Print position/size are percent of the photo (override per pick in front matter). */
+.picks-figure-tee {
+  padding: 0;
+  overflow: hidden;
+}
+
+.picks-figure-tee::before {
+  display: none;
+}
+
+.tee-stage {
   position: relative;
-  margin: var(--space-1) 0 0;
+  aspect-ratio: 900 / 880;
+  background: var(--landing-slate);
+}
+
+.tee-stage img {
+  display: block;
+}
+
+.tee-stage-base {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tee-stage-print {
+  position: absolute;
+  left: var(--print-x, 40.5%);
+  top: var(--print-y, 41.2%);
+  width: var(--print-w, 24.7%);
+  height: auto;
+}
+
+.picks-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  margin: 0;
   font-size: var(--font-caption);
   color: #fff;
   text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .picks-slide-head {
@@ -3417,6 +3457,7 @@ use the global flex .container, so no reset is needed.
 }
 
 .history-item {
+  position: relative;
   padding: var(--space-2) var(--space-3) var(--space-3);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -3427,7 +3468,7 @@ use the global flex .container, so no reset is needed.
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  min-height: 72px;
+  min-height: 56px;
   margin-bottom: var(--space-1);
 }
 
@@ -3448,18 +3489,16 @@ use the global flex .container, so no reset is needed.
   border-top: 3px dotted var(--border-mid);
 }
 
+/* Cut-out vintage photo (frame is part of the image), overlaps the card top */
 .history-photo {
-  flex: 0 0 auto;
-  width: 64px;
-  height: 80px;
-  object-fit: cover;
-  border: 3px solid #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  transform: rotate(-4deg);
-}
-
-.history-item:nth-child(even) .history-photo {
-  transform: rotate(3deg);
+  position: absolute;
+  top: -30px;
+  right: 14px;
+  z-index: 1;
+  width: auto;
+  height: 104px;
+  max-width: 48%;
+  pointer-events: none;
 }
 
 .history-text {
@@ -3478,10 +3517,10 @@ use the global flex .container, so no reset is needed.
 
 .history-deco {
   position: absolute;
-  right: -8px;
-  bottom: -72px;
-  z-index: 2;
-  width: clamp(150px, 17%, 240px);
+  right: 1%;
+  bottom: -76px;
+  z-index: 3;
+  width: clamp(150px, 16%, 250px);
   height: auto;
   pointer-events: none;
 }
@@ -3491,7 +3530,7 @@ use the global flex .container, so no reset is needed.
   width: 100%;
   max-width: var(--landing-wide);
   height: auto;
-  margin: 0 auto var(--section-gap-md);
+  margin: -34px auto var(--section-gap-md);
   pointer-events: none;
 }
 
@@ -3516,6 +3555,7 @@ use the global flex .container, so no reset is needed.
 @media (max-width: 1024px) {
   .history-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--space-5);
   }
 }
 
@@ -3524,46 +3564,56 @@ use the global flex .container, so no reset is needed.
     padding: 0 var(--space-2);
   }
 
-  /* Hero: single column, oval flows between the collage and the H1 bar */
+  /* Hero: single column in normal flow, oval overlaps the H1 bar */
   .landing-collage {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: none;
-  }
-
-  .landing-collage-main,
-  .landing-collage-banner,
-  .landing-collage-tee,
-  .landing-hero-info {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  .landing-collage-main img {
-    min-height: 0;
-    aspect-ratio: 4 / 5;
-  }
-
-  .landing-collage-banner,
-  .landing-collage-tee {
-    padding: var(--space-2) var(--space-2) 0;
-  }
-
-  .landing-collage-tee img {
-    min-height: 0;
-    aspect-ratio: 4 / 3;
-  }
-
-  .landing-hero-info {
+    aspect-ratio: auto;
+    container-type: normal;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
     padding: var(--space-2);
   }
 
+  .landing-collage figure,
+  .landing-hero-info,
   .landing-hero-oval {
     position: static;
-    display: block;
+    width: 100%;
+  }
+
+  .landing-collage-main img {
+    aspect-ratio: 1000 / 951;
+    object-fit: cover;
+  }
+
+  .landing-hero-info {
+    padding: 0 var(--space-1);
+  }
+
+  .landing-hero-collections {
+    margin-bottom: var(--space-1);
+  }
+
+  .landing-hero-collections li {
+    gap: 10px;
+    font-size: var(--font-body-lg);
+  }
+
+  .landing-hero-collections li::before {
+    flex: 0 0 14px;
+    height: 14px;
+  }
+
+  .landing-hero-text {
+    padding-left: var(--space-2);
+    border-left-width: 6px;
+    font-size: var(--font-body);
+  }
+
+  .landing-hero-oval {
     width: 62%;
     max-width: 320px;
-    margin: 0 auto -48px;
-    transform: none;
+    margin: var(--space-1) auto -48px;
   }
 
   .landing-hero-bar {
@@ -3588,7 +3638,7 @@ use the global flex .container, so no reset is needed.
   }
 
   .landing-diff-deco {
-    top: -26px;
+    top: -30px;
   }
 
   /* Large image first, list below, so a tap on a row visibly changes it */
@@ -3616,7 +3666,8 @@ use the global flex .container, so no reset is needed.
   }
 
   .history-deco {
-    display: none;
+    width: 130px;
+    bottom: -60px;
   }
 }
 
