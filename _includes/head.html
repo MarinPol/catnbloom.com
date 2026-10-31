@@ -57,7 +57,7 @@
       content="{{ og_description }}">
 
 <meta property="og:image"
-      content="{{ page.og_image | default: page.image_url | default: page.photo | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
+      content="{{ page.og_image | default: page.image_url | default: page.photo | default: page.hero_image | default: page.hero_collage.main.src | default: '/assets/images/default_og.jpg' | absolute_url }}">
 
 <meta property="og:url"
       content="{{ page.url | absolute_url }}">
@@ -84,7 +84,7 @@
       content="{{ og_description }}">
 
 <meta name="twitter:image"
-      content="{{ page.og_image | default: page.image_url | default: page.photo | default: page.hero_image | default: '/assets/images/default_og.jpg' | absolute_url }}">
+      content="{{ page.og_image | default: page.image_url | default: page.photo | default: page.hero_image | default: page.hero_collage.main.src | default: '/assets/images/default_og.jpg' | absolute_url }}">
 
 {% if page.status == 'hidden' %}
 <meta name="robots" content="noindex,nofollow">
@@ -169,6 +169,44 @@
       {
         "@type": "ListItem",
         "position": {{ forloop.index }},
+        "url": "{{ product.url | absolute_url }}"
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+
+{% elsif page.layout == 'landing' %}
+{% assign landing_all_products = site.cottagecore | concat: site.witchy %}
+{% assign landing_schema_items = "" | split: "" %}
+{% for pid in page.products %}
+  {% assign found_item = landing_all_products | where: "sku", pid | first %}
+  {% if found_item and found_item.status != 'hidden' %}
+    {% assign landing_schema_items = landing_schema_items | push: found_item %}
+  {% endif %}
+{% endfor %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ page.hero_title | default: page.title | jsonify }},
+  "description": {{ page.seo_description | default: page.hero_subtitle | default: site.description | jsonify }},
+  "url": "{{ page.url | absolute_url }}",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Organization",
+    "name": "CatnBloom Studio",
+    "url": "{{ site.url }}"
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {% for product in landing_schema_items %}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "name": {{ product.title | remove: " — Wearable Art" | jsonify }},
         "url": "{{ product.url | absolute_url }}"
       }{% unless forloop.last %},{% endunless %}
       {% endfor %}
@@ -319,7 +357,7 @@
 </script>
 
 <!-- CORE STYLES -->
-<link rel="stylesheet" href="/assets/css/style.css?v=3335">
+<link rel="stylesheet" href="/assets/css/style.css?v=3336">
 
 <!-- ICONS -->
 <script src="https://unpkg.com/lucide@0.383.0/dist/umd/lucide.min.js"></script>
