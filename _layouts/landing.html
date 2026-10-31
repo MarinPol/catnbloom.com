@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include head.html %}
+</head>
+
+<body>
+
+  {% include header.html %}
+
+  {% comment %}
+  =====================================================
+  LANDING LAYOUT v2 (editorial theme page, e.g. /t-shirts/)
+  Built from the author's screenshot mock-up (landing-prototip2).
+
+  Blocks:
+    1. Hero            - image collage + H1 bar (the only H1 on the page)
+    2. Differences     - "What makes our designs different", 3 cards
+    3. Studio Picks    - numbered list + stage (JS only switches the stage)
+    4. History         - "A short history of the tee", compact timeline
+    5. Optional        - Markdown body of the page (rendered only if not empty)
+
+  All text is server-rendered by Liquid, so every title and story is in the
+  HTML for search engines. JS only toggles which slide is visible.
+
+  Front matter used by this layout:
+    hero_title, hero_subtitle, hero_text (Markdown)
+    hero_collections: [{label, url}]
+    hero_collage: main / banner / tee / oval, each {src, alt}
+    differences_title, differences: [{title, text}], differences_deco: {src}
+    picks_title, picks_intro, picks_note, products: [SKU, ...]
+    history_title, history_items: [{year, text, image: {src, alt}}],
+    history_note, history_deco: {src}, divider_image: {src}
+
+  Optional field in a product card (not in this page):
+    tee_image - large image of the design on a T-shirt (visual mock-up);
+                falls back to image_url when it is not set.
+
+  External links (TeePublic / Redbubble) are rendered only when the product
+  card has a valid URL. The page never presents itself as a shop.
+  =====================================================
+  {% endcomment %}
+
+  {% assign all_products = site.cottagecore | concat: site.witchy %}
+
+  {% assign picks = "" | split: "" %}
+  {% for pid in page.products %}
+    {% assign found = all_products | where: "sku", pid | first %}
+    {% if found and found.status != 'hidden' %}
+      {% assign picks = picks | push: found %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign dated_picks = picks | where_exp: "i", "i.date_added" | sort: "date_added" %}
+  {% assign newest = dated_picks | last %}
+
+  {% assign collage = page.hero_collage %}
+
+  {% comment %} ============ 1. HERO ============ {% endcomment %}
+  <header class="landing-hero">
+
+    {% if collage.main.src and collage.main.src != '' %}
+    <div class="landing-collage">
+
+      <figure class="landing-collage-main">
+        <img src="{{ collage.main.src }}"
+             alt="{{ collage.main.alt | default: page.hero_title | default: page.title | escape }}"
+             fetchpriority="high">
+      </figure>
+
+      {% if collage.banner.src and collage.banner.src != '' %}
+      <figure class="landing-collage-banner">
+        <img src="{{ collage.banner.src }}"
+             alt="{{ collage.banner.alt | default: '' | escape }}">
+      </figure>
+      {% endif %}
+
+      {% if collage.tee.src and collage.tee.src != '' %}
+      <figure class="landing-collage-tee">
+        <img src="{{ collage.tee.src }}"
+             alt="{{ collage.tee.alt | default: '' | escape }}">
+      </figure>
+      {% endif %}
+
+      {% if page.hero_text or page.hero_collections %}
+      <div class="landing-hero-info">
+        {% if page.hero_collections and page.hero_collections.size > 0 %}
+        <ul class="landing-hero-collections">
+          {% for c in page.hero_collections %}
+          <li><a href="{{ c.url }}">{{ c.label }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% if page.hero_text %}
+        <div class="landing-hero-text">{{ page.hero_text | markdownify }}</div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {% if collage.oval.src and collage.oval.src != '' %}
+      <img class="landing-hero-oval"
+           src="{{ collage.oval.src }}"
+           alt="{{ collage.oval.alt | default: '' | escape }}">
+      {% endif %}
+
+    </div>
+    {% endif %}
+
+    <div class="landing-hero-bar">
+      <h1>{{ page.hero_title | default: page.title }}</h1>
+      <div class="landing-hero-strip">
+        <span class="landing-pill">CatnBloom Studio</span>
+        {% if page.hero_subtitle %}
+          <p class="landing-subtitle">{{ page.hero_subtitle }}</p>
+        {% endif %}
+        <a class="landing-pill landing-pill-link" href="/">&larr; Home</a>
+      </div>
+    </div>
+
+  </header>
+
+  {% comment %} ============ 2. WHAT MAKES OUR DESIGNS DIFFERENT ============ {% endcomment %}
+  {% if page.differences and page.differences.size > 0 %}
+  <section class="landing-section landing-differences" aria-labelledby="diffHeading">
+    <div class="landing-panel">
+
+      {% if page.differences_deco.src and page.differences_deco.src != '' %}
+      <img class="landing-diff-deco"
+           src="{{ page.differences_deco.src }}"
+           alt=""
+           aria-hidden="true"
+           loading="lazy">
+      {% endif %}
+
+      <div class="landing-bar">
+        <h2 id="diffHeading">{{ page.differences_title | default: "What makes our designs different" }}</h2>
+      </div>
+
+      <div class="landing-panel-body">
+        <ul class="landing-diff-list">
+          {% for d in page.differences %}
+          <li class="landing-diff-card">
+            <h3>{{ d.title }}</h3>
+            <p>{{ d.text }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </section>
+  {% endif %}
+
+  {% comment %} ============ 3. STUDIO PICKS ============ {% endcomment %}
+  {% if picks.size > 0 %}
+  <section class="landing-section landing-picks" id="studioPicks" aria-labelledby="picksHeading">
+    <div class="landing-panel">
+
+      <div class="landing-bar">
+        <h2 id="picksHeading">{{ page.picks_title | default: "Studio Picks" }}</h2>
+      </div>
+
+      <div class="landing-panel-body">
+
+        {% if page.picks_intro %}
+          <p class="landing-picks-intro">{{ page.picks_intro }}</p>
+        {% endif %}
+
+        <div class="picks-layout">
+
+          <div class="picks-column">
+            <ol class="picks-list">
+              {% for p in picks %}
+              {% assign row_title = p.title | remove: " — Wearable Art" %}
+              <li class="picks-item">
+                <a class="picks-link"
+                   href="{{ p.url }}"
+                   {% if forloop.first %}aria-current="true"{% endif %}>
+                  <span class="picks-number">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
+                  <img class="picks-thumb"
+                       src="{{ p.image_url }}"
+                       alt="Illustration: {{ row_title | escape }}"
+                       loading="lazy">
+                  <span class="picks-title">
+                    {{ row_title }}
+                    {% if newest and p.sku == newest.sku %}<span class="picks-badge">new</span>{% endif %}
+                  </span>
+                </a>
+              </li>
+              {% endfor %}
+            </ol>
+
+            {% if newest %}
+            {% assign newest_title = newest.title | remove: " — Wearable Art" %}
+            <a class="picks-newest" href="{{ newest.url }}">
+              <img class="picks-newest-thumb"
+                   src="{{ newest.image_url }}"
+                   alt="Illustration: {{ newest_title | escape }}"
+                   loading="lazy">
+              <span class="picks-newest-text">
+                <span class="picks-newest-tag">Newest design</span>
+                <span class="picks-newest-title">{{ newest_title }}</span>
+                <span class="picks-newest-date">Added {{ newest.date_added | date: "%b %-d, %Y" }}</span>
+              </span>
+            </a>
+            {% endif %}
+          </div>
+
+          <div class="picks-stage" aria-live="polite">
+            {% for p in picks %}
+            {% assign stage_title = p.title | remove: " — Wearable Art" %}
+            {% assign stage_image = p.tee_image | default: p.image_url %}
+
+            {% assign tp_variants = false %}
+            {% if p.teepublic_variants and p.teepublic_variants.size > 0 %}
+              {% assign tp_variants = true %}
+            {% endif %}
+            {% assign tp_single = false %}
+            {% if p.teepublic_url and p.teepublic_url != '' and p.teepublic_url != 'none' and p.teepublic_url != '/' %}
+              {% assign tp_single = true %}
+            {% endif %}
+            {% assign rb_variants = false %}
+            {% if p.redbubble_variants and p.redbubble_variants.size > 0 %}
+              {% assign rb_variants = true %}
+            {% endif %}
+            {% assign rb_single = false %}
+            {% if p.redbubble_url and p.redbubble_url != '' and p.redbubble_url != 'none' and p.redbubble_url != '/' %}
+              {% assign rb_single = true %}
+            {% endif %}
+
+            <article class="picks-slide" {% unless forloop.first %}hidden{% endunless %}>
+              <figure class="picks-figure">
+                {% if p.tee_image and p.tee_image != '' %}
+                  <img src="{{ stage_image }}"
+                       alt="{{ stage_title | escape }} design on a T-shirt (visual mock-up)"
+                       {% unless forloop.first %}loading="lazy"{% endunless %}>
+                {% else %}
+                  <img src="{{ stage_image }}"
+                       alt="{{ p.alt_text | default: stage_title | escape }}"
+                       {% unless forloop.first %}loading="lazy"{% endunless %}>
+                {% endif %}
+                {% if p.tee_image and p.tee_image != '' %}
+                  <figcaption class="picks-caption">Product image is a visual mock-up.</figcaption>
+                {% endif %}
+              </figure>
+
+              <div class="picks-slide-head">
+                <h3 class="picks-slide-title">{{ stage_title }}</h3>
+                <a class="picks-view-btn"
+                   href="{{ p.url }}"
+                   aria-label="View design: {{ stage_title | escape }}">View design</a>
+              </div>
+
+              <p class="picks-slide-story">{{ p.story | strip_html | strip }}</p>
+
+              {% if tp_variants or tp_single or rb_variants or rb_single %}
+              <p class="picks-note">{{ page.picks_note | default: "Our site is a studio showcase. The shirts are made and shipped by TeePublic and Redbubble." }}</p>
+
+              <div class="picks-actions">
+                {% if tp_variants %}
+                  {% for variant in p.teepublic_variants %}
+                    {% assign short_label = variant.label | remove: " version" | remove: " Version" %}
+                    <a class="buy-button-variant picks-buy"
+                       href="{{ variant.url }}"
+                       target="_blank"
+                       rel="noopener"
+                       aria-label="See on TeePublic, {{ variant.label | escape }}: {{ stage_title | escape }}">
+                      <span>See on TeePublic — {{ short_label }}</span>
+                    </a>
+                  {% endfor %}
+                {% elsif tp_single %}
+                  <a class="buy-button-variant picks-buy"
+                     href="{{ p.teepublic_url }}"
+                     target="_blank"
+                     rel="noopener"
+                     aria-label="See on TeePublic: {{ stage_title | escape }}">
+                    <span>See on TeePublic</span>
+                  </a>
+                {% endif %}
+
+                {% if rb_variants %}
+                  {% for variant in p.redbubble_variants %}
+                    {% assign short_label = variant.label | remove: " version" | remove: " Version" %}
+                    <a class="buy-button-variant picks-buy"
+                       href="{{ variant.url }}"
+                       target="_blank"
+                       rel="noopener"
+                       aria-label="See on Redbubble, {{ variant.label | escape }}: {{ stage_title | escape }}">
+                      <span>See on Redbubble — {{ short_label }}</span>
+                    </a>
+                  {% endfor %}
+                {% elsif rb_single %}
+                  <a class="buy-button-variant picks-buy"
+                     href="{{ p.redbubble_url }}"
+                     target="_blank"
+                     rel="noopener"
+                     aria-label="See on Redbubble: {{ stage_title | escape }}">
+                    <span>See on Redbubble</span>
+                  </a>
+                {% endif %}
+              </div>
+              {% endif %}
+            </article>
+            {% endfor %}
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+  {% endif %}
+
+  {% comment %} ============ 4. A SHORT HISTORY OF THE TEE ============ {% endcomment %}
+  {% if page.history_items and page.history_items.size > 0 %}
+  <section class="landing-section landing-history" aria-labelledby="historyHeading">
+    <div class="landing-panel">
+
+      <div class="landing-bar">
+        <h2 id="historyHeading">{{ page.history_title | default: "A short history of the tee" }}</h2>
+      </div>
+
+      <div class="landing-panel-body">
+        <ol class="history-list">
+          {% for h in page.history_items %}
+          <li class="history-item">
+            <div class="history-head">
+              <span class="history-year">{{ h.year }}</span>
+              <span class="history-dots" aria-hidden="true"></span>
+              {% if h.image.src and h.image.src != '' %}
+              <img class="history-photo"
+                   src="{{ h.image.src }}"
+                   alt="{{ h.image.alt | default: '' | escape }}"
+                   loading="lazy">
+              {% endif %}
+            </div>
+            <p class="history-text">{{ h.text }}</p>
+          </li>
+          {% endfor %}
+        </ol>
+
+        {% if page.history_note %}
+          <p class="history-note">{{ page.history_note }}</p>
+        {% endif %}
+      </div>
+
+      {% if page.history_deco.src and page.history_deco.src != '' %}
+      <img class="history-deco"
+           src="{{ page.history_deco.src }}"
+           alt=""
+           aria-hidden="true"
+           loading="lazy">
+      {% endif %}
+
+    </div>
+  </section>
+  {% endif %}
+
+  {% if page.divider_image.src and page.divider_image.src != '' %}
+  <img class="landing-divider"
+       src="{{ page.divider_image.src }}"
+       alt=""
+       aria-hidden="true"
+       loading="lazy">
+  {% endif %}
+
+  {% comment %} ============ 5. OPTIONAL EDITORIAL (Markdown body of the page) ============ {% endcomment %}
+  {% assign editorial_html = content | strip %}
+  {% if editorial_html != "" %}
+  <section class="landing-section landing-editorial">
+    {{ content }}
+  </section>
+  {% endif %}
+
+  <script>
+  (function () {
+    var root = document.getElementById('studioPicks');
+    if (!root) return;
+
+    var links = Array.prototype.slice.call(root.querySelectorAll('.picks-link'));
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.picks-slide'));
+    if (!links.length || links.length !== slides.length) return;
+
+    var stage = root.querySelector('.picks-stage');
+    var narrow = window.matchMedia('(max-width: 768px)');
+    var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var current = 0;
+
+    root.classList.add('picks-js');
+    links[0].parentNode.classList.add('is-active');
+
+    function select(index, moveFocus) {
+      if (index < 0) index = links.length - 1;
+      if (index >= links.length) index = 0;
+
+      links[current].parentNode.classList.remove('is-active');
+      links[current].removeAttribute('aria-current');
+      slides[current].hidden = true;
+
+      current = index;
+
+      links[current].parentNode.classList.add('is-active');
+      links[current].setAttribute('aria-current', 'true');
+      slides[current].hidden = false;
+
+      if (moveFocus) links[current].focus();
+
+      if (narrow.matches && stage) {
+        stage.scrollIntoView({ behavior: calm.matches ? 'auto' : 'smooth', block: 'nearest' });
+      }
+    }
+
+    links.forEach(function (link, i) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        select(i, false);
+      });
+      link.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          select(i + 1, true);
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          select(i - 1, true);
+        }
+      });
+    });
+  })();
+  </script>
+
+  {% include footer.html %}
+
+</body>
+</html>
