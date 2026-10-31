@@ -2848,3 +2848,800 @@ the banner separates it from the header instead of sitting flush.
     line-height: 1.35;
   }
 }
+
+
+/* =========================
+LANDING PAGE v2 (layout: landing, e.g. /t-shirts/)
+Built from the author's screenshot mock-up.
+Blocks: hero collage + H1 bar / differences / Studio Picks / history / divider.
+Only this block is landing-specific; existing modules are not touched.
+Reuses .buy-button-variant (modified by .picks-buy). Landing sections do not
+use the global flex .container, so no reset is needed.
+========================= */
+
+:root {
+  /* Landing-only colors taken from the mock-up (not part of the core palette) */
+  --landing-slate: #5a7896;
+  --landing-slate-deep: #3f566e;
+  --landing-slate-soft: #e1eaf3;
+  --landing-mauve-deep: #8f7c78;
+  --landing-warm: #d9a566;
+  --landing-warm-soft: #fbeedb;
+  --landing-wide: 1280px;
+}
+
+/* ---- Shared: section wrapper, outlined panel, gray title bar ---- */
+
+.landing-section {
+  max-width: var(--landing-wide);
+  margin: 0 auto var(--section-gap-md);
+  padding: 0 var(--space-3);
+}
+
+.landing-panel {
+  position: relative;
+  border: 1px solid var(--border-mid);
+  border-radius: 16px;
+}
+
+.landing-bar {
+  padding: 10px var(--space-3);
+  background: var(--border-mid);
+  border-radius: 15px 15px 0 0;
+}
+
+.landing-bar h2 {
+  margin: 0;
+  font-size: var(--font-h2-inline);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.landing-panel-body {
+  padding: var(--space-3);
+}
+
+/* ---- 1. Hero ---- */
+
+.landing-hero {
+  position: relative;
+  width: 100%;
+  margin: 0 0 var(--section-gap-md);
+}
+
+.landing-collage {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: var(--landing-slate);
+}
+
+.landing-collage figure {
+  margin: 0;
+}
+
+.landing-collage-main {
+  grid-column: 1;
+  grid-row: 1 / 4;
+}
+
+.landing-collage-main img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  object-fit: cover;
+}
+
+.landing-collage-banner {
+  grid-column: 2;
+  grid-row: 1;
+  padding: var(--space-2) var(--space-3) 0;
+}
+
+.landing-collage-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.landing-collage-tee {
+  grid-column: 2;
+  grid-row: 2;
+  padding: var(--space-2) var(--space-3) 0;
+}
+
+.landing-collage-tee img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+}
+
+/* Text box under the tee photo; left padding leaves room for the oval */
+.landing-hero-info {
+  grid-column: 2;
+  grid-row: 3;
+  padding: var(--space-3) var(--space-3) var(--space-3) 30%;
+  color: #fff;
+}
+
+.landing-hero-collections {
+  list-style: none;
+  margin: 0 0 var(--space-2);
+  padding: 0;
+}
+
+.landing-hero-collections li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--font-body-lg);
+  line-height: 1.4;
+}
+
+.landing-hero-collections li::before {
+  content: "";
+  flex: 0 0 14px;
+  height: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: var(--accent-mauve);
+}
+
+.landing-hero-collections li:nth-child(2)::before {
+  background: var(--accent-plum);
+}
+
+.landing-hero-collections a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.landing-hero-collections a:hover,
+.landing-hero-collections a:focus-visible {
+  text-decoration: underline;
+}
+
+.landing-hero-text {
+  padding-left: var(--space-2);
+  border-left: 6px solid var(--accent-sage-dark);
+  font-size: var(--font-body);
+  line-height: var(--line-body);
+}
+
+.landing-hero-text p {
+  margin: 0;
+}
+
+/* Oval with the cat: sits on the collage edge and overlaps the H1 bar */
+.landing-hero-oval {
+  position: absolute;
+  left: 48%;
+  bottom: 0;
+  z-index: 3;
+  width: clamp(220px, 30%, 440px);
+  height: auto;
+  transform: translate(-50%, 36%);
+  pointer-events: none;
+}
+
+.landing-hero-bar {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  background: linear-gradient(180deg, var(--landing-slate) 0%, var(--landing-mauve-deep) 60%);
+  text-align: center;
+}
+
+.landing-hero h1 {
+  margin: 0 0 var(--space-3);
+  font-size: clamp(2.25rem, 6.2vw, 5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.landing-hero-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  max-width: var(--landing-wide);
+  margin: 0 auto;
+  padding: 10px var(--space-2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.landing-pill {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text-primary);
+  font-size: var(--font-body);
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.landing-pill-link:hover,
+.landing-pill-link:focus-visible {
+  background: var(--brand-soft-bg);
+}
+
+.landing-subtitle {
+  margin: 0;
+  font-size: var(--font-body-lg);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--surface-dark);
+}
+
+/* ---- 2. Differences ---- */
+
+.landing-differences .landing-bar h2 {
+  text-align: center;
+}
+
+.landing-diff-deco {
+  position: absolute;
+  left: 5%;
+  top: -34px;
+  z-index: 2;
+  width: clamp(90px, 12%, 160px);
+  height: auto;
+  pointer-events: none;
+}
+
+.landing-diff-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.landing-diff-card {
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--background-off);
+}
+
+.landing-diff-card h3 {
+  margin: 0 0 var(--space-1);
+  font-size: var(--font-card-title);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.landing-diff-card p {
+  margin: 0;
+  font-size: var(--font-body-lg);
+  line-height: var(--line-body-lg);
+  color: var(--text-secondary);
+}
+
+/* ---- 3. Studio Picks ---- */
+
+.landing-picks-intro {
+  max-width: 640px;
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-body);
+  line-height: var(--line-body);
+  color: var(--text-secondary);
+}
+
+.picks-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.picks-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.picks-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.picks-link {
+  display: grid;
+  grid-template-columns: 44px 64px minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: center;
+  padding: 10px var(--space-1);
+  border-left: 4px solid transparent;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.picks-link:hover,
+.picks-link:focus-visible {
+  background: var(--brand-soft-bg);
+}
+
+.picks-item.is-active .picks-link,
+.picks-link[aria-current="true"] {
+  border-left-color: var(--surface-dark);
+  background: var(--brand-soft-bg);
+}
+
+.picks-number {
+  font-size: var(--font-h2-inline);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s ease;
+}
+
+.picks-item.is-active .picks-number,
+.picks-link[aria-current="true"] .picks-number {
+  color: var(--text-primary);
+}
+
+.picks-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.picks-title {
+  font-size: var(--font-card-title);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.picks-badge {
+  display: inline-block;
+  margin-left: var(--space-1);
+  padding: 1px 10px;
+  border-radius: 999px;
+  background: var(--landing-slate-soft);
+  color: var(--landing-slate-deep);
+  font-size: var(--font-caption);
+  font-weight: 600;
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+/* Newest design card under the list */
+
+.picks-newest {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: center;
+  margin-top: var(--space-3);
+  padding: 12px var(--space-2);
+  border: 2px solid var(--landing-warm);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.picks-newest:hover,
+.picks-newest:focus-visible {
+  background: var(--landing-warm-soft);
+}
+
+.picks-newest-thumb {
+  width: 64px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.picks-newest-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+
+.picks-newest-tag {
+  padding: 1px 10px;
+  border-radius: 999px;
+  background: var(--landing-warm-soft);
+  font-size: var(--font-caption);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.picks-newest-title {
+  font-size: var(--font-card-title);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.picks-newest-date {
+  font-size: var(--font-caption);
+  color: var(--text-muted);
+}
+
+/* Stage (large image and details of the selected design) */
+
+.picks-stage {
+  position: sticky;
+  top: var(--space-3);
+}
+
+.picks-slide[hidden] {
+  display: none;
+}
+
+.picks-js .picks-slide {
+  animation: picksFade 0.35s ease;
+}
+
+@keyframes picksFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+.picks-figure {
+  position: relative;
+  margin: 0 0 var(--space-2);
+  padding: var(--space-3);
+  background: var(--landing-slate);
+  border-radius: 8px;
+}
+
+.picks-figure::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.45);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.picks-figure img {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: #fff;
+}
+
+.picks-caption {
+  position: relative;
+  margin: var(--space-1) 0 0;
+  font-size: var(--font-caption);
+  color: #fff;
+  text-align: center;
+}
+
+.picks-slide-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.picks-slide-title {
+  margin: 0;
+  font-size: var(--font-h3-inline);
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.picks-view-btn {
+  flex: 0 0 auto;
+  padding: 8px 20px;
+  border-radius: 12px;
+  background: var(--accent-mauve);
+  color: var(--surface-dark);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.picks-view-btn:hover,
+.picks-view-btn:focus-visible {
+  background: var(--landing-mauve-deep);
+  color: #fff;
+}
+
+.picks-slide-story {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-body-lg);
+  line-height: var(--line-body-lg);
+  color: var(--text-secondary);
+}
+
+.picks-note {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-caption);
+  line-height: var(--line-body);
+  color: var(--text-muted);
+}
+
+.picks-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.picks-actions .picks-buy:only-child {
+  grid-column: 1 / -1;
+}
+
+/* Filled variant of the shared outline button (mock-up: solid sage) */
+.picks-buy {
+  background: var(--brand-primary);
+  color: var(--text-primary);
+}
+
+.picks-buy:hover,
+.picks-buy:focus-visible {
+  background: var(--brand-hover);
+  color: var(--text-primary);
+}
+
+/* ---- 4. History ---- */
+
+.history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.history-item {
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--background-off);
+}
+
+.history-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 72px;
+  margin-bottom: var(--space-1);
+}
+
+.history-year {
+  flex: 0 0 auto;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--accent-mauve);
+  color: var(--surface-dark);
+  font-size: var(--font-body-lg);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.history-dots {
+  flex: 1 1 auto;
+  min-width: 16px;
+  border-top: 3px dotted var(--border-mid);
+}
+
+.history-photo {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 80px;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transform: rotate(-4deg);
+}
+
+.history-item:nth-child(even) .history-photo {
+  transform: rotate(3deg);
+}
+
+.history-text {
+  margin: 0;
+  font-size: var(--font-body-lg);
+  line-height: var(--line-body-lg);
+  color: var(--text-primary);
+}
+
+.history-note {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-body);
+  line-height: var(--line-body);
+  color: var(--text-muted);
+}
+
+.history-deco {
+  position: absolute;
+  right: -8px;
+  bottom: -72px;
+  z-index: 2;
+  width: clamp(150px, 17%, 240px);
+  height: auto;
+  pointer-events: none;
+}
+
+.landing-divider {
+  display: block;
+  width: 100%;
+  max-width: var(--landing-wide);
+  height: auto;
+  margin: 0 auto var(--section-gap-md);
+  pointer-events: none;
+}
+
+/* ---- 5. Optional editorial (Markdown body) ---- */
+
+.landing-editorial {
+  max-width: 760px;
+}
+
+.landing-editorial h2 {
+  margin: 0 0 var(--space-2);
+}
+
+.landing-editorial p {
+  font-size: var(--font-body);
+  line-height: var(--line-article-body);
+  color: var(--text-primary);
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 1024px) {
+  .history-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-section {
+    padding: 0 var(--space-2);
+  }
+
+  /* Hero: single column, oval flows between the collage and the H1 bar */
+  .landing-collage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  .landing-collage-main,
+  .landing-collage-banner,
+  .landing-collage-tee,
+  .landing-hero-info {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .landing-collage-main img {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+  }
+
+  .landing-collage-banner,
+  .landing-collage-tee {
+    padding: var(--space-2) var(--space-2) 0;
+  }
+
+  .landing-collage-tee img {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .landing-hero-info {
+    padding: var(--space-2);
+  }
+
+  .landing-hero-oval {
+    position: static;
+    display: block;
+    width: 62%;
+    max-width: 320px;
+    margin: 0 auto -48px;
+    transform: none;
+  }
+
+  .landing-hero-bar {
+    padding: 64px var(--space-2) var(--space-2);
+  }
+
+  .landing-hero-strip {
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 24px;
+  }
+
+  .landing-hero-strip .landing-subtitle {
+    order: 3;
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .landing-diff-list,
+  .picks-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .landing-diff-deco {
+    top: -26px;
+  }
+
+  /* Large image first, list below, so a tap on a row visibly changes it */
+  .picks-stage {
+    position: static;
+    order: -1;
+  }
+
+  .picks-link {
+    grid-template-columns: 32px 52px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .picks-thumb {
+    width: 52px;
+    height: 52px;
+  }
+
+  .picks-number {
+    font-size: var(--font-h3-inline);
+  }
+
+  .picks-figure {
+    padding: var(--space-2);
+  }
+
+  .history-deco {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .history-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .picks-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .landing-panel-body {
+    padding: var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .picks-js .picks-slide {
+    animation: none;
+  }
+
+  .picks-link,
+  .picks-newest,
+  .picks-view-btn {
+    transition: none;
+  }
+}
