@@ -22,14 +22,21 @@
     5. Divider         - grass strip
     6. Optional        - Markdown body of the page
 
-  STUDIO PICKS DATA (front matter, one line per design, easy to swap):
+  STUDIO PICKS DATA (front matter). The author only gives the SKU:
     picks:
-      - sku: "C01-041"          # card is looked up by SKU
-        name: "Design name"     # shown only while the SKU has no card yet
-        print: "https://..."    # optional transparent print for the tee mock-up
-        # optional fine tuning of the print on the tee (percent of the photo):
-        # print_x: 40.5   print_y: 41.2   print_w: 24.7
-    picks_stage_image: {src, alt}   # blank T-shirt photo shared by all designs
+      - sku: "C01-041"   # title, thumbnail, story and shop links come from the card
+        # all keys below are optional overrides:
+        # name: "..."    # shown only while the SKU has no card yet
+        # tee: dark      # force the black tee (default: C02-* = dark, others = light)
+        # print: "https://..."   # explicit print URL instead of the automatic one
+        # print_x: 40.5   print_y: 41.2   print_w: 24.7   # percent of the tee photo
+    picks_stage_image:      {src, alt}   # light tee photo (Cottagecore, C01-*)
+    picks_stage_image_dark: {src, alt}   # black tee photo (Witchy, C02-*)
+    picks_print_base: "https://ik.imagekit.io/catnbloom/prints/"   # external storage
+    picks_print_ext:  "webp"
+  Automatic print URL = picks_print_base + lowercase SKU + "." + picks_print_ext
+  (example: .../prints/c01-001.webp). Prints are NOT stored in the repository.
+  If a print file fails to load, the slide falls back to the product image.
 
   A pick whose SKU matches no card is still rendered (name + empty thumb),
   so the page layout is complete while SKUs are being filled in.
@@ -189,7 +196,7 @@
               {% for pk in active_picks %}
               {% assign card = all_products | where: "sku", pk.sku | first %}
               {% assign row_title = card.title | remove: " — Wearable Art" %}
-              {% if row_title == "" %}{% assign row_title = pk.name %}{% endif %}
+              {% if row_title == "" %}{% assign row_title = pk.name | default: pk.sku %}{% endif %}
               {% assign thumb = card.image_url %}
               {% if thumb contains 'ik.imagekit.io' %}{% assign thumb = thumb | append: '?tr=w-128,h-128,c-at_max,f-auto' %}{% endif %}
               <li class="picks-item">
@@ -238,12 +245,35 @@
             {% for pk in active_picks %}
             {% assign card = all_products | where: "sku", pk.sku | first %}
             {% assign stage_title = card.title | remove: " — Wearable Art" %}
-            {% if stage_title == "" %}{% assign stage_title = pk.name %}{% endif %}
+            {% if stage_title == "" %}{% assign stage_title = pk.name | default: pk.sku %}{% endif %}
+
+            {% comment %} Which blank tee: explicit pk.tee, else C02-* = dark, everything else = light {% endcomment %}
+            {% assign tee_kind = pk.tee | default: "" %}
+            {% if tee_kind == "" %}
+              {% assign sku_prefix = pk.sku | slice: 0, 3 | upcase %}
+              {% if sku_prefix == "C02" %}{% assign tee_kind = "dark" %}{% else %}{% assign tee_kind = "light" %}{% endif %}
+            {% endif %}
+            {% assign tee_base = stage_base %}
+            {% if tee_kind == "dark" and page.picks_stage_image_dark.src and page.picks_stage_image_dark.src != "" %}
+              {% assign tee_base = page.picks_stage_image_dark %}
+            {% endif %}
+
+            {% comment %} Print URL: explicit override, else built from the SKU on external storage {% endcomment %}
+            {% assign print_src = pk.print | default: "" %}
+            {% if print_src == "" and page.picks_print_base and page.picks_print_base != "" %}
+              {% assign sku_low = pk.sku | downcase %}
+              {% assign print_ext = page.picks_print_ext | default: "webp" %}
+              {% assign print_src = page.picks_print_base | append: sku_low | append: "." | append: print_ext %}
+            {% endif %}
+            {% if print_src contains "ik.imagekit.io" %}{% assign print_src = print_src | append: "?tr=w-600,f-auto" %}{% endif %}
 
             {% assign has_print = false %}
-            {% if pk.print and pk.print != '' and stage_base.src and stage_base.src != '' %}
+            {% if print_src != "" and tee_base.src and tee_base.src != "" %}
               {% assign has_print = true %}
             {% endif %}
+
+            {% assign stage_image = card.tee_image | default: card.image_url | default: "" %}
+            {% if stage_image contains 'ik.imagekit.io' %}{% assign stage_image = stage_image | append: '?tr=w-960,f-auto' %}{% endif %}
 
             {% assign tp_variants = false %}
             {% if card.teepublic_variants and card.teepublic_variants.size > 0 %}
@@ -269,30 +299,37 @@
                 <div class="tee-stage"
                      style="--print-x: {{ pk.print_x | default: 40.5 }}%; --print-y: {{ pk.print_y | default: 41.2 }}%; --print-w: {{ pk.print_w | default: 24.7 }}%;">
                   <img class="tee-stage-base"
-                       src="{{ stage_base.src }}"
+                       src="{{ tee_base.src }}"
                        alt=""
                        {% unless forloop.first %}loading="lazy"{% endunless %}>
                   <img class="tee-stage-print"
-                       src="{{ pk.print }}"
+                       src="{{ print_src }}"
                        alt="{{ stage_title | escape }} design on a T-shirt (visual mock-up)"
-                       {% unless forloop.first %}loading="lazy"{% endunless %}>
+                       {% unless forloop.first %}loading="lazy"{% endunless %}
+                       onerror="var f=this.closest('figure');f.style.display='none';var n=f.nextElementSibling;if(n&&n.hasAttribute('hidden')){n.hidden=false;}">
                 </div>
                 <figcaption class="picks-caption">Product image is a visual mock-up.</figcaption>
               </figure>
-              {% elsif card %}
-              {% assign stage_image = card.tee_image | default: card.image_url %}
-              {% if stage_image contains 'ik.imagekit.io' %}{% assign stage_image = stage_image | append: '?tr=w-960,f-auto' %}{% endif %}
+              {% if card and stage_image != "" %}
+              {% comment %} Fallback shown only if the print file is missing on external storage {% endcomment %}
+              <figure class="picks-figure" hidden>
+                <img src="{{ stage_image }}"
+                     alt="{{ card.alt_text | default: stage_title | escape }}"
+                     loading="lazy">
+              </figure>
+              {% endif %}
+              {% elsif card and stage_image != "" %}
               <figure class="picks-figure">
                 <img src="{{ stage_image }}"
                      alt="{{ card.alt_text | default: stage_title | escape }}"
                      {% unless forloop.first %}loading="lazy"{% endunless %}>
               </figure>
-              {% elsif stage_base.src and stage_base.src != '' %}
+              {% elsif tee_base.src and tee_base.src != '' %}
               <figure class="picks-figure picks-figure-tee">
                 <div class="tee-stage">
                   <img class="tee-stage-base"
-                       src="{{ stage_base.src }}"
-                       alt="{{ stage_base.alt | default: '' | escape }}"
+                       src="{{ tee_base.src }}"
+                       alt="{{ tee_base.alt | default: '' | escape }}"
                        {% unless forloop.first %}loading="lazy"{% endunless %}>
                 </div>
               </figure>
