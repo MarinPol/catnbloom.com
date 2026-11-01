@@ -52,7 +52,8 @@ picks:
   - sku: "C01-038"
   - sku: "C02-019"
   - sku: "C01-039"
-  - sku: "C02-0XX"   # TODO: 10th design (Witchy) - SKU not chosen yet
+  print: "https://ik.imagekit.io/catnbloom/prints/C01-039.webp"
+  - sku: "C02-029"   
 
 # --- 1. Hero ---
 hero_title: "T-Shirts with Cats & Flowers"
