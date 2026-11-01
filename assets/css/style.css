@@ -2851,7 +2851,7 @@ the banner separates it from the header instead of sitting flush.
 
 
 /* =========================
-LANDING PAGE v4 (layout: landing, e.g. /t-shirts/)
+LANDING PAGE v4.1 (layout: landing, e.g. /t-shirts/)
 Built from the author's mock-up and SVG sources.
 No site header on landing pages: the hero collage replaces it.
 Hero is a fixed-ratio composition (percent positions taken from the SVG),
@@ -2921,7 +2921,7 @@ Reuses .buy-button-variant (modified by .picks-buy).
 }
 
 .landing-hero-top {
-  background: none;
+  background: var(--landing-slate);
 }
 
 /* Composition ratio: 3092 x 1384 (includes the bar and the bottom margin) */
@@ -3077,20 +3077,41 @@ Reuses .buy-button-variant (modified by .picks-buy).
   color: var(--surface-dark);
 }
 
-/* Desktop: the whole composition fits the first screen.
-   --hero-w = composition width, limited by the hero width, the max width AND the
-   viewport height (composition ratio 1384/3092 = 0.4476, so 2.2 x height keeps it
-   inside one screen). Every size below is a fraction of --hero-w, with a floor
-   so nothing becomes unreadable on narrow desktop windows. */
-@media (min-width: 769px) {
+/* Desktop / landscape (width >= 769px AND aspect >= 1.3): the hero is EXACTLY one
+   screen tall (100svh) and edge to edge. The background is one smooth gradient
+   over the full width (no boxed bar). The photo composition is scaled to the
+   screen width (slate margins of the artwork are cropped), unless the screen is
+   too short - then the height limits it. --hero-w = width of the 3092-unit
+   composition; every size below is a fraction of it. The title block is anchored
+   to the bottom of the screen, so any spare height becomes calm gradient between
+   the photos and the title. Needed height ~ 0.46 x --hero-w, hence 2.17 x height. */
+@media (min-width: 769px) and (min-aspect-ratio: 13/10) {
   .landing-hero {
     container-type: inline-size;
-    --hero-w: min(100cqw, var(--landing-hero-max), max(720px, calc(100svh * 2.2)));
+    height: max(520px, 100svh);
+    overflow: hidden;
+    --hero-pad: max(12px, 1.5vw);
+    --hero-w: min(
+      calc((100cqw - 2 * var(--hero-pad)) * 1.1243),
+      calc(max(520px, 100svh) * 2.17)
+    );
+  }
+
+  /* Full-bleed gradient: slate under the photos, warming to mauve at the bottom */
+  .landing-hero-top {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      var(--landing-slate) calc(var(--hero-w) * 0.31),
+      var(--landing-mauve-deep) 100%
+    );
   }
 
   .landing-hero-top .landing-collage {
     width: var(--hero-w);
     max-width: none;
+    margin: 0 0 0 calc((100cqw - var(--hero-w)) / 2);
   }
 
   /* Plaque: rotated box (text follows the tilt of the artwork); the image is
@@ -3117,7 +3138,7 @@ Reuses .buy-button-variant (modified by .picks-buy).
 
   .landing-hero-collections li {
     gap: calc(var(--hero-w) * 0.0065);
-    font-size: max(0.85rem, calc(var(--hero-w) * 0.0139));
+    font-size: max(0.85rem, calc(var(--hero-w) * 0.0148));
   }
 
   .landing-hero-collections li::before {
@@ -3128,29 +3149,30 @@ Reuses .buy-button-variant (modified by .picks-buy).
   .landing-hero-text {
     padding-left: calc(var(--hero-w) * 0.0071);
     border-left-width: max(4px, calc(var(--hero-w) * 0.0065));
-    font-size: max(0.7rem, calc(var(--hero-w) * 0.0108));
+    font-size: max(0.75rem, calc(var(--hero-w) * 0.0114));
   }
 
-  /* Bar: inside the composition (x 5.83%, y 29.97%, w 88.84%, h 8.98%) */
+  /* Title block: no box of its own, anchored to the bottom of the screen */
   .landing-hero-bar {
     position: absolute;
     z-index: 2;
     box-sizing: border-box;
-    left: calc(50% - var(--hero-w) / 2 + var(--hero-w) * 0.0583);
-    top: calc(var(--hero-w) * 0.2997);
+    left: calc(50% - var(--hero-w) * 0.4442);
+    bottom: max(1rem, calc(var(--hero-w) * 0.03));
     width: calc(var(--hero-w) * 0.8884);
-    height: calc(var(--hero-w) * 0.0898);
-    padding: calc(var(--hero-w) * 0.002) calc(var(--hero-w) * 0.0258) 0;
+    padding: 0;
+    background: none;
   }
 
   .landing-hero h1 {
     margin: 0 0 calc(var(--hero-w) * 0.0106);
-    font-size: max(1.2rem, calc(var(--hero-w) * 0.0255));
+    font-size: max(1.4rem, calc(var(--hero-w) * 0.0275));
   }
 
   .landing-hero-strip {
     max-width: none;
     height: calc(var(--hero-w) * 0.0359);
+    min-height: 2.4rem;
     box-sizing: border-box;
     gap: calc(var(--hero-w) * 0.01);
     padding: 0 calc(var(--hero-w) * 0.0095);
@@ -3159,11 +3181,77 @@ Reuses .buy-button-variant (modified by .picks-buy).
   .landing-pill {
     padding: calc(var(--hero-w) * 0.0055) calc(var(--hero-w) * 0.0125);
     border-radius: calc(var(--hero-w) * 0.004);
-    font-size: max(0.7rem, calc(var(--hero-w) * 0.01));
+    font-size: max(0.75rem, calc(var(--hero-w) * 0.0105));
   }
 
   .landing-subtitle {
-    font-size: max(0.7rem, calc(var(--hero-w) * 0.01));
+    font-size: max(0.75rem, calc(var(--hero-w) * 0.0105));
+  }
+}
+
+/* Mobile / portrait (width <= 768px OR aspect < 1.3): single column in normal
+   flow, the oval overlaps the title block. Same layout for portrait tablets. */
+@media (max-width: 768px), (max-aspect-ratio: 13/10) {
+  .landing-collage {
+    aspect-ratio: auto;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-2);
+  }
+
+  .landing-collage figure,
+  .landing-hero-info,
+  .landing-hero-oval {
+    position: static;
+    width: 100%;
+  }
+
+  .landing-hero-info {
+    padding: 0 var(--space-1);
+  }
+
+  .landing-hero-collections {
+    margin-bottom: var(--space-1);
+  }
+
+  .landing-hero-collections li {
+    gap: 10px;
+    font-size: var(--font-body-lg);
+  }
+
+  .landing-hero-collections li::before {
+    width: 14px;
+    height: 14px;
+  }
+
+  .landing-hero-text {
+    padding-left: var(--space-2);
+    border-left-width: 6px;
+    font-size: var(--font-body);
+  }
+
+  .landing-hero-oval {
+    width: 62%;
+    max-width: 320px;
+    margin: var(--space-1) auto -48px;
+  }
+
+  .landing-hero-bar {
+    padding: 64px var(--space-2) var(--space-2);
+  }
+
+  .landing-hero-strip {
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 24px;
+  }
+
+  .landing-hero-strip .landing-subtitle {
+    order: 3;
+    flex: 1 1 100%;
+    text-align: center;
   }
 }
 
@@ -3650,69 +3738,6 @@ Reuses .buy-button-variant (modified by .picks-buy).
 @media (max-width: 768px) {
   .landing-section {
     padding: 0 var(--space-2);
-  }
-
-  /* Hero: single column in normal flow, oval overlaps the H1 bar */
-  .landing-collage {
-    aspect-ratio: auto;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    padding: var(--space-2);
-  }
-
-  .landing-collage figure,
-  .landing-hero-info,
-  .landing-hero-oval {
-    position: static;
-    width: 100%;
-  }
-
-  .landing-hero-info {
-    padding: 0 var(--space-1);
-  }
-
-  .landing-hero-collections {
-    margin-bottom: var(--space-1);
-  }
-
-  .landing-hero-collections li {
-    gap: 10px;
-    font-size: var(--font-body-lg);
-  }
-
-  .landing-hero-collections li::before {
-    flex: 0 0 14px;
-    height: 14px;
-  }
-
-  .landing-hero-text {
-    padding-left: var(--space-2);
-    border-left-width: 6px;
-    font-size: var(--font-body);
-  }
-
-  .landing-hero-oval {
-    width: 62%;
-    max-width: 320px;
-    margin: var(--space-1) auto -48px;
-  }
-
-  .landing-hero-bar {
-    padding: 64px var(--space-2) var(--space-2);
-  }
-
-  .landing-hero-strip {
-    flex-wrap: wrap;
-    justify-content: center;
-    border-radius: 24px;
-  }
-
-  .landing-hero-strip .landing-subtitle {
-    order: 3;
-    flex: 1 1 100%;
-    text-align: center;
   }
 
   .landing-diff-list,
