@@ -44,6 +44,7 @@ picks_print_ext: "webp"
 
 picks:
   - sku: "C01-001"
+    print: "https://ik.imagekit.io/catnbloom/prints/C01-001.webp"
   - sku: "C02-001"
     print: "https://ik.imagekit.io/catnbloom/prints/C02-001.webp"
   - sku: "C01-004"
