@@ -8,12 +8,12 @@
 enabled: true
 
 # Free text in the center. Keep it short — it sits between two images.
-text: "Wearable art for the season"
+text: "T-Shirts with Cats & Flowers"
 
 # Left and right images (PNG with transparency recommended).
 # Leave a value empty ("") to hide that side only; text still shows.
-left_image: /assets/images/seasonal/halloween-left.png
-right_image: /assets/images/seasonal/halloween-right.png
+left_image: /assets/images/seasonal/t-shirts-left.webp
+right_image: /assets/images/seasonal/t-shirts-right.webp
 
 # Optional: makes the whole banner a link. Leave empty ("") for no link.
-link: /smart/sc10/
+link: /t-shirts/
