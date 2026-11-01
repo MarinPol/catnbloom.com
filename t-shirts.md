@@ -52,30 +52,29 @@ picks:
   - sku: "C01-038"
   - sku: "C02-019"
   - sku: "C01-039"
-    print: "https://ik.imagekit.io/catnbloom/prints/C01-039_.webp"
-  - sku: "C02-029"   
+  - sku: "C02-0XX"   # TODO: 10th design (Witchy) - SKU not chosen yet
 
 # --- 1. Hero ---
 hero_title: "T-Shirts with Cats & Flowers"
 hero_subtitle: "Illustrated Designs by CatnBloom Studio"
-hero_text: "Every CatnBloom T-shirt carries one of our own illustrations: a cat, a few plants, and a small story you can read at a glance. Find these designs on TeePublic and Redbubble."
+hero_text: "Every CatnBloom T-shirt carries one of our own illustrations: a cat, a few plants, and a small story you can read at a glance."
 hero_collections:
   - label: "Cottagecore Cats"
     url: "/cottagecore-cats/"
   - label: "Witchy Cats + Plants"
     url: "/witchy-cats-plants/"
+# Hero v4 (new header). Files are baked from the author's SVG to final proportions
+# (no distortion, brush edges kept). The plaque image is text-free and lives in
+# style.css; the title bar, collection links and plaque text are live HTML.
 hero_collage:
   main:
-    src: "/assets/images/t-shirts/hero-main.webp"
+    src: "/assets/images/t-shirts/hero4-main.webp"
     alt: "Woman in a sunlit room wearing a CatnBloom Floral Balance T-shirt, petting an orange cat"
-  banner:
-    src: "/assets/images/t-shirts/hero-banner.webp"
-    alt: "Whimsical art and prints for cat-plant lovers, CatnBloom"
   tee:
-    src: "/assets/images/t-shirts/hero-tee.webp"
+    src: "/assets/images/t-shirts/hero4-tee.webp"
     alt: "Folded light blue T-shirt with The Lovers cat design on a wooden bench"
   oval:
-    src: "/assets/images/t-shirts/hero-oval.webp"
+    src: "/assets/images/t-shirts/hero4-oval.webp"
     alt: "Illustrated gray cat holding a purple flower and an autumn maple leaf"
 
 # --- 2. What makes our designs different ---
