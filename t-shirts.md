@@ -52,7 +52,7 @@ picks:
   - sku: "C01-038"
   - sku: "C02-019"
   - sku: "C01-039"
-  print: "https://ik.imagekit.io/catnbloom/prints/C01-039.webp"
+    print: "https://ik.imagekit.io/catnbloom/prints/C01-039.webp"
   - sku: "C02-029"   
 
 # --- 1. Hero ---
