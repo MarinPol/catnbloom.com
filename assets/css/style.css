@@ -3543,6 +3543,16 @@ Reuses .buy-button-variant (modified by .picks-buy).
   opacity: var(--print-opacity, 1);
 }
 
+/* PRINT TRANSPARENCY - the two numbers to edit (1 = solid ink, lower = fabric shows through).
+   Light tee = Cottagecore (C01-*), dark tee = Witchy (C02-*). Multiplies with the file's own alpha. */
+.tee-stage[data-tee="light"] {
+  --print-opacity: 0.95;
+}
+
+.tee-stage[data-tee="dark"] {
+  --print-opacity: 0.85;
+}
+
 .picks-caption {
   position: absolute;
   left: 0;
