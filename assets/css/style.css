@@ -3538,10 +3538,9 @@ Reuses .buy-button-variant (modified by .picks-buy).
   top: var(--print-y, 41.2%);
   width: var(--print-w, 24.7%);
   height: auto;
-  /* Overall print transparency: 1 = solid ink, lower = the fabric shows through.
-     Change the number (0.85 - 0.95 is natural); this works on top of any
-     transparent pixels the file already has. */
-  opacity: var(--print-opacity, 0.9);
+  /* Extra print transparency on top of the file's own alpha (multiplies with it).
+     1 = leave the file as is. Lower it (e.g. 0.85) to let more fabric show through. */
+  opacity: var(--print-opacity, 1);
 }
 
 .picks-caption {
