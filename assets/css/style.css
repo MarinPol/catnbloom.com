@@ -2851,7 +2851,7 @@ the banner separates it from the header instead of sitting flush.
 
 
 /* =========================
-LANDING PAGE v3 (layout: landing, e.g. /t-shirts/)
+LANDING PAGE v4 (layout: landing, e.g. /t-shirts/)
 Built from the author's mock-up and SVG sources.
 No site header on landing pages: the hero collage replaces it.
 Hero is a fixed-ratio composition (percent positions taken from the SVG),
@@ -2907,24 +2907,29 @@ Reuses .buy-button-variant (modified by .picks-buy).
 
 /* ---- 1. Hero ---- */
 
+/* Hero v4 (new header composition 3092 x 1384).
+   Desktop: one fixed-ratio composition, every element is placed in percent of
+   the composition width (--hero-w); the title bar is live HTML/CSS (not an image)
+   and sits inside the composition. Plaque = text-free image + live text.
+   Mobile (<=768px): single column, see the media block further below. */
+
 .landing-hero {
   position: relative;
   width: 100%;
   margin: 0 0 var(--section-gap-md);
-}
-
-.landing-hero-top {
   background: var(--landing-slate);
 }
 
-/* Fixed-ratio composition: 2080 x 1110 (size of the source collage) */
+.landing-hero-top {
+  background: none;
+}
+
+/* Composition ratio: 3092 x 1384 (includes the bar and the bottom margin) */
 .landing-collage {
   position: relative;
-  z-index: 2;
   max-width: var(--landing-hero-max);
   margin: 0 auto;
-  aspect-ratio: 2080 / 1110;
-  container-type: inline-size;
+  aspect-ratio: 3092 / 1384;
 }
 
 .landing-collage figure {
@@ -2938,51 +2943,46 @@ Reuses .buy-button-variant (modified by .picks-buy).
   height: auto;
 }
 
+/* Stacking order as in the source SVG: photo < bar < tee photo < oval < plaque */
 .landing-collage-main {
-  left: 1.92%;
-  top: 3.24%;
-  width: 52.6%;
-}
-
-.landing-collage-banner {
-  left: 57.5%;
-  top: 4.7%;
-  width: 41.5%;
+  z-index: 1;
+  left: 5.737%;
+  top: 0;
+  width: 47.99%;
 }
 
 .landing-collage-tee {
-  left: 53.96%;
-  top: 31.2%;
-  width: 44.1%;
+  z-index: 3;
+  left: 52.99%;
+  top: 0;
+  width: 41.69%;
 }
 
-/* Text box in the lower right corner of the collage (scales with the collage) */
+/* Plaque: text-free image (pseudo-element) + live collection links and text */
 .landing-hero-info {
   position: absolute;
-  left: 68.4%;
-  top: 77.5%;
-  width: 30%;
+  z-index: 5;
+  left: 53.34%;
+  top: 34.54%;
+  width: 41.34%;
   color: #fff;
 }
 
 .landing-hero-collections {
   list-style: none;
-  margin: 0 0 0.9cqw;
+  margin: 0;
   padding: 0;
 }
 
 .landing-hero-collections li {
   display: flex;
   align-items: center;
-  gap: 0.7cqw;
-  font-size: 1.6cqw;
-  line-height: 1.35;
+  line-height: 1.25;
 }
 
 .landing-hero-collections li::before {
   content: "";
-  flex: 0 0 0.9cqw;
-  height: 0.9cqw;
+  flex: 0 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.7);
   background: var(--accent-mauve);
 }
@@ -3002,9 +3002,7 @@ Reuses .buy-button-variant (modified by .picks-buy).
 }
 
 .landing-hero-text {
-  padding-left: 1cqw;
-  border-left: 0.45cqw solid var(--accent-sage-dark);
-  font-size: 1.22cqw;
+  border-left: 4px solid var(--accent-sage-dark);
   line-height: 1.4;
 }
 
@@ -3012,18 +3010,18 @@ Reuses .buy-button-variant (modified by .picks-buy).
   margin: 0;
 }
 
-/* Oval with the cat: sits on the collage and overlaps the H1 bar */
+/* Oval with the cat: overlaps the bar */
 .landing-hero-oval {
   position: absolute;
-  left: 36.2%;
-  top: 73.2%;
-  z-index: 3;
-  width: 30.8%;
+  z-index: 4;
+  left: 8.07%;
+  top: 49.07%;
+  width: 23.42%;
   height: auto;
   pointer-events: none;
 }
 
-/* Bar under the collage; top padding keeps the H1 clear of the oval */
+/* Title bar (mobile base: block under the collage; desktop override below) */
 .landing-hero-bar {
   position: relative;
   z-index: 1;
@@ -3079,29 +3077,93 @@ Reuses .buy-button-variant (modified by .picks-buy).
   color: var(--surface-dark);
 }
 
-/* Hero fits the first screen on desktop (collage + H1 bar together).
-   --hero-w = collage width: limited by the hero width, the max width AND the
-   viewport height (the ratio 1.56 comes from collage ratio + bar height).
-   The H1 and the bar padding scale with the same value, so the whole hero
-   is about one screen tall on any desktop window. Mobile keeps its own layout. */
+/* Desktop: the whole composition fits the first screen.
+   --hero-w = composition width, limited by the hero width, the max width AND the
+   viewport height (composition ratio 1384/3092 = 0.4476, so 2.2 x height keeps it
+   inside one screen). Every size below is a fraction of --hero-w, with a floor
+   so nothing becomes unreadable on narrow desktop windows. */
 @media (min-width: 769px) {
   .landing-hero {
     container-type: inline-size;
-    --hero-w: min(100cqw, var(--landing-hero-max), max(720px, calc((100svh - 120px) * 1.56)));
+    --hero-w: min(100cqw, var(--landing-hero-max), max(720px, calc(100svh * 2.2)));
   }
 
-  .landing-collage {
+  .landing-hero-top .landing-collage {
     width: var(--hero-w);
     max-width: none;
   }
 
+  /* Plaque: rotated box (text follows the tilt of the artwork); the image is
+     counter-rotated, so the plaque artwork itself stays as drawn. */
+  .landing-hero-info {
+    aspect-ratio: 1278.2 / 453.1;
+    box-sizing: border-box;
+    padding: calc(var(--hero-w) * 0.0178) calc(var(--hero-w) * 0.0624) 0 calc(var(--hero-w) * 0.0873);
+    transform: rotate(-2deg);
+  }
+
+  .landing-hero-info::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url("/assets/images/t-shirts/hero4-plaque.webp") center / 100% 100% no-repeat;
+    transform: rotate(2deg);
+  }
+
+  .landing-hero-collections {
+    margin-bottom: calc(var(--hero-w) * 0.0125);
+  }
+
+  .landing-hero-collections li {
+    gap: calc(var(--hero-w) * 0.0065);
+    font-size: max(0.85rem, calc(var(--hero-w) * 0.0139));
+  }
+
+  .landing-hero-collections li::before {
+    width: max(9px, calc(var(--hero-w) * 0.0097));
+    height: max(9px, calc(var(--hero-w) * 0.0097));
+  }
+
+  .landing-hero-text {
+    padding-left: calc(var(--hero-w) * 0.0071);
+    border-left-width: max(4px, calc(var(--hero-w) * 0.0065));
+    font-size: max(0.7rem, calc(var(--hero-w) * 0.0108));
+  }
+
+  /* Bar: inside the composition (x 5.83%, y 29.97%, w 88.84%, h 8.98%) */
   .landing-hero-bar {
-    padding-top: calc(var(--hero-w) * 0.056);
+    position: absolute;
+    z-index: 2;
+    box-sizing: border-box;
+    left: calc(50% - var(--hero-w) / 2 + var(--hero-w) * 0.0583);
+    top: calc(var(--hero-w) * 0.2997);
+    width: calc(var(--hero-w) * 0.8884);
+    height: calc(var(--hero-w) * 0.0898);
+    padding: calc(var(--hero-w) * 0.002) calc(var(--hero-w) * 0.0258) 0;
   }
 
   .landing-hero h1 {
-    margin-bottom: var(--space-2);
-    font-size: max(2rem, calc(var(--hero-w) * 0.045));
+    margin: 0 0 calc(var(--hero-w) * 0.0106);
+    font-size: max(1.2rem, calc(var(--hero-w) * 0.0255));
+  }
+
+  .landing-hero-strip {
+    max-width: none;
+    height: calc(var(--hero-w) * 0.0359);
+    box-sizing: border-box;
+    gap: calc(var(--hero-w) * 0.01);
+    padding: 0 calc(var(--hero-w) * 0.0095);
+  }
+
+  .landing-pill {
+    padding: calc(var(--hero-w) * 0.0055) calc(var(--hero-w) * 0.0125);
+    border-radius: calc(var(--hero-w) * 0.004);
+    font-size: max(0.7rem, calc(var(--hero-w) * 0.01));
+  }
+
+  .landing-subtitle {
+    font-size: max(0.7rem, calc(var(--hero-w) * 0.01));
   }
 }
 
@@ -3593,7 +3655,7 @@ Reuses .buy-button-variant (modified by .picks-buy).
   /* Hero: single column in normal flow, oval overlaps the H1 bar */
   .landing-collage {
     aspect-ratio: auto;
-    container-type: normal;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
@@ -3605,11 +3667,6 @@ Reuses .buy-button-variant (modified by .picks-buy).
   .landing-hero-oval {
     position: static;
     width: 100%;
-  }
-
-  .landing-collage-main img {
-    aspect-ratio: 1000 / 951;
-    object-fit: cover;
   }
 
   .landing-hero-info {
