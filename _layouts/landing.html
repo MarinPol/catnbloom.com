@@ -36,7 +36,10 @@
     picks_print_ext:  "webp"
   Automatic print URL = picks_print_base + lowercase SKU + "." + picks_print_ext
   (example: .../prints/c01-001.webp). Prints are NOT stored in the repository.
-  If a print file fails to load, the slide falls back to the product image.
+  If a print file is missing, the TEE MOCK-UP STAYS and the product image from the
+  card is placed on it as a temporary print (multiply on the light tee, lighten on
+  the black tee). The tee is never replaced by the plain product image.
+  Story under the stage = first sentence only, capped at 180 characters.
 
   A pick whose SKU matches no card is still rendered (name + empty thumb),
   so the page layout is complete while SKUs are being filled in.
@@ -297,6 +300,7 @@
               {% if has_print %}
               <figure class="picks-figure picks-figure-tee">
                 <div class="tee-stage"
+                     data-tee="{{ tee_kind }}"
                      style="--print-x: {{ pk.print_x | default: 40.5 }}%; --print-y: {{ pk.print_y | default: 41.2 }}%; --print-w: {{ pk.print_w | default: 24.7 }}%;">
                   <img class="tee-stage-base"
                        src="{{ tee_base.src }}"
@@ -304,20 +308,12 @@
                        {% unless forloop.first %}loading="lazy"{% endunless %}>
                   <img class="tee-stage-print"
                        src="{{ print_src }}"
+                       {% if card and stage_image != "" %}data-fallback="{{ stage_image }}"{% endif %}
                        alt="{{ stage_title | escape }} design on a T-shirt (visual mock-up)"
-                       {% unless forloop.first %}loading="lazy"{% endunless %}
-                       onerror="var f=this.closest('figure');f.style.display='none';var n=f.nextElementSibling;if(n&&n.hasAttribute('hidden')){n.hidden=false;}">
+                       {% unless forloop.first %}loading="lazy"{% endunless %}>
                 </div>
                 <figcaption class="picks-caption">Product image is a visual mock-up.</figcaption>
               </figure>
-              {% if card and stage_image != "" %}
-              {% comment %} Fallback shown only if the print file is missing on external storage {% endcomment %}
-              <figure class="picks-figure" hidden>
-                <img src="{{ stage_image }}"
-                     alt="{{ card.alt_text | default: stage_title | escape }}"
-                     loading="lazy">
-              </figure>
-              {% endif %}
               {% elsif card and stage_image != "" %}
               <figure class="picks-figure">
                 <img src="{{ stage_image }}"
@@ -345,7 +341,13 @@
               </div>
 
               {% if card and card.story %}
-              <p class="picks-slide-story">{{ card.story | strip_html | strip }}</p>
+              {% assign story_full = card.story | strip_html | strip %}
+              {% assign story_short = story_full | split: ". " | first %}
+              {% assign story_last = story_short | slice: -1 %}
+              {% unless story_last == "." or story_last == "!" or story_last == "?" %}
+                {% assign story_short = story_short | append: "." %}
+              {% endunless %}
+              <p class="picks-slide-story">{{ story_short | truncate: 180 }}</p>
               {% endif %}
 
               {% if tp_variants or tp_single or rb_variants or rb_single %}
@@ -484,6 +486,29 @@
     var narrow = window.matchMedia('(max-width: 768px)');
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
     var current = 0;
+
+    // Missing print on external storage: keep the tee, put the product image on it.
+    // Light tee: multiply (white background disappears). Black tee: lighten (dark background disappears).
+    function printFallback(img) {
+      var fb = img.getAttribute('data-fallback');
+      var stageEl = img.closest('.tee-stage');
+      if (!fb || img.getAttribute('data-fb-done')) {
+        img.style.visibility = 'hidden'; // no fallback available: plain tee stays
+        return;
+      }
+      img.setAttribute('data-fb-done', '1');
+      var dark = stageEl && stageEl.getAttribute('data-tee') === 'dark';
+      img.style.mixBlendMode = dark ? 'lighten' : 'multiply';
+      img.style.width = '30%';
+      img.style.left = '37.8%';
+      img.style.top = '39.5%';
+      img.src = fb;
+    }
+
+    Array.prototype.slice.call(root.querySelectorAll('.tee-stage-print')).forEach(function (img) {
+      img.addEventListener('error', function () { printFallback(img); });
+      if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) printFallback(img);
+    });
 
     root.classList.add('picks-js');
     links[0].parentNode.classList.add('is-active');
