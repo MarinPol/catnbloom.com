@@ -5,7 +5,7 @@ permalink: /t-shirts/
 
 # SEO
 seo_title: "T-Shirts with Cats & Flowers | CatnBloom Studio"
-seo_description: "Explore illustrated T-shirts featuring CatnBloom Studio designs inspired by cats, flowers and botanical art. View each design and find it on TeePublic or Redbubble."
+seo_description: "Illustrated T-shirts with cats and flowers by CatnBloom Studio. See each design and where to find it on TeePublic or Redbubble."
 
 # Optional: image used for social sharing. If empty, hero_collage.main.src is used.
 # og_image: ""
