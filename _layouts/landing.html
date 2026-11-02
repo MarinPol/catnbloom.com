@@ -46,7 +46,10 @@
   A pick whose card has status: hidden is skipped everywhere.
 
   Product thumbnails from ImageKit are requested resized (?tr=...) to keep
-  the page light.
+  the page light. Any query already present in image_url (e.g. ?tr=f-auto) is
+  stripped first, so the URL never gets a double "?tr=".
+  The "studio showcase" note (page.picks_note) is rendered ONCE above the picks
+  list, not inside each slide.
   =====================================================
   {% endcomment %}
 
@@ -192,6 +195,10 @@
           <p class="landing-picks-intro">{{ page.picks_intro }}</p>
         {% endif %}
 
+        {% comment %} Shown once for the whole block (not repeated in every slide) {% endcomment %}
+        <p class="landing-picks-intro">{{ page.picks_note | default: "Our site is a studio showcase. The shirts are made and shipped by TeePublic and Redbubble." }}</p>
+        <p class="landing-picks-intro">Product images are visual mock-ups.</p>
+
         <div class="picks-layout">
 
           <div class="picks-column">
@@ -201,7 +208,7 @@
               {% assign row_title = card.title | remove: " — Wearable Art" %}
               {% if row_title == "" %}{% assign row_title = pk.name | default: pk.sku %}{% endif %}
               {% assign thumb = card.image_url %}
-              {% if thumb contains 'ik.imagekit.io' %}{% assign thumb = thumb | append: '?tr=w-128,h-128,c-at_max,f-auto' %}{% endif %}
+              {% if thumb contains 'ik.imagekit.io' %}{% assign thumb = thumb | split: '?' | first | append: '?tr=w-128,h-128,c-at_max,f-auto' %}{% endif %}
               <li class="picks-item">
                 <a class="picks-link"
                    href="{% if card %}{{ card.url }}{% else %}#studioPicks{% endif %}"
@@ -228,7 +235,7 @@
             {% if newest %}
             {% assign newest_title = newest.title | remove: " — Wearable Art" %}
             {% assign newest_thumb = newest.image_url %}
-            {% if newest_thumb contains 'ik.imagekit.io' %}{% assign newest_thumb = newest_thumb | append: '?tr=w-128,h-160,c-at_max,f-auto' %}{% endif %}
+            {% if newest_thumb contains 'ik.imagekit.io' %}{% assign newest_thumb = newest_thumb | split: '?' | first | append: '?tr=w-128,h-160,c-at_max,f-auto' %}{% endif %}
             <a class="picks-newest" href="{{ newest.url }}">
               <img class="picks-newest-thumb"
                    src="{{ newest_thumb }}"
@@ -268,7 +275,7 @@
               {% assign print_ext = page.picks_print_ext | default: "webp" %}
               {% assign print_src = page.picks_print_base | append: sku_low | append: "." | append: print_ext %}
             {% endif %}
-            {% if print_src contains "ik.imagekit.io" %}{% assign print_src = print_src | append: "?tr=w-600,f-auto" %}{% endif %}
+            {% if print_src contains "ik.imagekit.io" %}{% assign print_src = print_src | split: "?" | first | append: "?tr=w-600,f-auto" %}{% endif %}
 
             {% assign has_print = false %}
             {% if print_src != "" and tee_base.src and tee_base.src != "" %}
@@ -276,7 +283,7 @@
             {% endif %}
 
             {% assign stage_image = card.tee_image | default: card.image_url | default: "" %}
-            {% if stage_image contains 'ik.imagekit.io' %}{% assign stage_image = stage_image | append: '?tr=w-960,f-auto' %}{% endif %}
+            {% if stage_image contains 'ik.imagekit.io' %}{% assign stage_image = stage_image | split: '?' | first | append: '?tr=w-960,f-auto' %}{% endif %}
 
             {% assign tp_variants = false %}
             {% if card.teepublic_variants and card.teepublic_variants.size > 0 %}
@@ -312,7 +319,6 @@
                        alt="{{ stage_title | escape }} design on a T-shirt (visual mock-up)"
                        {% unless forloop.first %}loading="lazy"{% endunless %}>
                 </div>
-                <figcaption class="picks-caption">Product image is a visual mock-up.</figcaption>
               </figure>
               {% elsif card and stage_image != "" %}
               <figure class="picks-figure">
@@ -351,8 +357,6 @@
               {% endif %}
 
               {% if tp_variants or tp_single or rb_variants or rb_single %}
-              <p class="picks-note">{{ page.picks_note | default: "Our site is a studio showcase. The shirts are made and shipped by TeePublic and Redbubble." }}</p>
-
               <div class="picks-actions">
                 {% if tp_variants %}
                   {% for variant in card.teepublic_variants %}
