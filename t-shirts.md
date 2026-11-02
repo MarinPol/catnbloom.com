@@ -101,7 +101,7 @@ differences:
 
 # --- 3. Studio Picks (texts) ---
 picks_title: "Studio Picks"
-picks_note: "Our site is a studio showcase. The shirts are made and shipped by TeePublic and Redbubble."
+picks_note: "Our site is a showcase for original designs by CatnBloom Studio. The designs are printed on shirts and shipped by TeePublic and Redbubble. Product images are visual mock-ups."
 
 # --- 4. A short history of the tee ---
 history_title: "A short history of the tee"
