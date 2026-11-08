@@ -67,8 +67,22 @@
     {% endif %}
   {% endfor %}
 
-  {% assign dated_cards = resolved | where_exp: "i", "i.date_added" | sort: "date_added" %}
-  {% assign newest = dated_cards | last %}
+  {% comment %}
+    "Newest design" = the newest visible card of the WHOLE catalog (cottagecore + witchy),
+    not only of the 10 picks. Needs date_added and a status other than hidden.
+    Same date_added: the higher SKU wins.
+  {% endcomment %}
+  {% assign newest = all_products | where: "sku", "__none__" | first %}
+  {% assign newest_key = "" %}
+  {% for c in all_products %}
+    {% if c.status != 'hidden' and c.date_added %}
+      {% assign c_key = c.date_added | date: "%Y-%m-%d" | append: " " | append: c.sku %}
+      {% if c_key > newest_key %}
+        {% assign newest = c %}
+        {% assign newest_key = c_key %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
 
   {% assign collage = page.hero_collage %}
   {% assign stage_base = page.picks_stage_image %}
@@ -224,7 +238,7 @@
             {% if newest %}
             {% assign newest_title = newest.title | remove: " — Wearable Art" %}
             {% assign newest_thumb = newest.image_url %}
-            {% if newest_thumb contains 'ik.imagekit.io' %}{% assign newest_thumb = newest_thumb | append: '?tr=w-128,h-160,c-at_max,f-auto' %}{% endif %}
+            {% if newest_thumb contains 'ik.imagekit.io' %}{% assign newest_thumb = newest_thumb | split: '?' | first | append: '?tr=w-128,h-160,c-at_max,f-auto' %}{% endif %}
             <a class="picks-newest" href="{{ newest.url }}">
               <img class="picks-newest-thumb"
                    src="{{ newest_thumb }}"
