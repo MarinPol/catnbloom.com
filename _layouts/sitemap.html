@@ -58,6 +58,21 @@
       </section>
       {% endif %}
 
+      <!-- ===== SECTION: SHOP BY PRODUCT (landing pages) ===== -->
+      <!-- Auto-collects every page with layout: landing; new landings appear here without editing this file -->
+      {% assign sorted_landings = site.pages | where: "layout", "landing" | where_exp: "p", "p.status != 'hidden'" | sort: "title" %}
+      {% if sorted_landings.size > 0 %}
+      <section class="sitemap-section">
+        <h3 class="icon-title"><i data-lucide="shirt"></i>Shop by Product</h3>
+
+        <ul class="sitemap-list">
+          {% for landing in sorted_landings %}
+          <li><a href="{{ landing.url }}">{{ landing.hero_title | default: landing.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
       <!-- ===== SECTION: SMART COLLECTIONS ===== -->
       {% assign smart_months = site.smart | sort: "permalink" %}
       {% if smart_months.size > 0 %}
