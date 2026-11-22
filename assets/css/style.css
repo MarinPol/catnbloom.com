@@ -3817,3 +3817,40 @@ Reuses .buy-button-variant (modified by .picks-buy).
     transition: none;
   }
 }
+
+/* =========================
+   PRODUCT COLOR PALETTE
+   Optional block on product pages (color_palette in front matter).
+   No outer margin: spacing comes from the parent .right-container gap.
+   ========================= */
+.color-palette-label {
+  margin: 0 0 8px;
+  font-size: var(--font-body);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.color-palette-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.color-palette-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-body);
+  color: var(--text-primary);
+}
+
+.color-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  flex-shrink: 0;
+}
