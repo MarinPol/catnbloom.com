@@ -127,6 +127,12 @@
         <div class="human-proof-box">{{ page.human_proof }}</div>
         {% endif %}
 
+        {% comment %} Optional field: older products have no color_palette, so the block is skipped when it is empty or whitespace-only. {% endcomment %}
+        {% assign color_palette_clean = page.color_palette | strip %}
+        {% if color_palette_clean != "" %}
+        <div class="story-text color-palette"><strong>Color palette:</strong> {{ color_palette_clean }}</div>
+        {% endif %}
+
         {% if page.author_note %}
         <div class="author-note-box">{{ page.author_note }}</div>
         {% endif %}
