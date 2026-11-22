@@ -127,10 +127,22 @@
         <div class="human-proof-box">{{ page.human_proof }}</div>
         {% endif %}
 
-        {% comment %} Optional field: older products have no color_palette, so the block is skipped when it is empty or whitespace-only. {% endcomment %}
-        {% assign color_palette_clean = page.color_palette | strip %}
-        {% if color_palette_clean != "" %}
-        <div class="story-text color-palette"><strong>Color palette:</strong> {{ color_palette_clean }}</div>
+        {% comment %} Optional field: older products have no color_palette, so the block is skipped unless the first item has a hex value. Expected format: a list of {name, hex} items. {% endcomment %}
+        {% assign first_color = page.color_palette | first %}
+        {% if first_color.hex %}
+        <div class="color-palette">
+            <p class="color-palette-label">Color palette</p>
+            <ul class="color-palette-list">
+                {% for color in page.color_palette %}
+                {% if color.hex %}
+                <li class="color-palette-item">
+                    <span class="color-swatch" style="background-color: {{ color.hex }};" aria-hidden="true"></span>
+                    <span class="color-name">{{ color.name }}</span>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
         {% endif %}
 
         {% if page.author_note %}
