@@ -122,11 +122,15 @@ history_items:
       src: "/assets/images/t-shirts/history-1951.webp"
       alt: "Black-and-white night street scene with a vintage car"
   - year: "1977"
-    text: "Milton Glaser’s I ♥ NY logo, made for a 1977 tourism campaign, soon becomes a T-shirt classic."
+    text: "Milton Glaser’s I ♥ NY logo, designed in 1976, launches with a 1977 tourism campaign and soon becomes a T-shirt classic."
     image:
       src: ""
       alt: ""
 history_note: "From underwear to a blank canvas: today the tee can carry a small story, like ours."
+# Link to the full article (rendered by landing.html; the layout must read these two keys)
+history_link:
+  text: "Read the full story: How the tee became a canvas →"
+  url: "/studio-notes/sn01-007/"
 history_deco:
   src: "/assets/images/t-shirts/history-cat.webp"
 divider_image:
