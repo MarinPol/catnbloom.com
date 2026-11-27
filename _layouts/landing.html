@@ -18,6 +18,7 @@
     1. Hero            - image collage + H1 bar (the only H1 on the page)
     2. Differences     - 3 cards
     3. Studio Picks    - numbered list + stage (JS only switches the stage)
+    3b. Explore more   - two collection cards (front matter: explore_title, explore[])
     4. History         - "A short history of the tee"
     5. Divider         - grass strip
     6. Optional        - Markdown body of the page
@@ -47,6 +48,9 @@
 
   Product thumbnails from ImageKit are requested resized (?tr=...) to keep
   the page light.
+
+  HISTORY LINK (front matter, optional):
+    history_link: {text, url}   # link to the full article, shown under history_note
   =====================================================
   {% endcomment %}
 
@@ -360,6 +364,7 @@
               {% endif %}
 
               {% if tp_variants or tp_single or rb_variants or rb_single %}
+              <p class="buy-variants-label">Available to purchase on:</p>
               <div class="picks-actions">
                 {% if tp_variants %}
                   {% for variant in card.teepublic_variants %}
@@ -418,6 +423,57 @@
   </section>
   {% endif %}
 
+  {% comment %} ============ 3b. EXPLORE MORE DESIGNS ============
+    Two collection cards after Studio Picks. Data: explore_title and explore[] in front matter
+    (label, url, optional text, optional collection key, optional image {src, alt}).
+    Thumbnail: explore[].image.src if given, else the image of the newest visible card
+    of the collection named in explore[].collection (automatic, no extra files).
+  {% endcomment %}
+  {% if page.explore and page.explore.size > 0 %}
+  <section class="landing-section landing-explore" aria-labelledby="exploreHeading">
+    <div class="landing-panel">
+
+      <div class="landing-bar">
+        <h2 id="exploreHeading">{{ page.explore_title | default: "Explore more designs" }}</h2>
+      </div>
+
+      <div class="landing-panel-body">
+        <ul class="landing-explore-list">
+          {% for e in page.explore %}
+          {% assign explore_thumb = e.image.src | default: "" %}
+          {% if explore_thumb == "" and e.collection %}
+            {% assign explore_items = site[e.collection] | sort: "date_added" | reverse %}
+            {% for ec in explore_items %}
+              {% if explore_thumb == "" and ec.status != 'hidden' and ec.image_url and ec.image_url != "" %}
+                {% assign explore_thumb = ec.image_url %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% if explore_thumb contains 'ik.imagekit.io' %}{% assign explore_thumb = explore_thumb | split: '?' | first | append: '?tr=w-192,h-192,c-at_max,f-auto' %}{% endif %}
+          <li>
+            <a class="landing-explore-card" href="{{ e.url }}">
+              {% if explore_thumb != "" %}
+              <img class="landing-explore-thumb"
+                   src="{{ explore_thumb }}"
+                   alt="{{ e.image.alt | default: '' | escape }}"
+                   width="96" height="96"
+                   loading="lazy">
+              {% endif %}
+              <span class="landing-explore-text">
+                <span class="landing-explore-title">{{ e.label }}</span>
+                {% if e.text and e.text != '' %}<span class="landing-explore-sub">{{ e.text }}</span>{% endif %}
+              </span>
+              <span class="landing-explore-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </section>
+  {% endif %}
+
   {% comment %} ============ 4. A SHORT HISTORY OF THE TEE ============ {% endcomment %}
   {% if page.history_items and page.history_items.size > 0 %}
   <section class="landing-section landing-history" aria-labelledby="historyHeading">
@@ -448,6 +504,11 @@
 
         {% if page.history_note %}
           <p class="history-note">{{ page.history_note }}</p>
+        {% endif %}
+
+        {% comment %} Link to the full Studio Notes article. Data: history_link {text, url} in t-shirts.md. Hidden if no url. {% endcomment %}
+        {% if page.history_link.url and page.history_link.url != '' %}
+          <p class="history-note"><a href="{{ page.history_link.url }}">{{ page.history_link.text | default: "Read the full story" }}</a></p>
         {% endif %}
       </div>
 
