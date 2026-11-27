@@ -101,7 +101,21 @@ differences:
 
 # --- 3. Studio Picks (texts) ---
 picks_title: "Studio Picks"
-picks_note: "Our site is a showcase for original designs by CatnBloom Studio. The designs are printed on shirts and shipped by TeePublic and Redbubble. Product images are visual mock-ups."
+picks_note: "Our site is a showcase for original designs by CatnBloom Studio. The designs are printed on shirts and shipped by TeePublic and Redbubble."
+
+# --- 3b. Explore more designs (after Studio Picks) ---
+# collection: Jekyll collection key; the thumbnail is the newest visible design of it.
+# Optional per card: image: {src, alt} to use a fixed picture instead.
+explore_title: "Explore more designs"
+explore:
+  - label: "Cottagecore Cats"
+    url: "/cottagecore-cats/"
+    collection: "cottagecore"
+    text: "See the full collection"
+  - label: "Witchy Cats + Plants"
+    url: "/witchy-cats-plants/"
+    collection: "witchy"
+    text: "See the full collection"
 
 # --- 4. A short history of the tee ---
 history_title: "A short history of the tee"
