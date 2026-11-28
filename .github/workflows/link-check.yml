@@ -45,6 +45,8 @@ jobs:
           # Network timeouts are still reported, so review those by hand.
           # newsletter.catnbloom.com is excluded completely: a plain GET on
           # /unsubscribe or /confirm links could change subscriber data.
+          # Do NOT add --output or --format here: the action sets them itself
+          # and writes the report to lychee/out.md.
           args: >-
             --no-progress
             --max-concurrency 5
@@ -53,8 +55,6 @@ jobs:
             --retry-wait-time 5
             --accept '100..=403,405..=409,411..=599'
             --exclude 'newsletter\.catnbloom\.com'
-            --format markdown
-            --output lychee-report.md
             ${{ steps.urls.outputs.list }}
           fail: false
           jobSummary: true
@@ -70,4 +70,4 @@ jobs:
         uses: peter-evans/create-issue-from-file@v5
         with:
           title: "Broken external links found (weekly link check)"
-          content-filepath: lychee-report.md
+          content-filepath: ./lychee/out.md
