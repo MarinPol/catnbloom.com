@@ -1,0 +1,73 @@
+name: Link Check
+"on":
+  workflow_dispatch:
+    inputs:
+      create_issue:
+        description: "Create a GitHub issue if broken links are found (false = test run, report only in the job summary)"
+        required: false
+        default: "false"
+  schedule:
+    # Every Sunday at 06:00 UTC (night of Saturday to Sunday in the US).
+    # Deliberately NOT on Monday, to keep it apart from the newsletter run.
+    - cron: "0 6 * * 0"
+permissions:
+  contents: read   # read-only: this workflow never writes to the repository
+  issues: write    # needed only to open an issue with the report
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Collect page URLs from the live sitemap
+        id: urls
+        run: |
+          # The live site is checked (not the repository files): the source files
+          # are Liquid templates, so the links inside them are not real URLs yet.
+          curl -fsS https://www.catnbloom.com/sitemap.xml \
+            | grep -oE '<loc>[^<]+</loc>' \
+            | sed -E 's#</?loc>##g' \
+            > urls.txt
+          COUNT=$(wc -l < urls.txt)
+          echo "Pages found in sitemap: $COUNT"
+          if [ "$COUNT" -eq 0 ]; then
+            echo "Sitemap is empty or unreadable - stopping."
+            exit 1
+          fi
+          echo "list=$(tr '\n' ' ' < urls.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Only 404 and 410 count as broken. Codes 403 and 429 (TeePublic and
+          # Redbubble sometimes answer bots with them even when the page works)
+          # are accepted, i.e. treated as "could not verify", not as an error.
+          # Network timeouts are still reported, so review those by hand.
+          # newsletter.catnbloom.com is excluded completely: a plain GET on
+          # /unsubscribe or /confirm links could change subscriber data.
+          args: >-
+            --no-progress
+            --max-concurrency 5
+            --timeout 30
+            --max-retries 2
+            --retry-wait-time 5
+            --accept '100..=403,405..=409,411..=599'
+            --exclude 'newsletter\.catnbloom\.com'
+            --format markdown
+            --output lychee-report.md
+            ${{ steps.urls.outputs.list }}
+          fail: false
+          jobSummary: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Open issue with the report
+        # Scheduled runs always open an issue when something is broken;
+        # manual runs only if create_issue = true.
+        if: >-
+          steps.lychee.outputs.exit_code != 0 &&
+          (github.event_name == 'schedule' || github.event.inputs.create_issue == 'true')
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Broken external links found (weekly link check)"
+          content-filepath: lychee-report.md
